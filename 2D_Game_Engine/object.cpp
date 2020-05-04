@@ -7,8 +7,13 @@
 SDL_Texture* tex;
 std::string name;
 
+//This is to correctly assign every object an ID value
+static int nextID = 0;
+
 Object::Object()
 {
+	id = nextID;
+	nextID++;
 }
 
 
@@ -16,6 +21,9 @@ Object::~Object()
 {
 }
 
+/**
+ * Returns the destination of an object
+ */
 SDL_Rect* Object::getDestination()
 {
 	SDL_Rect* dest = new SDL_Rect();
@@ -26,6 +34,12 @@ SDL_Rect* Object::getDestination()
 	return dest;
 }
 
+/**
+ * Sets the texture of an object
+ *
+ * @param const char* path
+ * @param SDL_Renderer *renderer
+ */
 bool Object::setTexture(const char* path, SDL_Renderer *renderer)
 {
 	//TODO: Try/catch for bad texture paths
@@ -43,16 +57,25 @@ bool Object::setTexture(const char* path, SDL_Renderer *renderer)
 	//SDL_RenderCopy(renderer, tex, NULL, getDestination());
 //}
 
+/**
+ * Returns the name of the object
+ */
 std::string Object::getName()
 {
 	return name;
 }
 
+/**
+ * Returns the depth of the object
+ */
 int Object::getDepth()
 {
 	return d;
 }
 
+/**
+ * Returns the texture of the object
+ */
 SDL_Texture* getTexture()
 {
 	return tex;

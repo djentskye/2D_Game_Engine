@@ -20,6 +20,16 @@ Game::~Game()
 {
 }
 
+/**
+ * Initializes the game
+ *
+ * This function initializes SDL, creates the window, and performs general setup
+ * for the engine before running anything. 
+ *
+ * @param const char* title
+ * @param int xPos, yPos, w, h
+ * @param bool fullscreen
+ */
 void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullscreen)
 {
 	int flags = 0;
@@ -58,6 +68,10 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	player = new Player();
 }
 
+//TODO: This should be exported to a class of its own eventually
+/**
+ * Used for event handling
+ */
 void Game::handleEvents()
 {
 	SDL_Event event;
@@ -72,6 +86,12 @@ void Game::handleEvents()
 	}
 }
 
+/**
+ * Updates the game
+ *
+ * Currently updates objects only, will eventually update physics,
+ * collision detection, and more
+ */
 void Game::update()
 {
 	//if (SDL_GetTicks() % 10 == 0)
@@ -81,6 +101,9 @@ void Game::update()
 	om.updateObjects();
 }
 
+/**
+ * Renders the game
+ */
 void Game::render()
 {
 	//SDL_RenderClear(renderer);
@@ -98,6 +121,9 @@ void Game::render()
 	renderer->render();
 }
 
+/**
+ * Destroys the window and quits SDL, closing the program
+ */
 void Game::clean()
 {
 	SDL_DestroyWindow(window);
@@ -106,16 +132,25 @@ void Game::clean()
 	std::cout << "Game has been cleared" << std::endl;
 }
 
+/**
+ * Returns the running state of the game
+ */
 bool Game::running()
 {
 	return isRunning;
 }
 
+/**
+ * Returns the window
+ */
 SDL_Window* Game::getWindow()
 {
 	return window;
 }
 
+/**
+ * Returns the renderer
+ */
 Renderer* Game::getRenderer()
 {
 	return renderer;

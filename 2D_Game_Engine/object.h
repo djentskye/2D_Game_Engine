@@ -24,6 +24,8 @@ private:
 	int x, y, w, h, d;
 	SDL_Texture* tex;
 	std::string name;
+	int id;
+	static int nextID;
 };
 
 #endif

@@ -15,6 +15,13 @@ Player::~Player()
 {
 }
 
+/**
+ * Initializes the player
+ *
+ * Currently uses stock assets, this should be configurable in the future
+ *
+ * @param SDL_Renderer* renderer
+ */
 void Player::init(SDL_Renderer* renderer)
 {
 	SDL_Surface* tempSurface = IMG_Load("assets/textures/block.png");
@@ -22,14 +29,26 @@ void Player::init(SDL_Renderer* renderer)
 	SDL_FreeSurface(tempSurface);
 }
 
+/**
+ * Moves the player on x and y
+ *
+ * @param int amtx, amty
+ */
 void Player::movePlayer(int amtx, int amty)
 {
+	//TODO: Collision detection
 	x += amtx;
 	y += amty;
 }
 
+/**
+ * Moves the player to a specific point
+ *
+ * @param int xVal, yVal
+ */
 void Player::movePlayerTo(int xVal, int yVal)
 {
+	//TODO: Location check
 	x = xVal;
 	y = yVal;
 }
@@ -40,6 +59,9 @@ SDL_Rect* Player::getSource()
 	return new SDL_Rect();
 }
 
+/**
+ * Returns the destination of the player
+ */
 SDL_Rect* Player::getDestination()
 {
 	SDL_Rect* dest = new SDL_Rect();
@@ -50,6 +72,9 @@ SDL_Rect* Player::getDestination()
 	return dest;
 }
 
+/**
+ * Returns the texture of the player
+ */
 SDL_Texture* Player::getTexture()
 {
 	return texture;
