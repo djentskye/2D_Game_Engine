@@ -76,7 +76,7 @@ int Object::getDepth()
 /**
  * Returns the texture of the object
  */
-SDL_Texture* getTexture()
+SDL_Texture* Object::getTexture()
 {
 	return tex;
 }
