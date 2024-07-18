@@ -25,10 +25,8 @@ int main(int argc, const char* argv[]) {
 	while (g->running())
 	{
 		g->handleEvents();
-		//std::thread update_thread(g->update);
 		g->update();
 		g->render();
-		//update_thread.join();
 	}
 
 	g->clean();

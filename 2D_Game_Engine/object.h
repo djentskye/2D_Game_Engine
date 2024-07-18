@@ -14,10 +14,12 @@ public:
 	~Object();
 	SDL_Rect* getDestination();
 	bool setTexture(const char* path, SDL_Renderer *renderer);
-	//bool renderObject();
+	bool setTexture(SDL_Texture* texture);
+	bool setTextureFromObject(Object obj);
 	std::string getName();
 	int getDepth();
 	SDL_Texture* getTexture();
+	int getID();
 
 private:
 	//x coord, y coord, width, height, depth

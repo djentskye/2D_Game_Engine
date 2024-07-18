@@ -36,6 +36,8 @@ SDL_Rect* Object::getDestination()
 
 /**
  * Sets the texture of an object
+ * 
+ * TODO: Deprecate this function so it's less of a hassle to clean up memory later
  *
  * @param const char* path
  * @param SDL_Renderer *renderer
@@ -47,6 +49,26 @@ bool Object::setTexture(const char* path, SDL_Renderer *renderer)
 	tex = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 	return true; //change this
+}
+
+/**
+ * Sets the texture of an object to a preexisting texture
+ * 
+ * @param SDL_Texture *texture
+ */
+bool Object::setTexture(SDL_Texture *texture) {
+	tex = texture;
+	return true;
+}
+
+/**
+ * Sets the texture of an object given another object
+ * 
+ * @param Object obj
+ */
+bool Object::setTextureFromObject(Object obj) {
+	tex = obj.getTexture();
+	return true;
 }
 
 //we're opting to return nothing (instead of returning a bool) and throwing an exception
@@ -79,4 +101,9 @@ int Object::getDepth()
 SDL_Texture* Object::getTexture()
 {
 	return tex;
+}
+
+int Object::getID()
+{
+	return id;
 }

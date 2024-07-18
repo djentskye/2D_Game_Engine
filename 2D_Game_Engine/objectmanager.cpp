@@ -7,6 +7,8 @@ int counter;
 
 //The engine should create objects through an object manager. 
 
+//Every single object rendered in the engine must have a texture and an SDL_Rect* dstrect, which contains the object's location in a scene. 
+
 
 ObjectManager::ObjectManager()
 {
@@ -30,9 +32,39 @@ void ObjectManager::addObject(Object obj)
 {
 	//Should we have this show depth instead, so then we can sort 
 	//and display everything in the correct order?
-	objMap.insert(std::pair<int,Object>(counter, obj));
+	//objMap.insert(std::pair<int,Object>(counter, obj));
+
+	//Insert the object to the objMap using its objID, which it creates itself. This ensures 
+	//there is no difference in how we track id's. 
+	objMap.insert(std::pair<int, Object>(obj.getID(), obj));
 	
+	//Add one to the current object counter
 	counter++;
+}
+
+/**
+ * Removes an object from the object manager and destroys the object
+ * 
+ * 
+ */
+void ObjectManager::destroyObject(Object obj)
+{
+	//Remove the specified object from the objMap
+	objMap.erase(obj.getID());
+
+	//TODO: Find a way to uninitialize objects in their own class
+
+	//Subtract one from the current object counter
+	counter--;
+}
+
+void ObjectManager::destroyObjectByID(int objID)
+{
+	//Remove the specified object from the objMap using its ID
+	objMap.erase(objID);
+
+	//Subtract one from the current object counter
+	counter--;
 }
 
 void ObjectManager::initObjects()

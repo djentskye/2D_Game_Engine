@@ -22,7 +22,8 @@ void Renderer::init(SDL_Window* window)
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	if (renderer)
 	{
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		//Clear the screen with black
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		std::cout << "Renderer has been created" << std::endl;
 	}
 }

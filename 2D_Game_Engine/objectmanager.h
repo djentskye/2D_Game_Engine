@@ -15,6 +15,8 @@ public:
 	void renderObjects(Renderer r);
 	//Object* getObject(std::string oName);
 	Object* getObject(int index);
+	void destroyObject(Object obj);
+	void destroyObjectByID(int objID);
 
 private:
 	std::map<int, Object> objMap;

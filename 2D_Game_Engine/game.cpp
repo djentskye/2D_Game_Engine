@@ -78,6 +78,21 @@ void Game::handleEvents()
 	SDL_PollEvent(&event);
 	switch (event.type)
 	{
+	//Catch and handle keypress events
+	case SDL_KEYDOWN:
+		switch (event.key.keysym.sym) 
+		{
+		case SDLK_ESCAPE:
+			isRunning = false;
+			break;
+		case SDLK_w:
+			//Keybindings
+			break;
+		default:
+			break;
+		}
+		break;
+	//Catch other events
 	case SDL_QUIT: 
 		isRunning = false;
 		break;
