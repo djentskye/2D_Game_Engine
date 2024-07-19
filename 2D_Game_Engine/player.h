@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
@@ -19,7 +22,8 @@ public:
 	void update();
 
 private:
-	int x, y, w, h;
-	SDL_Texture* texture;
+	//int x, y, w, h, d;
+	//SDL_Texture* texture;
 };
 
+#endif

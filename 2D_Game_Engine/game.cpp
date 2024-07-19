@@ -80,6 +80,9 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	om.initObjects();
 
 	player = new Player();
+	player->init(renderer->getRenderer());
+
+	renderer->addToRenderQueue(*player);
 }
 
 //TODO: This should be exported to a class of its own eventually

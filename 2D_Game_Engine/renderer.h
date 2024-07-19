@@ -2,6 +2,7 @@
 #include "object.h"
 #include <iostream>
 #include <map>
+#include "player.h"
 
 class Renderer
 {
@@ -13,6 +14,7 @@ public:
 	void render();
 	SDL_Renderer* getRenderer();
 	void addToRenderQueue(Object o);
+	void addToRenderQueue(Player p);
 	void addToRenderQueue(int i, Object o);
 
 private:

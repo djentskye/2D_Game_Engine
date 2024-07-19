@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include <iostream>
+#include "player.h"
 
 std::map<int, Object*> renderQueue;
 
@@ -79,11 +80,21 @@ SDL_Renderer* Renderer::getRenderer()
  *
  * @param Object o
  */
-void addToRenderQueue(Object o)
+void Renderer::addToRenderQueue(Object o)
 {
 	//Eventually we will need a method to change the depth by removing from render queue and re-adding
 	renderQueue.insert(std::pair<int, Object*>(renderQueue.size()+1, &o));
 	//renderQueue.insert(std::pair<int, Object*>(renderQueue.() + 1, &o));
+}
+
+void Renderer::addToRenderQueue(Player p)
+{
+	std::pair<int, Object*> tempPair = std::pair<int, Object*>(renderQueue.size() + 1, &p);
+
+	//Eventually we will need a method to change the depth by removing from render queue and re-adding
+	renderQueue.insert(tempPair);
+
+	printf("eeee");
 }
 
 /**
@@ -92,7 +103,7 @@ void addToRenderQueue(Object o)
  * @param int i
  * @param Object o
  */
-void addToRenderQueue(int i, Object o)
+void Renderer::addToRenderQueue(int i, Object o)
 {
 	//Eventually we will need a method to change the depth by removing from render queue and re-adding
 	renderQueue.insert(std::pair<int, Object*>(i, &o)); //??? &

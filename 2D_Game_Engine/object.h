@@ -13,6 +13,7 @@ public:
 	Object();
 	~Object();
 	SDL_Rect* getDestination();
+	void setDestination(SDL_Rect* rect);
 	bool setTexture(const char* path, SDL_Renderer *renderer);
 	bool setTexture(SDL_Texture* texture);
 	bool setTextureFromObject(Object obj);
@@ -21,11 +22,13 @@ public:
 	SDL_Texture* getTexture();
 	int getID();
 
-private:
+protected:
 	//x coord, y coord, width, height, depth
 	int x, y, w, h, d;
-	SDL_Texture* tex;
+	SDL_Texture* texture;
 	std::string name;
+
+private:
 	int id;
 	//static int nextID;
 };

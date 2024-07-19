@@ -4,7 +4,7 @@
 #include <iostream>
 
 //int x, y, w, h;
-SDL_Texture* tex;
+SDL_Texture* texture;
 std::string name;
 
 //This is to correctly assign every object an ID value
@@ -34,6 +34,13 @@ SDL_Rect* Object::getDestination()
 	return dest;
 }
 
+void Object::setDestination(SDL_Rect* rect) {
+	x = rect->x;
+	y = rect->y;
+	w = rect->w;
+	h = rect->h;
+}
+
 /**
  * Sets the texture of an object
  * 
@@ -46,7 +53,7 @@ bool Object::setTexture(const char* path, SDL_Renderer *renderer)
 {
 	//TODO: Try/catch for bad texture paths
 	SDL_Surface* tempSurface = IMG_Load(path);
-	tex = SDL_CreateTextureFromSurface(renderer, tempSurface);
+	texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 	return true; //change this
 }
@@ -57,7 +64,7 @@ bool Object::setTexture(const char* path, SDL_Renderer *renderer)
  * @param SDL_Texture *texture
  */
 bool Object::setTexture(SDL_Texture *texture) {
-	tex = texture;
+	texture = texture;
 	return true;
 }
 
@@ -67,7 +74,7 @@ bool Object::setTexture(SDL_Texture *texture) {
  * @param Object obj
  */
 bool Object::setTextureFromObject(Object obj) {
-	tex = obj.getTexture();
+	texture = obj.getTexture();
 	return true;
 }
 
@@ -100,7 +107,7 @@ int Object::getDepth()
  */
 SDL_Texture* Object::getTexture()
 {
-	return tex;
+	return texture;
 }
 
 int Object::getID()

@@ -1,7 +1,8 @@
 #include "Player.h"
+#include "object.h"
 
 
-int x, y, w, h;
+//int x, y, w, h;
 
 Player::Player()
 {

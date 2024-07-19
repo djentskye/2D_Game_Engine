@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="commands.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="io\parseCFG.cpp" />
+    <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="objectmanager.cpp" />
@@ -27,7 +30,10 @@
     <ClCompile Include="renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commands.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="io\parseCFG.h" />
+    <ClInclude Include="keyboard.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="objectmanager.h" />
     <ClInclude Include="player.h" />

@@ -19,6 +19,12 @@
     <Filter Include="Header Files\entities">
       <UniqueIdentifier>{ce8bee14-7ea8-4fbe-9843-9f6ec78e2bfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{48012dc0-bd87-4ee6-b281-882062649807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\io">
+      <UniqueIdentifier>{c68c80af-176e-48cb-8937-0f7841a369dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +45,15 @@
     <ClCompile Include="objectmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="io\parseCFG.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -54,6 +69,15 @@
       <Filter>Header Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="objectmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="io\parseCFG.h">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

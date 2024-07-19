@@ -50,18 +50,6 @@ bool Keyboard::keyboardEvent(int sym)
 		//std::cout << "No keybinding for " + sym << std::endl;
 		return false;
 	}
-
-	/*switch (sym)
-	{
-	case SDLK_ESCAPE:
-		//TODO: Create console, then add keybinding support for it
-		break;
-	case SDLK_w:
-		//Keybindings
-		break;
-	default:
-		break;
-	}*/
 }
 
 /**
