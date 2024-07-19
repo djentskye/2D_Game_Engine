@@ -4,12 +4,20 @@
 #include <iostream>
 #include "player.h"
 #include "objectmanager.h"
+#include "io/parseCFG.h"
+#include "keyboard.h"
+#include "commands.h"
 
 SDL_Texture* block;
 
 Player* player;
 
 ObjectManager om;
+
+Keyboard keyboard;
+
+//Initialize a commands parser
+Commands commands;
 
 Game::Game()
 {
@@ -59,6 +67,12 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 		isRunning = false;
 	}
 
+	//Create the command parser
+	commands = Commands(this);
+
+	//Load keybindings from CFG
+	ParseCFG::parseKeybindings(keyboard);
+
 	//Initialize the textures
 	//SDL_Surface* tempSurface = IMG_Load("assets/textures/block.png");
 	//block = SDL_CreateTextureFromSurface(renderer, tempSurface);
@@ -80,9 +94,10 @@ void Game::handleEvents()
 	{
 	//Catch and handle keypress events
 	case SDL_KEYDOWN:
-		switch (event.key.keysym.sym) 
+		/*switch (event.key.keysym.sym)
 		{
 		case SDLK_ESCAPE:
+			//TODO: Create console, then add keybinding support for it
 			isRunning = false;
 			break;
 		case SDLK_w:
@@ -90,7 +105,9 @@ void Game::handleEvents()
 			break;
 		default:
 			break;
-		}
+		}*/
+		keyboard.keyboardEvent(event.key.keysym.sym);
+		
 		break;
 	//Catch other events
 	case SDL_QUIT: 
@@ -169,4 +186,11 @@ SDL_Window* Game::getWindow()
 Renderer* Game::getRenderer()
 {
 	return renderer;
+}
+
+/**
+ * Exits the game
+ */
+void Game::exit() {
+	isRunning = false;
 }

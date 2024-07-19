@@ -19,6 +19,7 @@ public:
 	bool running();
 	SDL_Window* getWindow();
 	Renderer* getRenderer();
+	void exit();
 
 private: 
 	bool isRunning;
