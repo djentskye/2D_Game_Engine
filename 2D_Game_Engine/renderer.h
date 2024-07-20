@@ -13,8 +13,8 @@ public:
 	void exit();
 	void render();
 	SDL_Renderer* getRenderer();
-	void addToRenderQueue(Object o);
-	void addToRenderQueue(Player p);
+	void addToRenderQueue(Object* o);
+	void addToRenderQueue(Player* p);
 	void addToRenderQueue(int i, Object o);
 
 private:

@@ -3,13 +3,14 @@
 #include <map>
 #include "object.h"
 #include "renderer.h"
+#include "physics.h"
 
 class ObjectManager
 {
 public:
 	ObjectManager();
 	~ObjectManager();
-	void addObject(Object obj);
+	void addObject(Object* obj);
 	void initObjects();
 	void updateObjects();
 	void renderObjects(Renderer r);
@@ -19,7 +20,8 @@ public:
 	void destroyObjectByID(int objID);
 
 private:
-	std::map<int, Object> objMap;
+	std::map<int, Object*> objMap;
 	int counter;
+	Physics physics;
 };
 

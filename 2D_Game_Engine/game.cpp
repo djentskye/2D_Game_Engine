@@ -12,9 +12,9 @@ SDL_Texture* block;
 
 Player* player;
 
-ObjectManager om;
-
 Keyboard keyboard;
+
+ObjectManager om;
 
 //Initialize a commands parser
 Commands commands;
@@ -82,7 +82,9 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	player = new Player();
 	player->init(renderer->getRenderer());
 
-	renderer->addToRenderQueue(*player);
+	renderer->addToRenderQueue(player);
+
+	om.addObject(player);
 }
 
 //TODO: This should be exported to a class of its own eventually
@@ -134,6 +136,8 @@ void Game::update()
 		//player->movePlayer(1, 1);
 	//}
 	om.updateObjects();
+
+	
 }
 
 /**

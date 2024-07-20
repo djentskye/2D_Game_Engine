@@ -55,7 +55,7 @@ void Renderer::render()
 	//TODO: [REND] Render objects
 	//TODO: [REND] Render player
 
-	//TODO: [REND] Add objects to the render queue
+	//TODO: [REND] Add objects to the render queue by loading a level
 	for (std::pair<int, Object*> element : renderQueue) {
 		SDL_RenderCopy(renderer, element.second->getTexture(), NULL, element.second->getDestination());
 	}
@@ -80,16 +80,16 @@ SDL_Renderer* Renderer::getRenderer()
  *
  * @param Object o
  */
-void Renderer::addToRenderQueue(Object o)
+void Renderer::addToRenderQueue(Object* o)
 {
 	//Eventually we will need a method to change the depth by removing from render queue and re-adding
-	renderQueue.insert(std::pair<int, Object*>(renderQueue.size()+1, &o));
+	renderQueue.insert(std::pair<int, Object*>(renderQueue.size()+1, o));
 	//renderQueue.insert(std::pair<int, Object*>(renderQueue.() + 1, &o));
 }
 
-void Renderer::addToRenderQueue(Player p)
+void Renderer::addToRenderQueue(Player* p)
 {
-	std::pair<int, Object*> tempPair = std::pair<int, Object*>(renderQueue.size() + 1, &p);
+	std::pair<int, Object*> tempPair = std::pair<int, Object*>(renderQueue.size() + 1, p);
 
 	//Eventually we will need a method to change the depth by removing from render queue and re-adding
 	renderQueue.insert(tempPair);

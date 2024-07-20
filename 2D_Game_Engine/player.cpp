@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "object.h"
+#include "variables.h"
 
 
 //int x, y, w, h;
@@ -10,6 +11,9 @@ Player::Player()
 	y = 0;
 	w = 32;
 	h = 32;
+
+	//Set the physics state
+	physics_state = obj_physics;
 }
 
 Player::~Player()

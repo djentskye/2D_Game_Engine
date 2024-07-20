@@ -2,10 +2,12 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include <iostream>
+#include "variables.h"
 
 //int x, y, w, h;
 SDL_Texture* texture;
 std::string name;
+phys_state physics_state;
 
 //This is to correctly assign every object an ID value
 static int nextID = 0;
@@ -113,4 +115,30 @@ SDL_Texture* Object::getTexture()
 int Object::getID()
 {
 	return id;
+}
+
+double Object::getXVelocity() {
+	return velx;
+}
+
+double Object::getYVelocity() {
+	return vely;
+}
+
+void Object::setVelocity(double x, double y) {
+	velx = x;
+	vely = y;
+}
+
+void Object::addToVelocity(double x, double y) {
+	velx += x;
+	vely += y;
+}
+
+void Object::setPhysState(phys_state p) {
+	physics_state = p;
+}
+
+phys_state Object::getPhysState() {
+	return physics_state;
 }

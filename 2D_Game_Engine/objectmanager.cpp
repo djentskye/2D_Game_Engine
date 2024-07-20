@@ -13,6 +13,10 @@ int counter;
 ObjectManager::ObjectManager()
 {
 	counter = 0;
+
+	//This feels like an unhinged spot to initialize the physics at. 
+	//but here we are. 
+	physics.startPhysics(0.02f, 1);
 }
 
 
@@ -28,7 +32,7 @@ ObjectManager::~ObjectManager()
  *
  * @param Object obj
  */
-void ObjectManager::addObject(Object obj)
+void ObjectManager::addObject(Object* obj)
 {
 	//Should we have this show depth instead, so then we can sort 
 	//and display everything in the correct order?
@@ -36,7 +40,7 @@ void ObjectManager::addObject(Object obj)
 
 	//Insert the object to the objMap using its objID, which it creates itself. This ensures 
 	//there is no difference in how we track id's. 
-	objMap.insert(std::pair<int, Object>(obj.getID(), obj));
+	objMap.insert(std::pair<int, Object*>(obj->getID(), obj));
 	
 	//Add one to the current object counter
 	counter++;
@@ -77,7 +81,9 @@ void ObjectManager::initObjects()
  */
 void ObjectManager::updateObjects()
 {
-	for (std::pair<int, Object> element : objMap) {
+	for (std::pair<int, Object*> element : objMap) {
+		Object* obj = element.second;
+		physics.applyPhysics(element.second);
 		//Update forces (gravity)
 		//Update movement (scripted)
 		///Update player input /where do we want this in the chain?
@@ -117,5 +123,5 @@ void ObjectManager::renderObjects(Renderer r)
  */
 Object* ObjectManager::getObject(int index)
 {
-	return &objMap.find(index)->second;
+	return objMap.find(index)->second;
 }
