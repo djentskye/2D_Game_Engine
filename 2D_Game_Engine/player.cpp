@@ -11,9 +11,14 @@ Player::Player()
 	y = 0;
 	w = 32;
 	h = 32;
+	rotation = 0;
+	velx = 0;
+	vely = 0;
 
 	//Set the physics state
 	physics_state = obj_physics;
+
+	texture_flipped = SDL_FLIP_NONE;
 }
 
 Player::~Player()

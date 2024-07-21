@@ -85,6 +85,19 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	renderer->addToRenderQueue(player);
 
 	om.addObject(player);
+
+
+	Object* floor = new Object();
+	SDL_Rect* floorRect = new SDL_Rect;
+	floorRect->x = -100;
+	floorRect->w = 800;
+	floorRect->y = 400;
+	floorRect->h = 200;
+	floor->setDestination(floorRect);
+	floor->setPhysState(obj_static);
+	floor->setTexture(player->getTexture());
+	renderer->addToRenderQueue(floor);
+	om.addObject(floor);
 }
 
 //TODO: This should be exported to a class of its own eventually

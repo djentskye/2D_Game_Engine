@@ -57,7 +57,8 @@ void Renderer::render()
 
 	//TODO: [REND] Add objects to the render queue by loading a level
 	for (std::pair<int, Object*> element : renderQueue) {
-		SDL_RenderCopy(renderer, element.second->getTexture(), NULL, element.second->getDestination());
+		//SDL_RenderCopy(renderer, element.second->getTexture(), NULL, element.second->getDestination());
+		SDL_RenderCopyEx(renderer, element.second->getTexture(), NULL, element.second->getDestination(), element.second->getRotation(), NULL, element.second->getTextureFlip());
 	}
 
 	SDL_RenderPresent(renderer);

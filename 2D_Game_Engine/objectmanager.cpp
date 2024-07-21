@@ -16,7 +16,7 @@ ObjectManager::ObjectManager()
 
 	//This feels like an unhinged spot to initialize the physics at. 
 	//but here we are. 
-	physics.startPhysics(0.02f, 1);
+	physics.startPhysics(0.01f, 1);
 }
 
 
@@ -81,6 +81,10 @@ void ObjectManager::initObjects()
  */
 void ObjectManager::updateObjects()
 {
+	//Reset the collision bounds
+	physics.resetCollisionList();
+
+	//Loop over each element and apply updates to them
 	for (std::pair<int, Object*> element : objMap) {
 		Object* obj = element.second;
 		physics.applyPhysics(element.second);

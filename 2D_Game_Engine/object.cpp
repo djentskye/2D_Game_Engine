@@ -3,6 +3,7 @@
 #include "SDL_image.h"
 #include <iostream>
 #include "variables.h"
+#include <cmath>
 
 //int x, y, w, h;
 SDL_Texture* texture;
@@ -16,6 +17,7 @@ Object::Object()
 {
 	id = nextID;
 	nextID++;
+	destRect = new SDL_Rect();
 }
 
 
@@ -28,12 +30,11 @@ Object::~Object()
  */
 SDL_Rect* Object::getDestination()
 {
-	SDL_Rect* dest = new SDL_Rect();
-	dest->x = x;
-	dest->y = y;
-	dest->h = h;
-	dest->w = w;
-	return dest;
+	destRect->x = x;
+	destRect->y = y;
+	destRect->h = h;
+	destRect->w = w;
+	return destRect;
 }
 
 void Object::setDestination(SDL_Rect* rect) {
@@ -41,6 +42,19 @@ void Object::setDestination(SDL_Rect* rect) {
 	y = rect->y;
 	w = rect->w;
 	h = rect->h;
+}
+
+/**
+ * Returns the destination of an object
+ */
+SDL_Rect* Object::getBoundingBox()
+{
+	SDL_Rect* dest = new SDL_Rect();
+	dest->x = x;
+	dest->y = y;
+	dest->h = h;
+	dest->w = w;
+	return dest;
 }
 
 /**
@@ -117,6 +131,14 @@ int Object::getID()
 	return id;
 }
 
+double Object::getVelocity() {
+	return sqrt(pow(velx, 2) + pow(vely, 2));
+}
+
+double Object::getVelocityAngle() {
+	return atan(vely/velx);
+}
+
 double Object::getXVelocity() {
 	return velx;
 }
@@ -135,6 +157,18 @@ void Object::addToVelocity(double x, double y) {
 	vely += y;
 }
 
+double Object::getRotationVelocity() {
+	return rotationVelocity;
+}
+
+void Object::setRotationVelocity(double vel) {
+	rotationVelocity = vel;
+}
+
+void Object::addToRotationVelocity(double vel) {
+	rotationVelocity =+ vel;
+}
+
 void Object::setPhysState(phys_state p) {
 	physics_state = p;
 }
@@ -142,3 +176,20 @@ void Object::setPhysState(phys_state p) {
 phys_state Object::getPhysState() {
 	return physics_state;
 }
+
+double Object::getRotation() {
+	return rotation;
+}
+
+void Object::setRotation(double r) {
+	rotation = r;
+}
+
+SDL_RendererFlip Object::getTextureFlip() {
+	return texture_flipped;
+}
+
+void Object::setTextureFlip(SDL_RendererFlip rf) {
+	texture_flipped = rf;
+}
+

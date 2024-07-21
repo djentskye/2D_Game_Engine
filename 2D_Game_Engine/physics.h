@@ -5,6 +5,8 @@
 
 #include "object.h"
 #include "variables.h"
+#include <iostream>
+#include <vector>
 
 class Physics
 {
@@ -14,11 +16,13 @@ public:
 	void startPhysics(float gravity, int friction);
 	void setPhysics(float gravity, int friction);
 	void applyPhysics(Object* o);
+	void resetCollisionList();
 
 private:
 	float gravity;
 	int friction;
 	double timescale;
+	std::vector<Object*> collisionList;
 };
 
 #endif

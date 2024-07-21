@@ -17,7 +17,7 @@ void t_update()
 int main(int argc, const char* argv[]) {
 	g = new Game();
 
-	g->init("djent", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, false);
+	g->init("djent", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
 
 	//We should use one thread for rendering and another thread for updating
 	//Possibly use 
