@@ -10,8 +10,6 @@
 
 SDL_Texture* block;
 
-Player* player;
-
 Keyboard keyboard;
 
 ObjectManager om;
@@ -95,7 +93,7 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	floorRect->h = 200;
 	floor->setDestination(floorRect);
 	floor->setPhysState(obj_static);
-	floor->setTexture(player->getTexture());
+	floor->setTexture("assets/textures/purple.png", renderer->getRenderer());
 	renderer->addToRenderQueue(floor);
 	om.addObject(floor);
 }
@@ -124,10 +122,13 @@ void Game::handleEvents()
 		default:
 			break;
 		}*/
-		keyboard.keyboardEvent(event.key.keysym.sym);
+		keyboard.keyboardEvent(event.key.keysym.sym, SDL_KEYDOWN);
 		
 		break;
 	//Catch other events
+	case SDL_KEYUP:
+		keyboard.keyboardEvent(event.key.keysym.sym, SDL_KEYUP);
+		break;
 	case SDL_QUIT: 
 		isRunning = false;
 		break;
@@ -149,6 +150,7 @@ void Game::update()
 		//player->movePlayer(1, 1);
 	//}
 	om.updateObjects();
+	player->update();
 
 	
 }
@@ -213,4 +215,8 @@ Renderer* Game::getRenderer()
  */
 void Game::exit() {
 	isRunning = false;
+}
+
+Player* Game::getPlayer() {
+	return player;
 }

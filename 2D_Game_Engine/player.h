@@ -16,13 +16,29 @@ public:
 	void init(SDL_Renderer* renderer);
 	void movePlayer(int amtx, int amty);
 	void movePlayerTo(int xVal, int yVal);
+	void movePlayerAngle(double angle);
+	void startMovingLeft();
+	void stopMovingLeft();
+	void startMovingRight();
+	void stopMovingRight();
+	void startMovingUp();
+	void stopMovingUp();
+	void startMovingDown();
+	void stopMovingDown();
 	SDL_Rect* getSource();
-	SDL_Rect* getDestination();
+	//SDL_Rect* getDestination();
 	SDL_Texture* getTexture();
 	void update();
 
 private:
+	//Playerspeed is the max speed the player can travel
+	double playerSpeed;
+	double playerAccel;
+	double movementAngle;
+	bool moveLeft, moveRight, moveUp, moveDown;
+	void updateMovement();
 	//int x, y, w, h, d;
+	//double velx, vely;
 	//SDL_Texture* texture;
 };
 

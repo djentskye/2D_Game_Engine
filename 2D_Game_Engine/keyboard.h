@@ -11,8 +11,9 @@ class Keyboard
 public:
 	Keyboard();
 	~Keyboard();
-	bool keyboardEvent(int sym);
+	bool keyboardEvent(int sym, SDL_EventType eventType);
 	void bindKey(int sym, std::string keybindVal);
+
 };
 
 #endif

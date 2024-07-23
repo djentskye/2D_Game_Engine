@@ -16,7 +16,7 @@ ObjectManager::ObjectManager()
 
 	//This feels like an unhinged spot to initialize the physics at. 
 	//but here we are. 
-	physics.startPhysics(0.01f, 1);
+	physics.startPhysics(0.004f, 1);
 }
 
 

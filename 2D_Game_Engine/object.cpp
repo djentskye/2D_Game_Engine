@@ -136,6 +136,14 @@ double Object::getVelocity() {
 }
 
 double Object::getVelocityAngle() {
+	if (velx == 0.0) {
+		if (vely > 0) {
+			return 180;
+		}
+		else {
+			return 0;
+		}
+	}
 	return atan(vely/velx);
 }
 

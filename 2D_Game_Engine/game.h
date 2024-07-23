@@ -20,10 +20,12 @@ public:
 	SDL_Window* getWindow();
 	Renderer* getRenderer();
 	void exit();
+	Player* getPlayer();
 
 private: 
 	bool isRunning;
 	SDL_Window *window;
-	Renderer *renderer;
+	Renderer* renderer;
+	Player* player;
 };
 

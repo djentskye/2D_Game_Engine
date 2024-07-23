@@ -10,7 +10,7 @@ Physics::~Physics() {}
 void Physics::startPhysics(float grav, int fric) {
 	gravity = grav;
 	friction = fric;
-	timescale = 1;
+	timescale = 0.6;
 }
 
 void Physics::setPhysics(float gravity, int friction) {
@@ -30,7 +30,7 @@ void Physics::applyPhysics(Object* o) {
 
 	//Gravity
 	if (o->getPhysState() == obj_physics) {
-		yvel = yvel + gravity;
+		//yvel = yvel + gravity;
 	}
 
 	//Other physics properties can go down here
@@ -51,9 +51,11 @@ void Physics::applyPhysics(Object* o) {
 				//double diffy = ((r->y + r->h / 2) - (rect->y + rect->h / 2));
 
 				double magnitude = 0.95;
+				//double magnitude = 2;
 
 				//We just have to push back on the object with the same amount of force it's exerting on us
 				//Get the angle of the object's velocity
+				//double oppositeAngle = std::fmod(collisionList[i]->getVelocityAngle()+180, 360);
 				double oppositeAngle = std::fmod(collisionList[i]->getVelocityAngle()+180, 360);
 				double perpendicular = std::fmod(o->getRotation(), 90);
 
@@ -61,11 +63,16 @@ void Physics::applyPhysics(Object* o) {
 				double newRotate = perpendicular - oppositeAngle;
 				double newAngle = perpendicular + newRotate;
 
-				double x_component = std::cos(newAngle) * magnitude;
-				double y_component = std::sin(newAngle) * magnitude;
+				//double x_component = std::cos(newAngle) * magnitude;
+				//double y_component = std::sin(newAngle) * magnitude;
 
-				double toAccelX = -collisionList[i]->getXVelocity() + x_component;
+				double x_component = std::sin(newAngle) * magnitude;
+				double y_component = std::cos(newAngle) * magnitude;
+
+ 				double toAccelX = -collisionList[i]->getXVelocity() + x_component;
 				double toAccelY = -collisionList[i]->getYVelocity() + y_component;
+				//double toAccelX = x_component;
+				//double toAccelY = y_component;
 				
 				//Since this is a static object, we need to exert all this force on the other one. 
 				collisionList[i]->addToVelocity(toAccelX, toAccelY);
@@ -168,7 +175,7 @@ void Physics::applyPhysics(Object* o) {
 	}
 
 	//Update o's location
-	if (o->getPhysState() == obj_dynamic || obj_physics) {
+	if (o->getPhysState() == obj_dynamic || o->getPhysState() == obj_physics) {
 		rect->x = rect->x + xvel * timescale;
 		rect->y = rect->y + yvel * timescale;
 

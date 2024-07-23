@@ -3,6 +3,7 @@
 #include <map>
 #include <SDL_events.h>
 #include "commands.h"
+#include <string>
 
 ///////////////////////////////////////////////////////////////
 // Keyboard.cpp
@@ -27,14 +28,24 @@ Keyboard::~Keyboard() {}
  * Handles a keyboard event, given the SDL keycode of the pressed key
  *
  * @param int sym, the SDL keycode
+ * @param SDL_EventType eventType, the keypress type (up or down)
  */
-bool Keyboard::keyboardEvent(int sym)
+bool Keyboard::keyboardEvent(int sym, SDL_EventType eventType)
 {
 	//Try-catch doesn't work here because of terrible memory management stuff??
 	if (keymap.count(sym) == 1) {
 		try {
 			//std::cout << sym + " pressed! Command: " + keymap.at(sym) << std::endl;
-			Commands::runCommand(keymap.at(sym));
+			if (eventType == SDL_KEYDOWN) 
+			{
+				//If this is a keydown command, just run the bound command
+				Commands::runCommand(keymap.at(sym));
+			}
+			else
+			{
+				//If this is a keyup command, check if we need to do anything
+				Commands::runCommand(keymap.at(sym+654));
+			}
 			return true;
 		}
 		catch (std::out_of_range) {
@@ -64,6 +75,12 @@ void Keyboard::bindKey(int sym, std::string keybindVal)
 	if (keymap.count(sym) == 1) {
 		keymap.erase(sym);
 	}
+	//If the requested keybinding has a +, bind the key with a 654 higher value to the 
+	//respective - command
+	if (keybindVal[0] == '+') {
+		keymap.insert(std::pair<int, std::string>(sym+654, '-'+keybindVal.substr(1, std::string::npos)));
+	}
+
 	keymap.insert(std::pair<int, std::string>(sym, keybindVal));
 	printf("Just bound key!\n");
 }
