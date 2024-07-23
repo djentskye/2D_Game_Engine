@@ -32,7 +32,7 @@ public:
 
 private:
 	//Playerspeed is the max speed the player can travel
-	double playerSpeed;
+	double playerMaxSpeed;
 	double playerAccel;
 	double movementAngle;
 	bool moveLeft, moveRight, moveUp, moveDown;

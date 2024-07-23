@@ -43,7 +43,8 @@ public:
 
 protected:
 	//x coord, y coord, width, height, depth
-	int x, y, w, h, d;
+	double x, y;
+	int w, h, d;
 	//Rotation value, rotation velocity (clockwise)
 	double rotation, rotationVelocity;
 	double velx, vely;

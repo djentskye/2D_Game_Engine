@@ -87,9 +87,9 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 
 	Object* floor = new Object();
 	SDL_Rect* floorRect = new SDL_Rect;
-	floorRect->x = -100;
-	floorRect->w = 800;
-	floorRect->y = 400;
+	floorRect->x = 0;
+	floorRect->w = 1000;
+	floorRect->y = -200;
 	floorRect->h = 200;
 	floor->setDestination(floorRect);
 	floor->setPhysState(obj_static);

@@ -2,6 +2,7 @@
 #include "object.h"
 #include "variables.h"
 #include <cmath>
+#include <iostream>
 
 
 //int x, y, w, h;
@@ -15,7 +16,7 @@ Player::Player()
 	rotation = 0;
 	velx = 0;
 	vely = 0;
-	playerSpeed = 1;
+	playerMaxSpeed = 0.1;
 	playerAccel = 0.5;
 
 	//Set the physics state
@@ -135,8 +136,8 @@ void Player::updateMovement() {
 	double newVelX = velx;
 	double newVelY = vely;
 
-	int xdest = 0;
-	int ydest = 0;
+	double xdest = 0;
+	double ydest = 0;
 
 	//Figure out what our direction is going to be
 	if (moveLeft) {
@@ -154,18 +155,23 @@ void Player::updateMovement() {
 
 	//If we are moving on both axes, multiply both by sqrt of 2
 	if (abs(xdest) + abs(ydest) == 2) {
-		xdest = sqrt(2);
-		ydest = sqrt(2);
+		xdest *= sqrt(2);
+		ydest *= sqrt(2);
 	}
 
-	xdest *= playerSpeed;
-	ydest *= playerSpeed;
+	xdest += xdest * playerMaxSpeed;
+	ydest += ydest * playerMaxSpeed;
 
 	newVelX = xdest + playerAccel * (velx);
 	newVelY = ydest + playerAccel * (vely);
 
 	velx = newVelX;
 	vely = newVelY;
+
+	double vel = this->getVelocity();
+
+	std::cout << "vel: ";
+	std::cout << vel << std::endl;
 
 	/*
 	//If we are already at max speed while going right, we cannot increase our right velocity
