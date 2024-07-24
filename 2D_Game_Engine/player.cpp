@@ -17,7 +17,7 @@ Player::Player()
 	velx = 0;
 	vely = 0;
 	playerMaxSpeed = 0.1;
-	playerAccel = 0.5;
+	playerAccel = 0.4;
 
 	//Set the physics state
 	physics_state = obj_physics;

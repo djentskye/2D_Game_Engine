@@ -1,0 +1,11 @@
+playerSpawn=0000,0046
+obj={x=62;y=22;w=25;h=25;tex=assets/textures/purple.png;}
+
+//Ceiling
+obj={x=0;y=-20;w=2000;h=20;tex=assets/textures/purple.png;}
+//Floor
+obj={x=0;y=600;w=2000;h=20;tex=assets/textures/purple.png;}
+//Left
+obj={x=-20;y=-10;w=20;h=800;tex=assets/textures/purple.png;}
+//Right
+obj={x=800;y=-10;w=20;h=800;tex=assets/textures/purple.png;}

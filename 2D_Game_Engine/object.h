@@ -15,8 +15,15 @@ public:
 	~Object();
 	SDL_Rect* getDestination();
 	void setDestination(SDL_Rect* rect);
+	void setDestination(double x, double y, int w, int h);
+	void setX(double x);
+	void setY(double y);
+	void setWidth(int width);
+	void setHeight(int height);
+	void setDepth(int d);
 	SDL_Rect* getBoundingBox();
-	bool setTexture(const char* path, SDL_Renderer *renderer);
+	bool setTexture(const char* path, SDL_Renderer* renderer); 
+	bool setTexture(std::string path, SDL_Renderer* renderer);
 	bool setTexture(SDL_Texture* texture);
 	bool setTextureFromObject(Object obj);
 	std::string getName();
@@ -40,6 +47,7 @@ public:
 	void setTextureFlip(SDL_RendererFlip rf);
 	SDL_Point getCenter();
 	void setCenter(SDL_Point p);
+	void setName(std::string newName);
 
 protected:
 	//x coord, y coord, width, height, depth

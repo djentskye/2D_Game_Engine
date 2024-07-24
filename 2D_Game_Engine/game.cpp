@@ -7,6 +7,7 @@
 #include "io/parseCFG.h"
 #include "keyboard.h"
 #include "commands.h"
+#include "io/loadMap.h"
 
 SDL_Texture* block;
 
@@ -78,6 +79,13 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	om.initObjects();
 
 	player = new Player();
+
+	loadMap::initMapLoader(player, renderer, &om);
+
+	loadMap::load("test");
+
+	/* Currently adding map loading, we shouldn't need this code anymore now. 
+	player = new Player();
 	player->init(renderer->getRenderer());
 
 	renderer->addToRenderQueue(player);
@@ -96,6 +104,7 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	floor->setTexture("assets/textures/purple.png", renderer->getRenderer());
 	renderer->addToRenderQueue(floor);
 	om.addObject(floor);
+	*/
 }
 
 //TODO: This should be exported to a class of its own eventually

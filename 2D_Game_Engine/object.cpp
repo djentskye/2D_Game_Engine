@@ -44,6 +44,25 @@ void Object::setDestination(SDL_Rect* rect) {
 	h = rect->h;
 }
 
+void Object::setDestination(double x, double y, int w, int h) {
+	this->x = x;
+	this->y = y;
+	this->w = w;
+	this->h = h;
+}
+
+void Object::setX(double x) { this->x = x; }
+
+void Object::setY(double y) { this->y = y; }
+
+void Object::setWidth(int width) { w = width; }
+
+void Object::setHeight(int height) { h = height; }
+
+void Object::setDepth(int d) {
+	this->d = d;
+}
+
 /**
  * Returns the destination of an object
  */
@@ -65,10 +84,19 @@ SDL_Rect* Object::getBoundingBox()
  * @param const char* path
  * @param SDL_Renderer *renderer
  */
-bool Object::setTexture(const char* path, SDL_Renderer *renderer)
+bool Object::setTexture(const char* path, SDL_Renderer* renderer)
 {
 	//TODO: Try/catch for bad texture paths
 	SDL_Surface* tempSurface = IMG_Load(path);
+	texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+	SDL_FreeSurface(tempSurface);
+	return true; //change this
+}
+
+bool Object::setTexture(std::string path, SDL_Renderer* renderer)
+{
+	//TODO: Try/catch for bad texture paths
+	SDL_Surface* tempSurface = IMG_Load(path.c_str());
 	texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 	return true; //change this
@@ -201,3 +229,6 @@ void Object::setTextureFlip(SDL_RendererFlip rf) {
 	texture_flipped = rf;
 }
 
+void Object::setName(std::string newName) {
+	name = newName;
+}
