@@ -9,6 +9,7 @@
 #include "commands.h"
 #include "io/loadMap.h"
 #include "gamestates.h"
+#include "io/fonts.h"
 
 SDL_Texture* block;
 
@@ -66,6 +67,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 		std::cout << "Error initializing SDL" << std::endl;
 		isRunning = false;
 	}
+
+	Fonts::init(renderer->getRenderer());
 
 	Gamestates::init();
 	Gamestates::setGamestate(gs_menu);
