@@ -48,6 +48,12 @@ public:
 	SDL_Point getCenter();
 	void setCenter(SDL_Point p);
 	void setName(std::string newName);
+	void setHealth(double h);
+	void setMaxHealth(double h);
+	void addHealth(double h);
+	double getHealth();
+	double getMaxHealth();
+	void shootProjectile();
 
 protected:
 	//x coord, y coord, width, height, depth
@@ -56,6 +62,8 @@ protected:
 	//Rotation value, rotation velocity (clockwise)
 	double rotation, rotationVelocity;
 	double velx, vely;
+	double health;
+	double maxHealth;
 	SDL_Texture* texture;
 	std::string name;
 	phys_state physics_state;
@@ -65,7 +73,6 @@ protected:
 
 private:
 	int id;
-	//static int nextID;
 };
 
 #endif

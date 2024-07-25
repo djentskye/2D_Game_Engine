@@ -7,17 +7,32 @@
 #include "../renderer.h"
 #include "../objectmanager.h"
 #include "../variables.h"
+#include "../commands.h"
 
 static Player* player;
 static Renderer* renderer;
 static ObjectManager* om;
 
+/**
+ * Initializes the map loader class by setting some necessary static variables. This MUST be run 
+ * prior to loading a map. 
+ *
+ * @param Player* p
+ * @param Renderer* rend
+ * @param ObjectManager* objectManager
+ */
 void loadMap::initMapLoader(Player* p, Renderer* rend, ObjectManager* objectManager) {
 	player = p;
 	renderer = rend;
 	om = objectManager;
 }
 
+/**
+ * Returns an object specified by the string objData. Interprets an object's data within a map file 
+ * and loads it into memory. objData should not have curly brackets around it. 
+ *
+ * @param std::string objData
+ */
 Object* loadMap::loadObject(std::string objData) {
 	int counter = 0;
 	std::string propertyString, valueString;
@@ -73,7 +88,14 @@ Object* loadMap::loadObject(std::string objData) {
 	return o;
 }
 
+/**
+ * Loads a map into memory from a given filepath
+ * 
+ * @param std::string filepath
+ */
 bool loadMap::load(std::string filepath) {
+	Commands::runCommand("g_setGameState gs_game");
+
 	std::ifstream mapFile;
 	std::string fullMapString = "maps/" + filepath + ".map";
 	mapFile.open(fullMapString);
@@ -99,6 +121,9 @@ bool loadMap::load(std::string filepath) {
 			}
 			else if (tempString.substr(0, 2) == "//") {
 				//Do nothing; this is a comment!
+			}
+			else if (tempString.substr(0, 14) == "g_setGamemode ") {
+				Commands::runCommand(tempString);
 			}
 		}
 	}

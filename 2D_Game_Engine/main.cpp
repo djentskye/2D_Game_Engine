@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL.h>
 #include "game.h"
+#include "io/parseCFG.h"
+#include "variables.h"
 
 #include <thread>
 
@@ -17,7 +19,9 @@ void t_update()
 int main(int argc, const char* argv[]) {
 	g = new Game();
 
-	g->init("djent", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
+	ParseCFG::parseCFG(g);
+
+	g->init("djent", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 2, 2, false);
 
 	//We should use one thread for rendering and another thread for updating
 	//Possibly use 

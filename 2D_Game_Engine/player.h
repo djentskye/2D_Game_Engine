@@ -6,9 +6,10 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include "object.h"
+//#include "objectmanager.h"
 #undef main
 
-class Player: public Object //TODO: Make sure player works correctly as an object
+class Player: public Object
 {
 public:
 	Player();
@@ -25,8 +26,6 @@ public:
 	void stopMovingUp();
 	void startMovingDown();
 	void stopMovingDown();
-	SDL_Rect* getSource();
-	//SDL_Rect* getDestination();
 	SDL_Texture* getTexture();
 	void update();
 
@@ -37,9 +36,7 @@ private:
 	double movementAngle;
 	bool moveLeft, moveRight, moveUp, moveDown;
 	void updateMovement();
-	//int x, y, w, h, d;
-	//double velx, vely;
-	//SDL_Texture* texture;
+	//ObjectManager* om;
 };
 
 #endif

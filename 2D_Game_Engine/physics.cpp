@@ -7,21 +7,36 @@ Physics::Physics() {}
 
 Physics::~Physics() {}
 
+/**
+ * Starts the physics by setting some important variables. 
+ */
 void Physics::startPhysics(float grav, int fric) {
 	gravity = grav;
 	friction = fric;
 	timescale = 0.6;
 }
 
+/**
+ * Sets important physics variables. 
+ */
 void Physics::setPhysics(float gravity, int friction) {
 	gravity = gravity;
 	friction = friction;
 }
 
+void Physics::setGravity(float g) { gravity = g; }
+
+void Physics::setFriction(int f) { friction = f; }
+
+void Physics::setTimescale(double t) { timescale = t; }
+
 //TODO: EDGE DETECTION??? 
 
 
-
+/**
+ * Applies physics to an object. Should be called on every object which should have physics
+ * interactions. 
+ */
 void Physics::applyPhysics(Object* o) {
 	//Physics calculations
 	SDL_Rect* rect = o->getDestination();
@@ -30,7 +45,7 @@ void Physics::applyPhysics(Object* o) {
 
 	//Gravity
 	if (o->getPhysState() == obj_physics) {
-		//yvel = yvel + gravity;
+		yvel = yvel + gravity + yvel*gravity;
 	}
 
 	//Other physics properties can go down here
@@ -53,18 +68,15 @@ void Physics::applyPhysics(Object* o) {
 				double magnitude = 0.95;
 				//double magnitude = 2;
 
-				//We just have to push back on the object with the same amount of force it's exerting on us
+				//We just have to push back on the object with the same amount of force it's exerting 
+				// on us
 				//Get the angle of the object's velocity
-				//double oppositeAngle = std::fmod(collisionList[i]->getVelocityAngle()+180, 360);
 				double oppositeAngle = std::fmod(collisionList[i]->getVelocityAngle()+180, 360);
 				double perpendicular = std::fmod(o->getRotation(), 90);
 
 				//Find the new angle that the object should be pushed
 				double newRotate = perpendicular - oppositeAngle;
 				double newAngle = perpendicular + newRotate;
-
-				//double x_component = std::cos(newAngle) * magnitude;
-				//double y_component = std::sin(newAngle) * magnitude;
 
 				double x_component = std::sin(newAngle) * magnitude;
 				double y_component = std::cos(newAngle) * magnitude;
@@ -102,7 +114,8 @@ void Physics::applyPhysics(Object* o) {
 
 				double magnitude = 0.95;
 
-				//We just have to push back on the object with the same amount of force it's exerting on us
+				//We just have to push back on the object with the same amount of force it's exerting 
+				// on us
 				//Get the angle of the object's velocity
 				double oppositeAngle = std::fmod(collisionList[i]->getVelocityAngle() + 180, 360);
 				double perpendicular = std::fmod(o->getRotation(), 90);
@@ -145,7 +158,8 @@ void Physics::applyPhysics(Object* o) {
 
 				double magnitude = 0.95;
 
-				//We just have to push back on the object with the same amount of force it's exerting on us
+				//We just have to push back on the object with the same amount of force it's exerting 
+				//on us
 				//Get the angle of the object's velocity
 				double oppositeAngle = std::fmod(collisionList[i]->getVelocityAngle() + 180, 360);
 				double perpendicular = std::fmod(o->getRotation(), 90);
@@ -179,11 +193,16 @@ void Physics::applyPhysics(Object* o) {
 		rect->x = rect->x + xvel * timescale;
 		rect->y = rect->y + yvel * timescale;
 
-		o->setDestination(rect);
+		//o->setDestination(rect);
+		o->setX(rect->x);
+		o->setY(rect->y);
 		o->setVelocity(xvel, yvel);
 	}
 }
 
+/**
+ * Resets the collision list. This should be run between ticks, before or after collisions occur. 
+ */
 void Physics::resetCollisionList() {
 	collisionList.clear();
 }

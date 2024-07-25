@@ -7,6 +7,7 @@
 #include "SDL_image.h"
 #include <string>
 #include "../keyboard.h"
+#include "../game.h"
 
 class ParseCFG
 {
@@ -15,6 +16,7 @@ public:
 	~ParseCFG();
 	static void parseKeybindings(Keyboard keyboard);
 	static void parseKeybindings(std::string filepath, Keyboard keyboard);
+	static void parseCFG(Game* g);
 
 private:
 

@@ -1,11 +1,12 @@
+g_setGamemode gs_overworld
 playerSpawn=0000,0046
-obj={x=62;y=22;w=25;h=25;tex=assets/textures/purple.png;}
+obj={x=62;y=22;w=25;h=25;tex=assets/textures/purple.png;name=obj1;phys_state=2;}
 
 //Ceiling
-obj={x=0;y=-20;w=2000;h=20;tex=assets/textures/purple.png;}
+obj={x=0;y=-20;w=2000;h=20;tex=assets/textures/purple.png;name=ceiling;phys_state=0;}
 //Floor
-obj={x=0;y=600;w=2000;h=20;tex=assets/textures/purple.png;}
+obj={x=0;y=600;w=2000;h=20;tex=assets/textures/purple.png;name=floor;phys_state=0;}
 //Left
-obj={x=-20;y=-10;w=20;h=800;tex=assets/textures/purple.png;}
+obj={x=-20;y=-10;w=20;h=800;tex=assets/textures/purple.png;name=left;phys_state=0;}
 //Right
-obj={x=800;y=-10;w=20;h=800;tex=assets/textures/purple.png;}
+obj={x=800;y=-10;w=20;h=800;tex=assets/textures/purple.png;name=right;phys_state=0;}

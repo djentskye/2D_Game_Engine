@@ -21,11 +21,18 @@ public:
 	Renderer* getRenderer();
 	void exit();
 	Player* getPlayer();
+	void setWindowWidth(int w);
+	void setWindowHeight(int h);
+	void setWindowFullscreen(bool f);
 
 private: 
 	bool isRunning;
 	SDL_Window *window;
 	Renderer* renderer;
 	Player* player;
+
+	//A few private variables that we want to keep track of!
+	int WINDOW_WIDTH, WINDOW_HEIGHT;
+	bool WINDOW_FULLSCREEN;
 };
 

@@ -4,6 +4,8 @@
 #include "../keyboard.h"
 #include "SDL_keycode.h"
 #include <ctype.h>
+#include "../variables.h"
+#include "../game.h"
 
 /**
  * Parses keybindings from the provided path
@@ -94,4 +96,26 @@ void ParseCFG::parseKeybindings(Keyboard keyboard) {
 	}
 
 	keybindingFile.close();
+}
+
+void ParseCFG::parseCFG(Game* g) {
+	std::ifstream cfgFile;
+	cfgFile.open("cfg/config.cfg");
+
+	std::string tempString;
+	std::string setting;
+	std::string value;
+	int cursor;
+
+	if (cfgFile.is_open()) {
+		while (getline(cfgFile, tempString)) {
+			if (tempString.substr(0, 2) == "w=") {
+				g->setWindowWidth(stoi(tempString.substr(2, std::string::npos)));
+			} else if (tempString.substr(0, 2) == "h=") {
+				g->setWindowHeight(stoi(tempString.substr(2, std::string::npos)));
+			} else if (tempString.substr(0, 11) == "fullscreen=") {
+				g->setWindowFullscreen(stoi(tempString.substr(11, std::string::npos)));
+			}
+		}
+	}
 }

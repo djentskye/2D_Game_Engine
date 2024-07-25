@@ -5,10 +5,9 @@
 #include <iostream>
 
 
-//int x, y, w, h;
-
 Player::Player()
 {
+	//Set some basic starting values
 	x = 0;
 	y = 0;
 	w = 32;
@@ -22,6 +21,7 @@ Player::Player()
 	//Set the physics state
 	physics_state = obj_physics;
 
+	//Set the default texture state to unflipped
 	texture_flipped = SDL_FLIP_NONE;
 }
 
@@ -104,25 +104,6 @@ void Player::stopMovingDown() {
 	moveDown = false;
 }
 
-//???????
-SDL_Rect* Player::getSource()
-{
-	return new SDL_Rect();
-}
-
-/**
- * Returns the destination of the player
- */
-/*SDL_Rect* Player::getDestination()
-{
-	SDL_Rect* dest = new SDL_Rect();
-	dest->x = x;
-	dest->y = y;
-	dest->h = h;
-	dest->w = w;
-	return dest;
-}*/
-
 /**
  * Returns the texture of the player
  */
@@ -131,6 +112,9 @@ SDL_Texture* Player::getTexture()
 	return texture;
 }
 
+/**
+ * Updates the player's movement. Private class. Should only be run from Player::update(). 
+ */
 void Player::updateMovement() {
 	//We store the requested value 
 	double newVelX = velx;
@@ -170,113 +154,15 @@ void Player::updateMovement() {
 
 	double vel = this->getVelocity();
 
-	std::cout << "vel: ";
-	std::cout << vel << std::endl;
-
-	/*
-	//If we are already at max speed while going right, we cannot increase our right velocity
-	if (sqrt(abs(vely) + velx) >= playerSpeed) {
-		//If we want to move left, start changing the velocity to go left
-		if (moveLeft == true) {
-			newVelX -= playerSpeed * playerAccel;
-		} else if ()
-	}
-
-
-	else {
-		velx -= -playerSpeed * playerAccel;
-	}
-	if (moveRight == true) {
-		velx += playerSpeed * playerAccel;
-	}
-	else {
-		velx -= playerSpeed * playerAccel;
-	}
-	if (moveUp == true) {
-		vely += -playerSpeed * playerAccel;
-	}
-	else {
-		vely -= -playerSpeed * playerAccel;
-	}
-	if (moveDown == true) {
-		vely += playerSpeed * playerAccel;
-	}
-	else {
-		vely -= playerSpeed * playerAccel;
-	}
-	/*
-
-
-
-
-
-	/*double newXComponent = 0;
-	double newYComponent = 0;
-	double newMagnitude = 0;
-	if (moveLeft == true && moveRight == true) {
-		//No horizontal movement
-	}
-	else {
-		//Apply horizontal angles
-		if (moveLeft) {
-			newXComponent = -1;
-			newMagnitude++;
-		}
-		if (moveRight) {
-			newXComponent = 1;
-			newMagnitude++;
-		}
-	}
-	if (moveUp == true && moveDown == true) {
-		//No vertical movement
-	}
-	else {
-		//Apply vertical angles
-		if (moveUp) {
-			newYComponent = -1;
-			newMagnitude++;
-		}
-		if (moveDown) {
-			newYComponent = 1;
-			newMagnitude++;
-		}
-	}
-
-	//Get some calculations out of the way
-	double toAddX = newXComponent * playerAccel;
-	double toAddY = newYComponent * playerAccel;
-	double valueUntilSpeedLimit = playerSpeed - this->getVelocity();
-
-	//Apply the change to velocity
-	if (newMagnitude == 1) {
-		//This only happens if the user is trying to go in one direction
-		//If we are not going to reach the player's speed limit, just add our values to the vel
-		if (valueUntilSpeedLimit > toAddX && valueUntilSpeedLimit > toAddY) {
-			velx += toAddX;
-			vely += toAddY;
-		}
-		else {
-			velx += newXComponent * valueUntilSpeedLimit;
-			vely += newYComponent * valueUntilSpeedLimit;
-		}
-	}
-	else if (newMagnitude == 2) {
-		toAddX = toAddX * sqrt(2);
-		toAddY = toAddY * sqrt(2);
-		//This happens if the user is trying to go in two directions
-		//If we are not going to reach the player's speed limit, just add our values to the vel
-		if (valueUntilSpeedLimit > toAddX && valueUntilSpeedLimit > toAddY) {
-			velx += toAddX;
-			vely += toAddY;
-		}
-		else {
-			velx += newXComponent * valueUntilSpeedLimit;
-			vely += newYComponent * valueUntilSpeedLimit;
-		}
-	}
-	*/
+	//std::cout << "vel: ";
+	//std::cout << vel << std::endl;
 }
 
+/**
+ * Updates the player with anything that we might need to run from within the class. This is called 
+ * whenever we are updating the scene as a whole. Add any functions here which should run from 
+ * this class upon a tick update. 
+ */
 void Player::update()
 {
 	updateMovement();

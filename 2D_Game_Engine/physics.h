@@ -15,6 +15,9 @@ public:
 	~Physics();
 	void startPhysics(float gravity, int friction);
 	void setPhysics(float gravity, int friction);
+	void setGravity(float g);
+	void setFriction(int f);
+	void setTimescale(double t);
 	void applyPhysics(Object* o);
 	void resetCollisionList();
 

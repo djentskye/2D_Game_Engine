@@ -49,7 +49,7 @@ void ObjectManager::addObject(Object* obj)
 /**
  * Removes an object from the object manager and destroys the object
  * 
- * 
+ * @param Object obj
  */
 void ObjectManager::destroyObject(Object obj)
 {
@@ -94,21 +94,6 @@ void ObjectManager::updateObjects()
 		///^this probably doesn't belong in the object manager
 	}
 }
-
-//void ObjectManager::renderObjects(Renderer r)
-//{
-//	for (std::pair<int, Object> element : objMap) {
-//		try
-//		{
-//			//element.second.renderObject();
-//		}
-//		catch (const std::exception&)
-//		{
-//			std::cout << "Could not render object " << element.second.getName() << ", id " <<  //Does this syntax work?
-//				element.first << "." << std::endl;
-//		}
-//	}
-//}
 
 /**
  * Renders all objects

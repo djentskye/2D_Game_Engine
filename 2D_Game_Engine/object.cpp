@@ -232,3 +232,27 @@ void Object::setTextureFlip(SDL_RendererFlip rf) {
 void Object::setName(std::string newName) {
 	name = newName;
 }
+
+void Object::setHealth(double h) {
+	health = h;
+}
+
+void Object::setMaxHealth(double h) {
+	maxHealth = h;
+}
+
+void Object::addHealth(double h) {
+	health += h;
+}
+
+double Object::getHealth() {
+	return health;
+}
+
+double Object::getMaxHealth() {
+	return maxHealth;
+}
+
+void Object::shootProjectile() {
+	
+}

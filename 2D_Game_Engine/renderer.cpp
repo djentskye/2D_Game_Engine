@@ -52,10 +52,8 @@ void Renderer::render()
 	//Literally render everything here
 	//TODO: [REND] Implement a system for render order
 	//TODO: [REND] Render background
-	//TODO: [REND] Render objects
-	//TODO: [REND] Render player
 
-	//TODO: [REND] Add objects to the render queue by loading a level
+	//TODO: [REND] Get an iterator to return things in order from lowest-highest depth
 	for (std::pair<int, Object*> element : renderQueue) {
 		//SDL_RenderCopy(renderer, element.second->getTexture(), NULL, element.second->getDestination());
 		SDL_RenderCopyEx(renderer, element.second->getTexture(), NULL, element.second->getDestination(), element.second->getRotation(), NULL, element.second->getTextureFlip());
