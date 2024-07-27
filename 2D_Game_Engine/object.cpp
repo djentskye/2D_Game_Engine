@@ -55,6 +55,9 @@ void Object::setX(double x) { this->x = x; }
 
 void Object::setY(double y) { this->y = y; }
 
+double Object::getX() { return x; }
+double Object::getY() { return y; }
+
 void Object::setWidth(int width) { w = width; }
 
 void Object::setHeight(int height) { h = height; }
@@ -107,8 +110,8 @@ bool Object::setTexture(std::string path, SDL_Renderer* renderer)
  * 
  * @param SDL_Texture *texture
  */
-bool Object::setTexture(SDL_Texture *texture) {
-	texture = texture;
+bool Object::setTexture(SDL_Texture *newTexture) {
+	texture = newTexture;
 	return true;
 }
 

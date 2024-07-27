@@ -10,6 +10,7 @@
 #include "io/loadMap.h"
 #include "gamestates.h"
 #include "io/fonts.h"
+#include "io/console.h"
 
 SDL_Texture* block;
 
@@ -19,6 +20,8 @@ ObjectManager om;
 
 //Initialize a commands parser
 Commands commands;
+
+static int WINDOW_WIDTH, WINDOW_HEIGHT;
 
 Game::Game()
 {
@@ -68,6 +71,11 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 		isRunning = false;
 	}
 
+	if (TTF_Init() < 0) {
+		std::cout << "Error initializing SDL TTF" << std::endl;
+		isRunning = false;
+	}
+
 	Fonts::init(renderer->getRenderer());
 
 	Gamestates::init();
@@ -76,6 +84,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 
 	//Create the command parser
 	commands = Commands(this);
+
+	Console::init(20, 8, { 233, 233, 233, 255 }, "Inconsolata", {85, 10, 7, 160}, 100);
 
 	//Load keybindings from CFG
 	ParseCFG::parseKeybindings(keyboard);
@@ -199,6 +209,10 @@ void Game::setWindowHeight(int h) {
 void Game::setWindowFullscreen(bool f) {
 	WINDOW_FULLSCREEN = f;
 }
+
+int Game::getWindowWidth() { return WINDOW_WIDTH; }
+
+int Game::getWindowHeight() { return WINDOW_HEIGHT; }
 
 /*
 void Game::setGamestate(game_state g) {

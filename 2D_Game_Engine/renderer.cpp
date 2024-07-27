@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include <iostream>
 #include "player.h"
+#include "io/console.h"
 
 std::map<int, Object*> renderQueue;
 
@@ -37,6 +38,35 @@ void Renderer::exit()
 	SDL_DestroyRenderer(renderer);
 }
 
+void Renderer::renderConsole() {
+	//Render the cursor
+	SDL_Color cursorColor = Console::getCursorColor();
+	if (SDL_GetTicks() % 10 < 5) {
+		SDL_SetRenderDrawColor(renderer, cursorColor.r, cursorColor.g, cursorColor.b, 255);
+	}
+	else {
+		SDL_SetRenderDrawColor(renderer, cursorColor.r, cursorColor.g, cursorColor.b, 0);
+	}
+
+	SDL_Rect* test = Console::getCursorObj()->getDestination();
+
+	SDL_RenderDrawRect(renderer, Console::getCursorObj()->getDestination());
+
+	//TODO: This is super clunky lol, in the future we should have pointers in this class.
+	std::map<int, Object*> backgroundObjMap = *Console::getBackgroundObjMap();
+	std::list<Object*> textObjMap = *Console::getTextObjMap();
+
+	//Render the background
+	for (std::pair<int, Object*> element : backgroundObjMap) {
+		SDL_RenderCopy(renderer, element.second->getTexture(), NULL, element.second->getDestination());
+	}
+
+	//Render the text
+	for (Object* element : textObjMap) {
+		SDL_RenderCopy(renderer, element->getTexture(), NULL, element->getDestination());
+	}
+}
+
 //TODO: [REND] Add a render sorter
 //TODO: [REND] Multiple obj layers
 /**
@@ -47,6 +77,7 @@ void Renderer::exit()
  */
 void Renderer::render()
 {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
 	//Literally render everything here
@@ -57,6 +88,11 @@ void Renderer::render()
 	for (std::pair<int, Object*> element : renderQueue) {
 		//SDL_RenderCopy(renderer, element.second->getTexture(), NULL, element.second->getDestination());
 		SDL_RenderCopyEx(renderer, element.second->getTexture(), NULL, element.second->getDestination(), element.second->getRotation(), NULL, element.second->getTextureFlip());
+	}
+
+	//Render the console if it's currently showing
+	if (Console::consoleShowing()) {
+		renderConsole();
 	}
 
 	SDL_RenderPresent(renderer);

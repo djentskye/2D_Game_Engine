@@ -27,7 +27,14 @@ TTF_Font* Fonts::loadFont(std::string name, int size) {
 	std::string fontAddress = "fonts/" + name + ".ttf";
 
 	//Load the font
-	return TTF_OpenFont(fontAddress.c_str(), size);
+	TTF_Font* toReturn = TTF_OpenFont(fontAddress.c_str(), size);
+
+	if (!toReturn) {
+		printf("Error loading TTF_OpenFont: %s\n", TTF_GetError());
+		// handle error
+	}
+
+	return toReturn;
 }
 
 /**
@@ -46,7 +53,9 @@ SDL_Texture* Fonts::getRenderedText(std::string text, std::string font, int size
 			//Render the text!
 			SDL_Surface* surface = TTF_RenderText_Solid(element.second, text.c_str(), color);
 
-			return SDL_CreateTextureFromSurface(renderer, surface);
+			SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
+
+			return tex;
 		}
 	}
 
@@ -58,5 +67,7 @@ SDL_Texture* Fonts::getRenderedText(std::string text, std::string font, int size
 	//Render the text!
 	SDL_Surface* surface = TTF_RenderText_Solid(thisFont, text.c_str(), color);
 
-	return SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
+
+	return tex;
 }

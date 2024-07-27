@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include "player.h"
+#include "io/console.h"
 
 class Renderer
 {
@@ -11,6 +12,7 @@ public:
 	~Renderer();
 	void init(SDL_Window* window);
 	void exit();
+	void renderConsole();
 	void render();
 	SDL_Renderer* getRenderer();
 	void addToRenderQueue(Object* o);
@@ -20,5 +22,6 @@ public:
 private:
 	SDL_Renderer *renderer;
 	std::map<int, Object*> renderQueue;
+	std::map<int, Object*> consoleRenderQueue;
 };
 

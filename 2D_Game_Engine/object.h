@@ -18,6 +18,8 @@ public:
 	void setDestination(double x, double y, int w, int h);
 	void setX(double x);
 	void setY(double y);
+	double getX();
+	double getY();
 	void setWidth(int width);
 	void setHeight(int height);
 	void setDepth(int d);

@@ -24,6 +24,8 @@ public:
 	void setWindowWidth(int w);
 	void setWindowHeight(int h);
 	void setWindowFullscreen(bool f);
+	static int getWindowWidth();
+	static int getWindowHeight();
 
 private: 
 	bool isRunning;
@@ -32,7 +34,6 @@ private:
 	Player* player;
 
 	//A few private variables that we want to keep track of!
-	int WINDOW_WIDTH, WINDOW_HEIGHT;
 	bool WINDOW_FULLSCREEN;
 };
 
