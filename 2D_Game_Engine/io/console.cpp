@@ -3,6 +3,7 @@
 #include "fonts.h"
 #include "../game.h"
 #include "../commands.h"
+#include "../texture.h"
 
 //Private static variables
 static int textHeight, textWidth;
@@ -13,9 +14,12 @@ static int numLines, maxLines;
 static int cursorWidth, cursorHeight;
 static bool showConsole;
 static std::string currentCommand;
-static std::map<int, Object*>* backgroundObjMap;
+static Object* backgroundObj;
 static std::list<Object*>* textObjMap;
 static Object* cursor;
+static bool shift;
+static int backgroundShiftIncrementSize;
+static int requestedBackgroundY;
 
 Console::Console() {}
 
@@ -34,7 +38,10 @@ void Console::init(int text_h, int text_w, SDL_Color text_color, std::string tex
 	cursorWidth = 3;
 	cursorHeight = 16;
 	showConsole = false;
-	backgroundObjMap = new std::map<int, Object*>();
+	backgroundShiftIncrementSize = (textHeight + 1);
+	backgroundObj = new Object();
+	backgroundObj->setTexture(Texture::getTexture("assets/textures/console_background.png"));
+	backgroundObj->setDestination(0, -((textHeight + 1) * maxLines), Game::getWindowWidth(), ((textHeight + 1) * maxLines));
 	textObjMap = new std::list<Object*>();
 	currentCommand = "";
 	cursor = new Object();
@@ -44,6 +51,8 @@ void Console::init(int text_h, int text_w, SDL_Color text_color, std::string tex
 	cursor->setHeight(cursorHeight);
 	//Set the cursor color equal to the text color, for now
 	cursorColor = text_color;
+	shift = false;
+	requestedBackgroundY = -((textHeight + 1) * maxLines);
 }
 
 void Console::openConsole() {
@@ -54,7 +63,7 @@ void Console::openConsole() {
 	currentCommand = "";
 	cursor->setX(1);
 	cursor->setY(1);
-	backgroundObjMap = new std::map<int, Object*>();
+	backgroundObj->setDestination(0, -((textHeight + 1) * maxLines), Game::getWindowWidth(), ((textHeight + 1) * maxLines));
 	textObjMap = new std::list<Object*>();
 
 	//Show console and allow rendering
@@ -64,10 +73,15 @@ void Console::openConsole() {
 void Console::closeConsole() {
 	//Stop showing console
 	showConsole = false;
+	backgroundObj->setDestination(-2, -2, -1, -1);
 }
 
 //TODO: Testing
 void Console::writeChar(int sym) {
+	if (shift) {
+		sym -= 32;
+	}
+
 	currentCommand += (char)sym;
 
 	std::string cString{(char)sym};
@@ -98,15 +112,25 @@ void Console::newLine() {
 	//If we are at our max number of lines, start removing the oldest lines!
 	if (numLines == maxLines) {
 		std::list<Object*>::iterator it;
-		for (it = textObjMap->begin(); it != textObjMap->end(); ++it) {
-			if ((*it)->getY() < 2) {
-				//Remove the top row of text textures
-				it = textObjMap->erase(it);
+		for (it = textObjMap->begin(); it != textObjMap->end(); it) {
+			if ((*it)->getDepth() == maxLines) {
+				if (textObjMap->size() == 1) {
+					textObjMap->erase(it);
+					break;
+				} else {
+					//Remove the top row of text textures
+					it = textObjMap->erase(it);
+				}
 			}
 			else {
 				//Move the textures up to the next line
 				(*it)->setY((*it)->getY() - (textHeight + 1));
 				(*it)->setDepth((*it)->getDepth()+1);
+				it++;
+			}
+
+			if (it == textObjMap->end()) {
+				break;
 			}
 		}
 
@@ -140,11 +164,18 @@ void Console::newLine() {
 		//TODO: Add backgrounds!!
 		//Object* newBackgroundTile = 
 		//backgroundObjMap->emplace();
+
+		if (numLines == 2) {
+			requestedBackgroundY += backgroundShiftIncrementSize;
+		}
+
+		backgroundObj->setVelocity(0, 0.5);
+		requestedBackgroundY += backgroundShiftIncrementSize;
 	}
 }
 
-std::map<int, Object*>* Console::getBackgroundObjMap() {
-	return backgroundObjMap;
+Object* Console::getBackgroundObj() {
+	return backgroundObj;
 }
 
 std::list<Object*>* Console::getTextObjMap() {
@@ -189,7 +220,7 @@ void Console::backspace() {
 
 	if (currentCommand.length() > 0) {
 		//Remove the character to the left of the cursor
-		int charToRemove = ((cursor->getX() - 1) / (textWidth + 1)) -1;
+		int charToRemove = ((cursor->getX() - 1) / (textWidth + 1));
 		currentCommand.erase(charToRemove, 1);
 		/*
 		//Get the iterator for the beginning of our command, and find the element just before our cursor
@@ -222,13 +253,14 @@ void Console::backspace() {
 						textObjMap->clear();
 						break;
 						break;
-					}
-					if (currentChar >= currentCommand.length() - 1) {
+					} else if (currentChar >= currentCommand.length() - 1) {
 						textObjMap->erase(it);
 						break;
 					}
 					else {
+						//TODO: THIS is skipping one character. 
 						it = textObjMap->erase(it);
+						it--;
 					}
 				}
 				else if (currentChar > charToRemove) {
@@ -237,5 +269,15 @@ void Console::backspace() {
 				currentChar++;
 			}
 		}
+	}
+}
+
+void Console::setShift(bool b) {
+	shift = b;
+}
+
+void Console::update() {
+	if (backgroundObj->getDestination()->y < requestedBackgroundY) {
+		backgroundObj->update();
 	}
 }

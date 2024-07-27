@@ -53,13 +53,11 @@ void Renderer::renderConsole() {
 	SDL_RenderDrawRect(renderer, Console::getCursorObj()->getDestination());
 
 	//TODO: This is super clunky lol, in the future we should have pointers in this class.
-	std::map<int, Object*> backgroundObjMap = *Console::getBackgroundObjMap();
+	Object* backgroundObj = Console::getBackgroundObj();
 	std::list<Object*> textObjMap = *Console::getTextObjMap();
 
 	//Render the background
-	for (std::pair<int, Object*> element : backgroundObjMap) {
-		SDL_RenderCopy(renderer, element.second->getTexture(), NULL, element.second->getDestination());
-	}
+	SDL_RenderCopy(renderer, backgroundObj->getTexture(), NULL, backgroundObj->getDestination());
 
 	//Render the text
 	for (Object* element : textObjMap) {

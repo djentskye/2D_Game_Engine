@@ -259,3 +259,8 @@ double Object::getMaxHealth() {
 void Object::shootProjectile() {
 	
 }
+
+void Object::update() {
+	x += velx;
+	y += vely;
+}

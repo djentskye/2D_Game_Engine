@@ -56,6 +56,7 @@ public:
 	double getHealth();
 	double getMaxHealth();
 	void shootProjectile();
+	void update();
 
 protected:
 	//x coord, y coord, width, height, depth

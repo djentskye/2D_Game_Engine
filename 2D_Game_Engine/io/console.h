@@ -21,7 +21,7 @@ public:
 	static void closeConsole();
 	static void writeChar(int sym);
 	static void newLine();
-	static std::map<int, Object*>* getBackgroundObjMap();
+	static Object* getBackgroundObj();
 	static std::list<Object*>* getTextObjMap();
 	static void cursorLeft();
 	static void cursorRight();
@@ -31,6 +31,8 @@ public:
 	static bool consoleShowing();
 	static SDL_Color getCursorColor();
 	static void backspace();
+	static void setShift(bool b);
+	static void update();
 
 private:
 

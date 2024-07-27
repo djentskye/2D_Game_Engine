@@ -30,7 +30,6 @@ Keyboard::~Keyboard() {}
 
 bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 	//Try-catch doesn't work here because of terrible memory management stuff??
-	//if (keymap->count(sym) == 1) {
 		try {
 			//std::cout << sym + " pressed! Command: " + keymap.at(sym) << std::endl;
 			if (eventType == SDL_KEYDOWN)
@@ -38,9 +37,11 @@ bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 				if (sym == SDLK_BACKQUOTE) {
 					setKeyboardFocus(gs_keyboard_game);
 					Console::closeConsole();
-				} else if (sym == SDLK_RETURN) {
+				}
+				else if (sym == SDLK_RETURN) {
 					Console::newLine();
-				} else if (sym == SDLK_BACKSPACE) {
+				}
+				else if (sym == SDLK_BACKSPACE) {
 					Console::backspace();
 				}
 				else if (sym == SDLK_LEFT) {
@@ -48,6 +49,9 @@ bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 				}
 				else if (sym == SDLK_RIGHT) {
 					Console::cursorRight();
+				}
+				else if (sym == SDLK_LSHIFT || sym == SDLK_RSHIFT) {
+					Console::setShift(true);
 				}
 				else {
 					//If this is a keydown command, just run the bound command
@@ -57,17 +61,15 @@ bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 			else
 			{
 				//If this is a keyup command, check if we need to do anything
-				
+				if (sym == SDLK_LSHIFT || sym == SDLK_RSHIFT) {
+					Console::setShift(false);
+				}
 			}
 			return true;
 		}
 		catch (std::out_of_range) {
 			return false;
 		}
-	//}
-	//else {
-		//return false;
-	//}
 }
 
 bool Keyboard::keyboardEventGame(int sym, SDL_EventType eventType) {

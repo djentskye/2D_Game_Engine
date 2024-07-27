@@ -11,6 +11,7 @@
 #include "gamestates.h"
 #include "io/fonts.h"
 #include "io/console.h"
+#include "texture.h"
 
 SDL_Texture* block;
 
@@ -76,6 +77,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 		isRunning = false;
 	}
 
+	Texture::init(renderer);
+
 	Fonts::init(renderer->getRenderer());
 
 	Gamestates::init();
@@ -85,7 +88,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	//Create the command parser
 	commands = Commands(this);
 
-	Console::init(20, 8, { 233, 233, 233, 255 }, "Inconsolata", {85, 10, 7, 160}, 100);
+	//20, 6
+	Console::init(20, 10, { 255, 255, 255, 255 }, "Inconsolata", {85, 10, 7, 160}, 100);
 
 	//Load keybindings from CFG
 	ParseCFG::parseKeybindings(keyboard);
@@ -138,6 +142,7 @@ void Game::update()
 	//if (SDL_GetTicks() % 10 == 0)
 	om.updateObjects();
 	player->update();
+	Console::update();
 }
 
 /**

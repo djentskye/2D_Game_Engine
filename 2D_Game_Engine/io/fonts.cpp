@@ -51,7 +51,7 @@ SDL_Texture* Fonts::getRenderedText(std::string text, std::string font, int size
 	for (std::pair<std::pair<std::string, int>, TTF_Font*> element : *fontMap) {
 		if (element.first.first == font && element.first.second == size) {
 			//Render the text!
-			SDL_Surface* surface = TTF_RenderText_Solid(element.second, text.c_str(), color);
+			SDL_Surface* surface = TTF_RenderText_Blended(element.second, text.c_str(), color);
 
 			SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
 

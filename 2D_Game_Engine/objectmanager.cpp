@@ -88,6 +88,7 @@ void ObjectManager::updateObjects()
 	for (std::pair<int, Object*> element : objMap) {
 		Object* obj = element.second;
 		physics.applyPhysics(element.second);
+		//element.second->update();
 		//Update forces (gravity)
 		//Update movement (scripted)
 		///Update player input /where do we want this in the chain?
