@@ -15,13 +15,14 @@ public:
 	void renderConsole();
 	void render();
 	SDL_Renderer* getRenderer();
-	void addToRenderQueue(Object* o);
-	void addToRenderQueue(Player* p);
-	void addToRenderQueue(int i, Object o);
+	static int addToRenderQueue(Object* o);
+	static int addToRenderQueue(Player* p);
+	static void addToRenderQueue(int i, Object o);
+	static void removeFromRenderQueue(Object* o);
 
 private:
-	SDL_Renderer *renderer;
-	std::map<int, Object*> renderQueue;
-	std::map<int, Object*> consoleRenderQueue;
+	//SDL_Renderer *renderer;
+	//std::map<int, Object*> renderQueue;
+	//std::map<int, Object*> consoleRenderQueue;
 };
 

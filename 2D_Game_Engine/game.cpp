@@ -19,10 +19,15 @@ Keyboard keyboard;
 
 ObjectManager om;
 
+static Renderer* renderer;
+
 //Initialize a commands parser
 Commands commands;
 
 static int WINDOW_WIDTH, WINDOW_HEIGHT;
+
+static std::chrono::steady_clock GAME_TIMER;
+static long long ticks;
 
 Game::Game()
 {
@@ -102,6 +107,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	loadMap::initMapLoader(player, renderer, &om);
 
 	loadMap::load("test");
+
+	ticks = 0;
 }
 
 //TODO: This should be exported to a class of its own eventually
@@ -139,10 +146,13 @@ void Game::handleEvents()
  */
 void Game::update()
 {
-	//if (SDL_GetTicks() % 10 == 0)
-	om.updateObjects();
-	player->update();
-	Console::update();
+	//if (SDL_GetTicks() % 4 == 0) {
+	if (GAME_TIMER.now().time_since_epoch().count() % 30 == 0) {
+		ticks++;
+		om.updateObjects();
+		player->update();
+		Console::update();
+	}
 }
 
 /**
@@ -218,6 +228,10 @@ void Game::setWindowFullscreen(bool f) {
 int Game::getWindowWidth() { return WINDOW_WIDTH; }
 
 int Game::getWindowHeight() { return WINDOW_HEIGHT; }
+
+long long Game::getTick() {
+	return ticks;
+}
 
 /*
 void Game::setGamestate(game_state g) {

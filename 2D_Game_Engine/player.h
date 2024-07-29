@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include "object.h"
 //#include "objectmanager.h"
+#include <chrono>
+
 #undef main
 
 class Player: public Object
@@ -28,6 +30,9 @@ public:
 	void stopMovingDown();
 	SDL_Texture* getTexture();
 	void update();
+	void shootProjectile();
+	void startAttacking();
+	void stopAttacking();
 
 private:
 	//Playerspeed is the max speed the player can travel
@@ -37,6 +42,8 @@ private:
 	bool moveLeft, moveRight, moveUp, moveDown;
 	void updateMovement();
 	//ObjectManager* om;
+	bool shooting;
+	long long tick01;
 };
 
 #endif

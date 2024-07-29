@@ -1,8 +1,8 @@
 #include "objectmanager.h"
 #include "renderer.h"
 
-std::map<int, Object> staticObjMap;
-int counter;
+static std::map<int, Object*> objMap;
+static int counter;
 
 
 //The engine should create objects through an object manager. 
@@ -51,10 +51,10 @@ void ObjectManager::addObject(Object* obj)
  * 
  * @param Object obj
  */
-void ObjectManager::destroyObject(Object obj)
+void ObjectManager::destroyObject(Object* obj)
 {
 	//Remove the specified object from the objMap
-	objMap.erase(obj.getID());
+	objMap.erase(obj->getID());
 
 	//TODO: Find a way to uninitialize objects in their own class
 
@@ -84,15 +84,28 @@ void ObjectManager::updateObjects()
 	//Reset the collision bounds
 	physics.resetCollisionList();
 
+
+	/*
 	//Loop over each element and apply updates to them
 	for (std::pair<int, Object*> element : objMap) {
 		Object* obj = element.second;
 		physics.applyPhysics(element.second);
-		//element.second->update();
 		//Update forces (gravity)
 		//Update movement (scripted)
 		///Update player input /where do we want this in the chain?
 		///^this probably doesn't belong in the object manager
+	}*/
+
+	//Loop over each element and apply updates to them
+	auto it = objMap.begin();
+	while (it != objMap.end()) {
+		Object* obj = (*it).second;
+		if (!physics.applyPhysics((*it).second)) {
+			it = objMap.erase(it);
+		}
+		else {
+			++it;
+		}
 	}
 }
 

@@ -60,6 +60,12 @@ void Commands::runCommand(std::string str) {
 		game->getPlayer()->stopMovingDown();
 		return;
 	}
+	if (str == "+attack1") {
+		game->getPlayer()->startAttacking();
+	}
+	if (str == "-attack1") {
+		game->getPlayer()->stopAttacking();
+	}
 	if (str.substr(0, 3) == "map") {
 		std::string toLoad = str.substr(4, std::string::npos);
 		return;

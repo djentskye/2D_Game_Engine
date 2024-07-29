@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include "renderer.h"
+#include <chrono>
 #undef main
 
 class Game
@@ -18,7 +19,7 @@ public:
 	void clean();
 	bool running();
 	SDL_Window* getWindow();
-	Renderer* getRenderer();
+	static Renderer* getRenderer();
 	void exit();
 	Player* getPlayer();
 	void setWindowWidth(int w);
@@ -26,11 +27,11 @@ public:
 	void setWindowFullscreen(bool f);
 	static int getWindowWidth();
 	static int getWindowHeight();
+	static long long getTick();
 
 private: 
 	bool isRunning;
 	SDL_Window *window;
-	Renderer* renderer;
 	Player* player;
 
 	//A few private variables that we want to keep track of!

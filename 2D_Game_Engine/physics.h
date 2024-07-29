@@ -18,7 +18,7 @@ public:
 	void setGravity(float g);
 	void setFriction(int f);
 	void setTimescale(double t);
-	void applyPhysics(Object* o);
+	bool applyPhysics(Object* o);
 	void resetCollisionList();
 
 private:

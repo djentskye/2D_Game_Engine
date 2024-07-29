@@ -2,8 +2,11 @@
 #include <iostream>
 #include "player.h"
 #include "io/console.h"
+#include "game.h"
 
-std::map<int, Object*> renderQueue;
+static SDL_Renderer* renderer;
+static std::map<int, Object*> renderQueue;
+static std::map<int, Object*> consoleRenderQueue;
 
 Renderer::Renderer()
 {
@@ -41,7 +44,7 @@ void Renderer::exit()
 void Renderer::renderConsole() {
 	//Render the cursor
 	SDL_Color cursorColor = Console::getCursorColor();
-	if (SDL_GetTicks() % 10 < 5) {
+	if (Game::getTick() % 50 < 25) {
 		SDL_SetRenderDrawColor(renderer, cursorColor.r, cursorColor.g, cursorColor.b, 255);
 	}
 	else {
@@ -113,21 +116,24 @@ SDL_Renderer* Renderer::getRenderer()
  *
  * @param Object o
  */
-void Renderer::addToRenderQueue(Object* o)
+int Renderer::addToRenderQueue(Object* o)
 {
 	//Eventually we will need a method to change the depth by removing from render queue and re-adding
-	renderQueue.insert(std::pair<int, Object*>(renderQueue.size()+1, o));
-	//renderQueue.insert(std::pair<int, Object*>(renderQueue.() + 1, &o));
+	//renderQueue.insert(std::pair<int, Object*>(renderQueue.size()+1, o));
+	renderQueue.insert(std::pair<int, Object*>(o->getID(), o));
+
+	return o->getID();
 }
 
-void Renderer::addToRenderQueue(Player* p)
+int Renderer::addToRenderQueue(Player* p)
 {
-	std::pair<int, Object*> tempPair = std::pair<int, Object*>(renderQueue.size() + 1, p);
+	//std::pair<int, Object*> tempPair = std::pair<int, Object*>(renderQueue.size() + 1, p);
+	std::pair<int, Object*> tempPair = std::pair<int, Object*>(p->getID(), p);
 
 	//Eventually we will need a method to change the depth by removing from render queue and re-adding
 	renderQueue.insert(tempPair);
 
-	printf("eeee");
+	return p->getID();
 }
 
 /**
@@ -139,5 +145,20 @@ void Renderer::addToRenderQueue(Player* p)
 void Renderer::addToRenderQueue(int i, Object o)
 {
 	//Eventually we will need a method to change the depth by removing from render queue and re-adding
-	renderQueue.insert(std::pair<int, Object*>(i, &o)); //??? &
+	renderQueue.insert(std::pair<int, Object*>(i, &o)).first; //??? &
+}
+
+void Renderer::removeFromRenderQueue(Object* o) {
+	/*auto it = renderQueue.begin();
+	while (it != renderQueue.end()) {
+		Object* obj = (*it).second;
+		if ((*it).second == o) {
+			renderQueue.erase(it);
+			break;
+		}
+		else {
+			++it;
+		}
+	}*/
+	renderQueue.erase(o->getID());
 }

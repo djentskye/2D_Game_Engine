@@ -3,6 +3,9 @@
 #include "variables.h"
 #include <cmath>
 #include <iostream>
+#include "projectile.h"
+#include "objectmanager.h"
+#include "game.h"
 
 
 Player::Player()
@@ -12,11 +15,14 @@ Player::Player()
 	y = 0;
 	w = 32;
 	h = 32;
+	name = "player";
 	rotation = 0;
 	velx = 0;
 	vely = 0;
 	playerMaxSpeed = 0.1;
 	playerAccel = 0.4;
+	shooting = 0;
+	tick01 = 0;
 
 	//Set the physics state
 	physics_state = obj_physics;
@@ -124,14 +130,15 @@ void Player::updateMovement() {
 	double ydest = 0;
 
 	//Figure out what our direction is going to be
+	//TODO: Figure out why going in negative directions is faster???
 	if (moveLeft) {
-		xdest--;
+		xdest-=0.5;
 	}
 	if (moveRight) {
 		xdest++;
 	}
 	if (moveUp) {
-		ydest--;
+		ydest -= 0.5;
 	}
 	if (moveDown) {
 		ydest++;
@@ -166,4 +173,25 @@ void Player::updateMovement() {
 void Player::update()
 {
 	updateMovement();
+
+	if (shooting) {
+		if (Game::getTick() > tick01) {
+			shootProjectile();
+			tick01 = Game::getTick() + 50;
+		}
+	}
+}
+
+void Player::shootProjectile() {
+	Projectile* p = new Projectile(this, PROJ_GREEN, 2, 0, 2);
+	tick01 = Game::getTick() + 50;
+}
+
+void Player::startAttacking() {
+	shooting = true;
+}
+
+void Player::stopAttacking() {
+	shooting = false;
+	tick01 = 0;
 }

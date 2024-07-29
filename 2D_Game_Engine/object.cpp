@@ -4,6 +4,7 @@
 #include <iostream>
 #include "variables.h"
 #include <cmath>
+#include "projectile.h"
 
 //int x, y, w, h;
 SDL_Texture* texture;
@@ -257,10 +258,16 @@ double Object::getMaxHealth() {
 }
 
 void Object::shootProjectile() {
-	
+	Object* o = new Projectile(this);
 }
 
 void Object::update() {
-	x += velx;
-	y += vely;
+	//x += velx;
+	//y += vely;
+}
+
+
+SDL_Point Object::getCenter() {
+	SDL_Point p = { (x + (w / 2)), (y + (h / 2)) };
+	return p;
 }

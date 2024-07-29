@@ -4,7 +4,7 @@
 #pragma once
 
 //Physics enums
-enum phys_state { obj_static, obj_dynamic, obj_physics };
+enum phys_state { obj_static, obj_dynamic, obj_physics, obj_proj };
 
 //Gamestate enums
 enum game_state { gs_menu, gs_pausemenu, gs_game };
