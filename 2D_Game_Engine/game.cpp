@@ -12,6 +12,7 @@
 #include "io/fonts.h"
 #include "io/console.h"
 #include "texture.h"
+#include "projectile.h"
 
 SDL_Texture* block;
 
@@ -82,7 +83,11 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 		isRunning = false;
 	}
 
+	SDL_RenderSetLogicalSize(renderer->getRenderer(), 1920, 1080);
+
 	Texture::init(renderer);
+
+	Projectile::init();
 
 	Fonts::init(renderer->getRenderer());
 
@@ -147,12 +152,12 @@ void Game::handleEvents()
 void Game::update()
 {
 	//if (SDL_GetTicks() % 4 == 0) {
-	if (GAME_TIMER.now().time_since_epoch().count() % 30 == 0) {
+	//if (GAME_TIMER.now().time_since_epoch().count() % 30 == 0) {
 		ticks++;
 		om.updateObjects();
 		player->update();
 		Console::update();
-	}
+	//}
 }
 
 /**

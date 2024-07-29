@@ -12,8 +12,8 @@ public:
 	~Renderer();
 	void init(SDL_Window* window);
 	void exit();
-	void renderConsole();
-	void render();
+	static void renderConsole();
+	static void render();
 	SDL_Renderer* getRenderer();
 	static int addToRenderQueue(Object* o);
 	static int addToRenderQueue(Player* p);

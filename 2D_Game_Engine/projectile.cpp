@@ -4,6 +4,8 @@
 #include "renderer.h"
 #include "game.h"
 
+static std::map<int, SDL_Texture*>* textureMap;
+
 Projectile::Projectile(Object* from) {
 	shotBy = from;
 
@@ -14,17 +16,15 @@ Projectile::Projectile(Object* from) {
 }
 
 Projectile::Projectile(Object* from, PROJ_TypeCode type, double x_vel, double y_vel, double dmg) {
-
-	std::cout << Game::getTick() << std::endl;
-
 	shotBy = from;
 	projType = type;
 	damage = dmg;
 
+	texture = setTexture(type);
+
 	if (type == PROJ_GREEN) {
-		texture = Texture::getTexture("assets/textures/green_bullet.png");
-		w = 20;
-		h = 20;
+		w = 32;
+		h = 32;
 	}
 	SDL_Point originCenter = from->getCenter();
 
@@ -45,6 +45,29 @@ Projectile::Projectile(Object* from, PROJ_TypeCode type, double x_vel, double y_
 }
 
 Projectile::~Projectile() {}
+
+void Projectile::init() {
+	textureMap = new std::map<int, SDL_Texture*>();
+}
+
+SDL_Texture* Projectile::setTexture(PROJ_TypeCode projectileType) {
+
+	try {
+		return textureMap->at(projectileType);
+	}
+	catch (std::out_of_range) {
+		switch (projectileType) {
+		case PROJ_GREEN:
+			textureMap->insert(std::pair<int, SDL_Texture*>(projectileType,
+				Texture::getTexture("assets/textures/green_bullet.png")));
+		case PROJ_ORANGE:
+			textureMap->insert(std::pair<int, SDL_Texture*>(projectileType,
+				Texture::getTexture("assets/textures/orange_bullet.png")));
+		}
+		return textureMap->at(projectileType);
+	}
+}
+
 
 void Projectile::setDamage(double dmg) {
 	damage = dmg;

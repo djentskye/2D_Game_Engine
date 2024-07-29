@@ -40,6 +40,9 @@ void Physics::setTimescale(double t) { timescale = t; }
  */
 bool Physics::applyPhysics(Object* o) {
 	//Physics calculations
+	double x, y;
+	x = o->getX();
+	y = o->getY();
 	SDL_Rect* rect = o->getDestination();
 	double xvel = o->getXVelocity();
 	double yvel = o->getYVelocity();
@@ -158,12 +161,12 @@ bool Physics::applyPhysics(Object* o) {
 	//Update o's location
 	phys_state physicsState = o->getPhysState();
 	if (physicsState == obj_dynamic || physicsState == obj_physics || physicsState == obj_proj) {
-		rect->x = rect->x + xvel * timescale;
-		rect->y = rect->y + yvel * timescale;
+		x = x + xvel * timescale;
+		y = y + yvel * timescale;
 
 		//o->setDestination(rect);
-		o->setX(rect->x);
-		o->setY(rect->y);
+		o->setX(x);
+		o->setY(y);
 		o->setVelocity(xvel, yvel);
 
 		/*if (o->getName() == "player") {

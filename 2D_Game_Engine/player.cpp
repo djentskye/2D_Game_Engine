@@ -13,14 +13,14 @@ Player::Player()
 	//Set some basic starting values
 	x = 0;
 	y = 0;
-	w = 32;
-	h = 32;
+	w = 46;
+	h = 46;
 	name = "player";
 	rotation = 0;
 	velx = 0;
 	vely = 0;
 	playerMaxSpeed = 0.1;
-	playerAccel = 0.4;
+	playerAccel = 0.1;
 	shooting = 0;
 	tick01 = 0;
 
@@ -132,13 +132,13 @@ void Player::updateMovement() {
 	//Figure out what our direction is going to be
 	//TODO: Figure out why going in negative directions is faster???
 	if (moveLeft) {
-		xdest-=0.5;
+		xdest--;
 	}
 	if (moveRight) {
 		xdest++;
 	}
 	if (moveUp) {
-		ydest -= 0.5;
+		ydest--;
 	}
 	if (moveDown) {
 		ydest++;
@@ -146,8 +146,8 @@ void Player::updateMovement() {
 
 	//If we are moving on both axes, multiply both by sqrt of 2
 	if (abs(xdest) + abs(ydest) == 2) {
-		xdest *= sqrt(2);
-		ydest *= sqrt(2);
+		xdest *= sqrt(2)/2;
+		ydest *= sqrt(2)/2;
 	}
 
 	xdest += xdest * playerMaxSpeed;
@@ -183,7 +183,7 @@ void Player::update()
 }
 
 void Player::shootProjectile() {
-	Projectile* p = new Projectile(this, PROJ_GREEN, 2, 0, 2);
+	Projectile* p = new Projectile(this, PROJ_GREEN, 3.5, 0, 2);
 	tick01 = Game::getTick() + 50;
 }
 

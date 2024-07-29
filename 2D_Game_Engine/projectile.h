@@ -19,6 +19,8 @@ public:
 	Projectile(Object* from);
 	Projectile(Object* from, PROJ_TypeCode type, double xvel, double yvel, double dmg);
 	~Projectile();
+	static void init();
+	SDL_Texture* setTexture(PROJ_TypeCode projectileType);
 	void setDamage(double dmg);
 	bool onCollision(Object* o);
 	void update();
