@@ -21,6 +21,10 @@
   <ItemGroup>
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gamestates.cpp" />
+    <ClCompile Include="io\console.cpp" />
+    <ClCompile Include="io\fonts.cpp" />
+    <ClCompile Include="io\loadMap.cpp" />
     <ClCompile Include="io\parseCFG.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
@@ -28,18 +32,26 @@
     <ClCompile Include="objectmanager.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="projectile.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commands.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gamestates.h" />
+    <ClInclude Include="io\console.h" />
+    <ClInclude Include="io\fonts.h" />
+    <ClInclude Include="io\loadMap.h" />
     <ClInclude Include="io\parseCFG.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="objectmanager.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="projectile.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="variables.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -140,7 +152,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
