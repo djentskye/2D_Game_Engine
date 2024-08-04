@@ -6,6 +6,7 @@
 #include <SDL_events.h>
 #include <iostream>
 #include "game.h"
+#include "variables.h"
 
 
 class Commands

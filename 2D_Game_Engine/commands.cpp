@@ -19,7 +19,7 @@ Commands::Commands(Game* g) {
  * 
  * @param std::string str
  */
-void Commands::runCommand(std::string str) {
+void Commands::runCommand(std::string str/*, game_leveltype gamemode*/) {
 	if(str == "quit" || str == "exit") {
 		game->exit();
 		return;
@@ -29,6 +29,7 @@ void Commands::runCommand(std::string str) {
 		return;
 	}
 	if (str == "+left") {
+		//TODO: Pass gamemode to startMovingLeft....
 		game->getPlayer()->startMovingLeft();
 		return;
 	}
@@ -62,9 +63,11 @@ void Commands::runCommand(std::string str) {
 	}
 	if (str == "+attack1") {
 		game->getPlayer()->startAttacking();
+		return;
 	}
 	if (str == "-attack1") {
 		game->getPlayer()->stopAttacking();
+		return;
 	}
 	if (str.substr(0, 3) == "map") {
 		std::string toLoad = str.substr(4, std::string::npos);
@@ -73,20 +76,25 @@ void Commands::runCommand(std::string str) {
 	if (str.substr(0, 15) == "g_setGameState ") {
 		if (str.substr(15, std::string::npos) == "gs_menu") {
 			Gamestates::setGamestate(gs_menu);
+			return;
 		}
 		if (str.substr(15, std::string::npos) == "gs_pausemenu") {
 			Gamestates::setGamestate(gs_pausemenu);
+			return;
 		}
 		if (str.substr(15, std::string::npos) == "gs_game") {
 			Gamestates::setGamestate(gs_game);
+			return;
 		}
 	}
 	if (str.substr(0, 14) == "g_setGamemode ") {
 		if (str.substr(14, std::string::npos) == "gs_bullethell") {
 			Gamestates::setGamemode(gs_bullethell);
+			return;
 		}
 		if (str.substr(14, std::string::npos) == "gs_overworld") {
 			Gamestates::setGamemode(gs_overworld);
+			return;
 		}
 	}
 }

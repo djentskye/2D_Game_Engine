@@ -1,4 +1,4 @@
-g_setGamemode gs_overworld
+g_setGamemode gs_bullethell
 playerSpawn=0000,0046
 obj={x=62;y=22;w=25;h=25;tex=assets/textures/purple.png;name=obj1;phys_state=2;}
 

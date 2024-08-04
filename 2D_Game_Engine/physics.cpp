@@ -1,3 +1,4 @@
+#include <iostream>
 #include "physics.h"
 #include "object.h"
 #include "variables.h"
@@ -32,7 +33,57 @@ void Physics::setFriction(int f) { friction = f; }
 void Physics::setTimescale(double t) { timescale = t; }
 
 //TODO: EDGE DETECTION??? 
+void Physics::calculateCollisionStaticNonstatic(Object* o, Object* v) {
+	//TODO: Store this  so we don't have to make this every time /:
+	float RectLineInputs[4] = { v->getCenter().x,
+							   v->getCenter().y,
+							   v->getCenter().x - (v->getXVelocity() * timescale),
+							   v->getCenter().y - (v->getYVelocity() * timescale),
+	};
 
+	int xDirection, yDirection;
+	double rectBoundX, rectBoundY;
+	double xdest = v->getX();
+	double ydest = v->getY();
+	if (RectLineInputs[2] > o->getCenter().x) {
+		rectBoundX = o->getX() + o->getWidth();
+		xDirection = 1;
+		//If the collision is happening on x-axis, change xdest accordingly!!~
+		if (xdest < rectBoundX) {
+			xdest = rectBoundX;
+		}
+	}
+	else {
+		rectBoundX = o->getX();
+		xDirection = -1;
+		//Change xdest accordingly!!~
+		if (xdest - v->getWidth() < rectBoundX) {
+			xdest = rectBoundX - v->getWidth();
+		}
+	}
+	if (RectLineInputs[3] > o->getCenter().y) {
+		rectBoundY = o->getY() + o->getHeight();
+		yDirection = 1;
+		//Change ydest accordingly!!~
+		if (ydest < rectBoundY) {
+			ydest = rectBoundY;
+		}
+	}
+	else {
+		rectBoundY = o->getY();
+		yDirection = -1;
+		//Change ydest accordingly!!~
+		if (ydest - v->getHeight() < rectBoundY) {
+			ydest = rectBoundY - v->getHeight();
+		}
+	}
+
+		//TODO: This is only kinda terrible now!!
+	v->setDestination(xdest,
+					  ydest,
+					  v->getWidth(),
+					  v->getHeight());
+}
 
 /**
  * Applies physics to an object. Should be called on every object which should have physics
@@ -44,6 +95,8 @@ bool Physics::applyPhysics(Object* o) {
 	x = o->getX();
 	y = o->getY();
 	SDL_Rect* rect = o->getDestination();
+	//This is awful lol
+	SDL_FRect frect = {(float)rect->x, (float)rect->y, (float)rect->w, (float)rect->h };
 	double xvel = o->getXVelocity();
 	double yvel = o->getYVelocity();
 
@@ -73,45 +126,15 @@ bool Physics::applyPhysics(Object* o) {
 	if (o->getPhysState() == obj_static) {
 		//Loop through collisionList and see if we collide with anyone
 		for (int i = 0; i < collisionList.size(); i++) {
-			SDL_Rect* r = collisionList[i]->getDestination();
+			Object* v = collisionList[i];
 
+			if (v->getPhysState() == obj_dynamic || v->getPhysState() == obj_physics) {
+				//If the two objects are in each other, push apart!
 
-
-			//If the two objects are in each other, push apart!
-			if (SDL_HasIntersection(r, rect)) {
-				//Find the difference between their respective centers
-				//double diffx = ((r->x + r->w / 2) - (rect->x + rect->w / 2));
-				//double diffy = ((r->y + r->h / 2) - (rect->y + rect->h / 2));
-
-				double magnitude = 0.95;
-				//double magnitude = 2;
-
-				//We just have to push back on the object with the same amount of force it's exerting 
-				// on us
-				//Get the angle of the object's velocity
-				double oppositeAngle = std::fmod(collisionList[i]->getVelocityAngle()+180, 360);
-				double perpendicular = std::fmod(o->getRotation(), 90);
-
-				//Find the new angle that the object should be pushed
-				double newRotate = perpendicular - oppositeAngle;
-				double newAngle = perpendicular + newRotate;
-
-				double x_component = std::sin(newAngle) * magnitude;
-				double y_component = std::cos(newAngle) * magnitude;
-
- 				double toAccelX = -collisionList[i]->getXVelocity() + x_component;
-				double toAccelY = -collisionList[i]->getYVelocity() + y_component;
-				//double toAccelX = x_component;
-				//double toAccelY = y_component;
-				
-				//Since this is a static object, we need to exert all this force on the other one. 
-				collisionList[i]->addToVelocity(toAccelX, toAccelY);
-				collisionList[i]->addToRotationVelocity(newRotate);
+				if (SDL_HasIntersection(v->getDestination(), rect)) {
+					calculateCollisionStaticNonstatic(o, v);
+				}
 			}
-
-			//If the two objects have not collided but will colide after applying velocity, calculate
-			//TODO
-
 		}
 
 		//Add o's rect to the collisionList
@@ -120,13 +143,13 @@ bool Physics::applyPhysics(Object* o) {
 	if (o->getPhysState() == obj_dynamic) {
 		//Loop through collisionList and see if we collide with anyone
 		for (int i = 0; i < collisionList.size(); i++) {
-			SDL_Rect* r = collisionList[i]->getDestination();
+			Object* v = collisionList[i];
 
 
 
 			//If the two objects are in each other, push apart!
-			if (SDL_HasIntersection(r, rect)) {
-				
+			if (SDL_HasIntersection(v->getDestination(), rect)) {
+				calculateCollisionStaticNonstatic(v, o);
 			}
 
 			//If the two objects have not collided but will colide after applying velocity, calculate
@@ -140,13 +163,13 @@ bool Physics::applyPhysics(Object* o) {
 	if (o->getPhysState() == obj_physics) {
 		//Loop through collisionList and see if we collide with anyone
 		for (int i = 0; i < collisionList.size(); i++) {
-			SDL_Rect* r = collisionList[i]->getDestination();
+			Object* v = collisionList[i];
 
 
 
 			//If the two objects are in each other, push apart!
-			if (SDL_HasIntersection(r, rect)) {
-				
+			if (SDL_HasIntersection(v->getDestination(), rect)) {
+				calculateCollisionStaticNonstatic(v, o);
 			}
 
 			//If the two objects have not collided but will colide after applying velocity, calculate

@@ -21,7 +21,6 @@ Object::Object()
 	destRect = new SDL_Rect();
 }
 
-
 Object::~Object()
 {
 }
@@ -56,7 +55,12 @@ void Object::setX(double x) { this->x = x; }
 
 void Object::setY(double y) { this->y = y; }
 
+int Object::getWidth() { return w; }
+
+int Object::getHeight() { return h; }
+
 double Object::getX() { return x; }
+
 double Object::getY() { return y; }
 
 void Object::setWidth(int width) { w = width; }

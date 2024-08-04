@@ -20,6 +20,8 @@ public:
 	void setY(double y);
 	double getX();
 	double getY();
+	int getWidth();
+	int getHeight();
 	void setWidth(int width);
 	void setHeight(int height);
 	void setDepth(int d);

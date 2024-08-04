@@ -19,8 +19,8 @@ Player::Player()
 	rotation = 0;
 	velx = 0;
 	vely = 0;
-	playerMaxSpeed = 0.1;
-	playerAccel = 0.1;
+	playerMaxSpeed = 0.5;
+	playerAccel = 0.6;
 	shooting = 0;
 	tick01 = 0;
 
