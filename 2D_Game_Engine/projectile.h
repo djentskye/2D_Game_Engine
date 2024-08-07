@@ -10,7 +10,8 @@
 typedef enum
 {
 	PROJ_GREEN = 0,
-	PROJ_ORANGE = 1
+	PROJ_ORANGE = 1,
+	PROJ_MEME = 2
 } PROJ_TypeCode;
 
 class Projectile : public Object

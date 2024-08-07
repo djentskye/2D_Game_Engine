@@ -25,6 +25,12 @@
     <Filter Include="Header Files\io">
       <UniqueIdentifier>{c68c80af-176e-48cb-8937-0f7841a369dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\characters">
+      <UniqueIdentifier>{1138a2bb-fb21-42fc-bc6b-57d43b2cf951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\characters">
+      <UniqueIdentifier>{1cf57abb-9a7a-4581-a395-4769299440fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +81,9 @@
     <ClCompile Include="texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="characters\bh_lava.cpp">
+      <Filter>Source Files\characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -123,6 +132,12 @@
       <Filter>Header Files\io</Filter>
     </ClInclude>
     <ClInclude Include="texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="characters\bh_lava.h">
+      <Filter>Header Files\characters</Filter>
+    </ClInclude>
+    <ClInclude Include="entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

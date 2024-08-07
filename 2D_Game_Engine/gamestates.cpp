@@ -14,14 +14,14 @@ void Gamestates::setGamestate(game_state g) {
 	*gamestate = g;
 }
 
-game_state* Gamestates::getGamestate() {
-	return gamestate;
+game_state Gamestates::getGamestate() {
+	return *gamestate;
 }
 
 void Gamestates::setGamemode(game_leveltype g) {
 	*gamemode = g;
 }
 
-game_leveltype* Gamestates::getGamemode() {
-	return gamemode;
+game_leveltype Gamestates::getGamemode() {
+	return *gamemode;
 }

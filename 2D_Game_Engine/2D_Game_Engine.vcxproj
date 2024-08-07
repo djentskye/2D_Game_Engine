@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="characters\bh_lava.cpp" />
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gamestates.cpp" />
@@ -37,7 +38,9 @@
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="characters\bh_lava.h" />
     <ClInclude Include="commands.h" />
+    <ClInclude Include="entities.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gamestates.h" />
     <ClInclude Include="io\console.h" />

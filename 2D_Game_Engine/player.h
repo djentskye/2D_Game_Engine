@@ -6,7 +6,6 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include "object.h"
-//#include "objectmanager.h"
 #include <chrono>
 
 #undef main
@@ -41,7 +40,6 @@ private:
 	double movementAngle;
 	bool moveLeft, moveRight, moveUp, moveDown;
 	void updateMovement();
-	//ObjectManager* om;
 	bool shooting;
 	long long tick01;
 };

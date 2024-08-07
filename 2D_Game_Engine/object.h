@@ -59,6 +59,7 @@ public:
 	double getMaxHealth();
 	void shootProjectile();
 	void update();
+	bool isEntity();
 
 protected:
 	//x coord, y coord, width, height, depth
@@ -75,6 +76,7 @@ protected:
 	SDL_RendererFlip texture_flipped;
 	SDL_Point center;
 	SDL_Rect* destRect;
+	bool entity;
 
 private:
 	int id;

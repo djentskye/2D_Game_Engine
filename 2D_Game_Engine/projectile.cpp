@@ -26,6 +26,10 @@ Projectile::Projectile(Object* from, PROJ_TypeCode type, double x_vel, double y_
 		w = 32;
 		h = 32;
 	}
+	else {
+		w = 32;
+		h = 32;
+	}
 	SDL_Point originCenter = from->getCenter();
 
 	x = (originCenter.x - w / 2);
@@ -63,6 +67,9 @@ SDL_Texture* Projectile::setTexture(PROJ_TypeCode projectileType) {
 		case PROJ_ORANGE:
 			textureMap->insert(std::pair<int, SDL_Texture*>(projectileType,
 				Texture::getTexture("assets/textures/orange_bullet.png")));
+		case PROJ_MEME:
+			textureMap->insert(std::pair<int, SDL_Texture*>(projectileType,
+				Texture::getTexture("assets/textures/meme2.png")));
 		}
 		return textureMap->at(projectileType);
 	}

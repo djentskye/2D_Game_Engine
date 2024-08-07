@@ -19,6 +19,7 @@ Object::Object()
 	id = nextID;
 	nextID++;
 	destRect = new SDL_Rect();
+	entity = false;
 }
 
 Object::~Object()
@@ -270,8 +271,11 @@ void Object::update() {
 	//y += vely;
 }
 
-
 SDL_Point Object::getCenter() {
 	SDL_Point p = { (x + (w / 2)), (y + (h / 2)) };
 	return p;
+}
+
+bool Object::isEntity() {
+	return entity;
 }

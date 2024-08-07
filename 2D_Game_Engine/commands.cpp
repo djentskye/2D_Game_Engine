@@ -29,7 +29,6 @@ void Commands::runCommand(std::string str/*, game_leveltype gamemode*/) {
 		return;
 	}
 	if (str == "+left") {
-		//TODO: Pass gamemode to startMovingLeft....
 		game->getPlayer()->startMovingLeft();
 		return;
 	}

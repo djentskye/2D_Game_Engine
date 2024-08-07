@@ -10,3 +10,5 @@ obj={x=0;y=1080;w=2000;h=20;tex=assets/textures/purple.png;name=floor;phys_state
 obj={x=-20;y=-10;w=20;h=1090;tex=assets/textures/purple.png;name=left;phys_state=0;}
 //Right
 obj={x=1920;y=-10;w=20;h=1090;tex=assets/textures/purple.png;name=right;phys_state=0;}
+
+entity={type=bh_lava;x=1650;y=486;}

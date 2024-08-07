@@ -6,6 +6,7 @@
 #include "projectile.h"
 #include "objectmanager.h"
 #include "game.h"
+#include "gamestates.h"
 
 
 Player::Player()
@@ -19,8 +20,8 @@ Player::Player()
 	rotation = 0;
 	velx = 0;
 	vely = 0;
-	playerMaxSpeed = 0.5;
-	playerAccel = 0.6;
+	playerMaxSpeed = 0.3;
+	playerAccel = 0.3;
 	shooting = 0;
 	tick01 = 0;
 
@@ -174,7 +175,7 @@ void Player::update()
 {
 	updateMovement();
 
-	if (shooting) {
+	if (shooting && Gamestates::getGamemode() == gs_bullethell) {
 		if (Game::getTick() > tick01) {
 			shootProjectile();
 			tick01 = Game::getTick() + 50;

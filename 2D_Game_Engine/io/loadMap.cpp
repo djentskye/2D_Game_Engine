@@ -8,6 +8,7 @@
 #include "../objectmanager.h"
 #include "../variables.h"
 #include "../commands.h"
+#include "../entities.h"
 
 static Player* player;
 static Renderer* renderer;
@@ -83,6 +84,13 @@ Object* loadMap::loadObject(std::string objData) {
 		else if (propertyString == "r") {
 			o->setRotation(stod(valueString));
 		}
+		else if (propertyString == "type") {
+			//Handles the type, if the object is an entity. When used, type should be the first
+			//property defined in a .map file. 
+			if (valueString == "bh_lava") {
+				o = new bh_lava();
+			}
+		}
 	}
 
 	return o;
@@ -124,6 +132,11 @@ bool loadMap::load(std::string filepath) {
 			}
 			else if (tempString.substr(0, 14) == "g_setGamemode ") {
 				Commands::runCommand(tempString);
+			}
+			else if (tempString.substr(0, 7) == "entity=") {
+				Object* o = loadMap::loadObject(tempString.substr(8, tempString.length() - 2));
+				renderer->addToRenderQueue(o);
+				om->addObject(o);
 			}
 		}
 	}
