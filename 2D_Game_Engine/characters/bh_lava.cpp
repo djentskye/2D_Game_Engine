@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////////
+// characters/bh_lava.cpp
+// 
+// NPC class. Contains all the necessary functions and variables for bh_lava. 
+///////////////////////////////////////////////////////////////
+
 #include "bh_lava.h"
 
 bh_lava::bh_lava() {
@@ -22,6 +28,9 @@ bh_lava::bh_lava(double xDest, double yDest) {
 	maxHealth = 40;
 }
 
+/**
+ * Shoots a projectile. 
+ */
 void bh_lava::shootProjectile() {
 	Projectile* p = new Projectile(this, PROJ_MEME, -6, 0, 2);
 }

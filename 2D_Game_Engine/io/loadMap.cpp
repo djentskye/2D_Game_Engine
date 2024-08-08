@@ -1,3 +1,11 @@
+///////////////////////////////////////////////////////////////
+// io/loadMap.cpp
+// 
+// This class does not need to be constructed, though it must be initialized. Maps 
+// can be loaded to memory using just one filepath. There is not yet a cleaning 
+// system to use after loading a map, but that reset function belongs here as well. 
+///////////////////////////////////////////////////////////////
+
 #include "loadMap.h"
 #include <iostream>
 #include <fstream>
@@ -9,6 +17,7 @@
 #include "../variables.h"
 #include "../commands.h"
 #include "../entities.h"
+#include "../texture.h"
 
 static Player* player;
 static Renderer* renderer;
@@ -72,7 +81,8 @@ Object* loadMap::loadObject(std::string objData) {
 			o->setDepth(stoi(valueString));
 		}
 		else if (propertyString == "tex") {
-			o->setTexture(valueString, renderer->getRenderer());
+			//o->setTexture(valueString, renderer->getRenderer());
+			o->setTexture(Texture::getTexture(valueString.c_str()));
 		}
 		else if (propertyString == "name") {
 			o->setName(valueString);

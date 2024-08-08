@@ -1,3 +1,19 @@
+///////////////////////////////////////////////////////////////
+// game.cpp
+// 
+// This is the game class, which acts as an interface between main classes and the 
+// rest of the code. Most central functionality is performed in here, with main 
+// classes focusing on only upper level/process management utilities. This allows
+// us to easily instantiate different versions of the game engine easily. 
+// 
+// This class contains a lot of core variables and some essential functions. It 
+// contains an initializing function, a rendering function, an update function, and 
+// a handleEvents function. It also contains pointers to essential objects in the 
+// game engine, window dimensions, and timing functionality. Most functions belong 
+// outside of this class, unless they directly relate to the core of the game 
+// engine. 
+///////////////////////////////////////////////////////////////
+
 #include "Game.h"
 #include <SDL.h>
 #include "sdl_image.h"
@@ -49,7 +65,8 @@ Game::~Game()
  * @param int xPos, yPos, w, h
  * @param bool fullscreen
  */
-void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullscreen)
+void Game::init(const char* title, int xPos, int yPos, int w, int h, 
+				bool fullscreen)
 {
 	int flags = 0;
 	if (WINDOW_FULLSCREEN == true)
@@ -61,7 +78,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	{
 		std::cout << "SDL initialized" << std::endl;
 
-		window = SDL_CreateWindow(title, xPos, yPos, WINDOW_WIDTH, WINDOW_HEIGHT, flags);
+		window = SDL_CreateWindow(title, xPos, yPos, WINDOW_WIDTH, WINDOW_HEIGHT, 
+								  flags);
 		if (window)
 		{
 			std::cout << "Window created sucessfully" << std::endl;
@@ -99,7 +117,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h, bool fullsc
 	commands = Commands(this);
 
 	//20, 6
-	Console::init(20, 10, { 255, 255, 255, 255 }, "Inconsolata", {85, 10, 7, 160}, 100);
+	Console::init(20, 10, { 255, 255, 255, 255 }, "Inconsolata", {85, 10, 7, 160}, 
+				  100);
 
 	//Load keybindings from CFG
 	ParseCFG::parseKeybindings(keyboard);

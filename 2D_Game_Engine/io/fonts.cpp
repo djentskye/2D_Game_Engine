@@ -1,8 +1,12 @@
+///////////////////////////////////////////////////////////////
+// io/fonts.cpp
+// 
+// The font class. Manages all fonts and can return textures with text. 
+///////////////////////////////////////////////////////////////
+
 #include "fonts.h"
 #include <SDL_ttf.h>
 #include <map>
-
-//Inconsolata-VariableFont_wdth,wght
 
 static std::map<std::pair<std::string, int>, TTF_Font*>* fontMap;
 static SDL_Renderer* renderer;

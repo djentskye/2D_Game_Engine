@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////
+// projectile.cpp
+// 
+// This class contains all information for projectiles. Each individual projectile 
+// should be an instance of this class. Projectile types should be added to 
+// projectile.h, as PROJ_TypeCode lets us keep track of differing projectiles and 
+// give them properties appropriate to their type. 
+///////////////////////////////////////////////////////////////
+
 #include "projectile.h"
 #include "texture.h"
 #include "objectmanager.h"
@@ -15,13 +24,16 @@ Projectile::Projectile(Object* from) {
 	destroyed = false;
 }
 
-Projectile::Projectile(Object* from, PROJ_TypeCode type, double x_vel, double y_vel, double dmg) {
+Projectile::Projectile(Object* from, PROJ_TypeCode type, double x_vel, 
+					   double y_vel, double dmg) {
 	shotBy = from;
 	projType = type;
 	damage = dmg;
 
+	//Set the texture appropriately
 	texture = setTexture(type);
 
+	//Handle projectile sizing as needed
 	if (type == PROJ_GREEN) {
 		w = 32;
 		h = 32;
@@ -30,8 +42,10 @@ Projectile::Projectile(Object* from, PROJ_TypeCode type, double x_vel, double y_
 		w = 32;
 		h = 32;
 	}
-	SDL_Point originCenter = from->getCenter();
 
+	//Ensure that the projectile emits from the center of the projectile which shot
+	//it. This should be expanded to outside functions in the future!
+	SDL_Point originCenter = from->getCenter();
 	x = (originCenter.x - w / 2);
 	y = (originCenter.y - h / 2);
 
@@ -42,18 +56,24 @@ Projectile::Projectile(Object* from, PROJ_TypeCode type, double x_vel, double y_
 	destroyed = false;
 	dissappearOnHit = true;
 
+	//Adds projectile to the object manager and render queue
 	ObjectManager::addObject(this);
-
 	rendererValue = Renderer::addToRenderQueue(this);
-
 }
 
 Projectile::~Projectile() {}
 
+/**
+ * Initialize the projectile map. This should be called once as a static function, 
+ * while initializing the game engine
+ */
 void Projectile::init() {
 	textureMap = new std::map<int, SDL_Texture*>();
 }
 
+/**
+ * Sets the projectile's texture according to its PROJ_TypeCode. 
+ */
 SDL_Texture* Projectile::setTexture(PROJ_TypeCode projectileType) {
 
 	try {
@@ -75,7 +95,9 @@ SDL_Texture* Projectile::setTexture(PROJ_TypeCode projectileType) {
 	}
 }
 
-
+/**
+ * Sets the damage dealt by a projectile
+ */
 void Projectile::setDamage(double dmg) {
 	damage = dmg;
 }
@@ -98,6 +120,9 @@ bool Projectile::onCollision(Object* o) {
 	return true;
 }
 
+/**
+ * Projectile update function
+ */
 void Projectile::update() {
 
 }

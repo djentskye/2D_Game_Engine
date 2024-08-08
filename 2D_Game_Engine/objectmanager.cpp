@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////
+// objectmanager.cpp
+// 
+// This is the object manager class, which keeps track of all objects currently 
+// in memory. Anything that is actively being updated or rendered must be stored in
+// this class's objMap. The class is mostly used for rendering, updating positions 
+// for physics and movement, and generally keeping track of anything that parts of 
+// the engine would need to access. 
+///////////////////////////////////////////////////////////////
+
 #include "objectmanager.h"
 #include "renderer.h"
 
@@ -7,7 +17,8 @@ static int counter;
 
 //The engine should create objects through an object manager. 
 
-//Every single object rendered in the engine must have a texture and an SDL_Rect* dstrect, which contains the object's location in a scene. 
+//Every single object rendered in the engine must have a texture and an 
+//SDL_Rect* dstrect, which contains the object's location in a scene. 
 
 
 ObjectManager::ObjectManager()
@@ -38,8 +49,8 @@ void ObjectManager::addObject(Object* obj)
 	//and display everything in the correct order?
 	//objMap.insert(std::pair<int,Object>(counter, obj));
 
-	//Insert the object to the objMap using its objID, which it creates itself. This ensures 
-	//there is no difference in how we track id's. 
+	//Insert the object to the objMap using its objID, which it creates itself. 
+	//This ensures there is no difference in how we track id's. 
 	objMap.insert(std::pair<int, Object*>(obj->getID(), obj));
 	
 	//Add one to the current object counter
@@ -73,7 +84,8 @@ void ObjectManager::destroyObjectByID(int objID)
 
 void ObjectManager::initObjects()
 {
-	//Why do we even have this? For a level load, to initialize all objects (ex: scripting)
+	//Why do we even have this? For a level load, to initialize all objects 
+	//(ex: scripting)
 }
 
 /**
@@ -83,18 +95,6 @@ void ObjectManager::updateObjects()
 {
 	//Reset the collision bounds
 	physics.resetCollisionList();
-
-
-	/*
-	//Loop over each element and apply updates to them
-	for (std::pair<int, Object*> element : objMap) {
-		Object* obj = element.second;
-		physics.applyPhysics(element.second);
-		//Update forces (gravity)
-		//Update movement (scripted)
-		///Update player input /where do we want this in the chain?
-		///^this probably doesn't belong in the object manager
-	}*/
 
 	//Loop over each element and apply updates to them
 	auto it = objMap.begin();
@@ -107,7 +107,13 @@ void ObjectManager::updateObjects()
 			obj->update();
 		}
 		else {
-			++it;
+			//Checks to make sure we don't accidentally increment something we can't
+			if (it == objMap.end()) {
+				break;
+			}
+			else {
+				++it;
+			}
 		}
 	}
 }

@@ -1,3 +1,11 @@
+///////////////////////////////////////////////////////////////
+// commands.cpp
+// 
+// This class runs and parses commands. Any new commands should be defined in 
+// functions within this class. The runCommand() function is called upon any 
+// command input, so be sure to reference something from in there. 
+///////////////////////////////////////////////////////////////
+
 #include "commands.h"
 #include <iostream>
 #include "game.h"
@@ -15,11 +23,13 @@ Commands::Commands(Game* g) {
 }
 
 /**
- * Runs the command specified by str
+ * Runs the command specified by str. 
+ * 
+ * If-cases should only be a couple of lines long and call other functions. 
  * 
  * @param std::string str
  */
-void Commands::runCommand(std::string str/*, game_leveltype gamemode*/) {
+void Commands::runCommand(std::string str) {
 	if(str == "quit" || str == "exit") {
 		game->exit();
 		return;

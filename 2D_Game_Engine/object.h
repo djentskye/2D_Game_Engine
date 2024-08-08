@@ -26,8 +26,8 @@ public:
 	void setHeight(int height);
 	void setDepth(int d);
 	SDL_Rect* getBoundingBox();
-	bool setTexture(const char* path, SDL_Renderer* renderer); 
-	bool setTexture(std::string path, SDL_Renderer* renderer);
+	[[deprecated]] bool setTexture(const char* path, SDL_Renderer* renderer); 
+	[[deprecated]] bool setTexture(std::string path, SDL_Renderer* renderer);
 	bool setTexture(SDL_Texture* texture);
 	bool setTextureFromObject(Object obj);
 	std::string getName();

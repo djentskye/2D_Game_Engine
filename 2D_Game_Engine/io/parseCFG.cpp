@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////////
+// io/parseCFG.cpp
+// 
+// This class parses CFG files and runs commands from them. 
+///////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <fstream>
 #include "parseCFG.h"
@@ -9,6 +15,9 @@
 
 /**
  * Parses keybindings from the provided path
+ * 
+ * @param std::string filepath
+ * @param Keyboard keyboard
  */
 void parseKeybindings(std::string filepath, Keyboard keyboard) {
 	
@@ -16,6 +25,8 @@ void parseKeybindings(std::string filepath, Keyboard keyboard) {
 
 /**
  * Parses keybindings from default path (cfg/keybindings.cfg) into the requested keyboard object
+ * 
+ * @param Keyboard keyboard
  */
 void ParseCFG::parseKeybindings(Keyboard keyboard) {
 	std::ifstream keybindingFile;
@@ -98,6 +109,12 @@ void ParseCFG::parseKeybindings(Keyboard keyboard) {
 	keybindingFile.close();
 }
 
+/**
+ * Parses config from default path (cfg/config.cfg). Settings are saved 
+ * to this file. 
+ * 
+ * @param Game* g
+ */
 void ParseCFG::parseCFG(Game* g) {
 	std::ifstream cfgFile;
 	cfgFile.open("cfg/config.cfg");
@@ -105,7 +122,6 @@ void ParseCFG::parseCFG(Game* g) {
 	std::string tempString;
 	std::string setting;
 	std::string value;
-	int cursor;
 
 	if (cfgFile.is_open()) {
 		while (getline(cfgFile, tempString)) {

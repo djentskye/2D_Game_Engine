@@ -1,4 +1,5 @@
-
+#ifndef TEXTURE_H
+#define TEXTURE_H
 
 #pragma once
 
@@ -14,3 +15,4 @@ public:
 	static SDL_Texture* getTexture(const char* path);
 };
 
+#endif

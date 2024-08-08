@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////
+// physics.cpp
+// 
+// This class is where physics calculations and collision detection lives. 
+// There is support for a variety of options in this class, though it may be 
+// updated as new features are added. The physics class is also where velocity
+// is turned into movement, so updates to velocity should occur before an 
+// object's physics is applied. 
+///////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include "physics.h"
 #include "object.h"
@@ -5,7 +15,11 @@
 #include <cmath>
 #include "projectile.h"
 
-Physics::Physics() {}
+Physics::Physics() {
+	gravity = 0;
+	friction = 0;
+	timescale = 0.6;
+}
 
 Physics::~Physics() {}
 
@@ -35,7 +49,7 @@ void Physics::setTimescale(double t) { timescale = t; }
 //TODO: EDGE DETECTION??? 
 void Physics::calculateCollisionStaticNonstatic(Object* o, Object* v) {
 	//TODO: Store this  so we don't have to make this every time /:
-	float RectLineInputs[4] = { v->getCenter().x,
+	float RectLineInputs[4] = {v->getCenter().x,
 							   v->getCenter().y,
 							   v->getCenter().x - (v->getXVelocity() * timescale),
 							   v->getCenter().y - (v->getYVelocity() * timescale),

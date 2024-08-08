@@ -1,11 +1,3 @@
-#include "keyboard.h"
-#include <iostream>
-#include <map>
-#include <SDL_events.h>
-#include "commands.h"
-#include <string>
-#include "io/console.h"
-
 ///////////////////////////////////////////////////////////////
 // Keyboard.cpp
 // 
@@ -14,6 +6,14 @@
 // should be executed upon the pressing of their respective keys. This class should NOT be used 
 // outside of game.cpp, parseCFG.cpp, and any console commands. 
 ///////////////////////////////////////////////////////////////
+
+#include "keyboard.h"
+#include <iostream>
+#include <map>
+#include <SDL_events.h>
+#include "commands.h"
+#include <string>
+#include "io/console.h"
 
 //Stores keybindings; integer key is the SDL virtual keycode and string value is the associated command
 //TODO: Allocate memory somewhere else. This is breaking some keys, seemingly
@@ -126,6 +126,7 @@ bool Keyboard::keyboardEvent(int sym, SDL_EventType eventType)
 	}
 	else if (keyboardFocus == gs_keyboard_menu) {
 		//TODO
+		return false;
 	}
 	else {
 		return false;

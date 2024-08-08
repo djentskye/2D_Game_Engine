@@ -1,3 +1,11 @@
+///////////////////////////////////////////////////////////////
+// Player.cpp
+// 
+// The palyer class. Though there's nothing static in this class, there should only
+// be one instance of it at once. Most functions are handled internally for this 
+// class. 
+///////////////////////////////////////////////////////////////
+
 #include "Player.h"
 #include "object.h"
 #include "variables.h"
@@ -7,7 +15,6 @@
 #include "objectmanager.h"
 #include "game.h"
 #include "gamestates.h"
-
 
 Player::Player()
 {
@@ -120,7 +127,8 @@ SDL_Texture* Player::getTexture()
 }
 
 /**
- * Updates the player's movement. Private class. Should only be run from Player::update(). 
+ * Updates the player's movement. Private class. Should only be run from 
+ * Player::update(). 
  */
 void Player::updateMovement() {
 	//We store the requested value 
@@ -167,9 +175,9 @@ void Player::updateMovement() {
 }
 
 /**
- * Updates the player with anything that we might need to run from within the class. This is called 
- * whenever we are updating the scene as a whole. Add any functions here which should run from 
- * this class upon a tick update. 
+ * Updates the player with anything that we might need to run from within the 
+ * class. This is called whenever we are updating the scene as a whole. Add 
+ * any functions here which should run from this class upon a tick update. 
  */
 void Player::update()
 {

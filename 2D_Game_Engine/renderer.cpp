@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////
+// renderer.cpp
+// 
+// This is the renderer, which stores our SDL_Renderer object pointer, the render 
+// queue, and other relevant rendering information. It must be initialized in 
+// game.cpp prior to use. Anything that must be rendered shoud be put into the 
+// render queue, making this class essential for creating new objects.
+///////////////////////////////////////////////////////////////
+
 #include "renderer.h"
 #include <iostream>
 #include "player.h"
@@ -41,6 +50,9 @@ void Renderer::exit()
 	SDL_DestroyRenderer(renderer);
 }
 
+/**
+ * Renders the console
+ */
 void Renderer::renderConsole() {
 	//Render the cursor
 	SDL_Color cursorColor = Console::getCursorColor();
@@ -125,17 +137,6 @@ int Renderer::addToRenderQueue(Object* o)
 	return o->getID();
 }
 
-int Renderer::addToRenderQueue(Player* p)
-{
-	//std::pair<int, Object*> tempPair = std::pair<int, Object*>(renderQueue.size() + 1, p);
-	std::pair<int, Object*> tempPair = std::pair<int, Object*>(p->getID(), p);
-
-	//Eventually we will need a method to change the depth by removing from render queue and re-adding
-	renderQueue.insert(tempPair);
-
-	return p->getID();
-}
-
 /**
  * Adds an object to the render queue to a specific location
  *
@@ -148,17 +149,11 @@ void Renderer::addToRenderQueue(int i, Object o)
 	renderQueue.insert(std::pair<int, Object*>(i, &o)).first; //??? &
 }
 
+/**
+ * Removes an object from the render queue
+ * 
+ * @param Object* o
+ */
 void Renderer::removeFromRenderQueue(Object* o) {
-	/*auto it = renderQueue.begin();
-	while (it != renderQueue.end()) {
-		Object* obj = (*it).second;
-		if ((*it).second == o) {
-			renderQueue.erase(it);
-			break;
-		}
-		else {
-			++it;
-		}
-	}*/
 	renderQueue.erase(o->getID());
 }

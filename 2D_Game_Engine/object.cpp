@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////
+// object.cpp
+// 
+// The main object class. This is the parent class to effectively all visible or 
+// interactable classes supported by this engine. It has a ton of features and 
+// variables, so child classes should only need a relatively small amount of 
+// functions, excluding new features and overrides. 
+///////////////////////////////////////////////////////////////
+
 #include "object.h"
 #include "SDL.h"
 #include "SDL_image.h"
@@ -6,7 +15,6 @@
 #include <cmath>
 #include "projectile.h"
 
-//int x, y, w, h;
 SDL_Texture* texture;
 std::string name;
 phys_state physics_state;
@@ -38,6 +46,9 @@ SDL_Rect* Object::getDestination()
 	return destRect;
 }
 
+/**
+ * Sets the destination to that of an SDL_Rect*
+ */
 void Object::setDestination(SDL_Rect* rect) {
 	x = rect->x;
 	y = rect->y;
@@ -45,6 +56,9 @@ void Object::setDestination(SDL_Rect* rect) {
 	h = rect->h;
 }
 
+/**
+ * Sets the destination to a set of doubles and integers. 
+ */
 void Object::setDestination(double x, double y, int w, int h) {
 	this->x = x;
 	this->y = y;
@@ -86,14 +100,12 @@ SDL_Rect* Object::getBoundingBox()
 }
 
 /**
- * Sets the texture of an object
- * 
- * TODO: Deprecate this function so it's less of a hassle to clean up memory later
+ * Sets the texture of an object. Deprecated; please use the texture class instead
  *
  * @param const char* path
  * @param SDL_Renderer *renderer
  */
-bool Object::setTexture(const char* path, SDL_Renderer* renderer)
+[[deprecated]] bool Object::setTexture(const char* path, SDL_Renderer* renderer)
 {
 	//TODO: Try/catch for bad texture paths
 	SDL_Surface* tempSurface = IMG_Load(path);
@@ -102,7 +114,13 @@ bool Object::setTexture(const char* path, SDL_Renderer* renderer)
 	return true; //change this
 }
 
-bool Object::setTexture(std::string path, SDL_Renderer* renderer)
+/**
+ * Sets the texture of an object. Deprecated; please use the texture class instead
+ *
+ * @param std::string path
+ * @param SDL_Renderer *renderer
+ */
+[[deprecated]] bool Object::setTexture(std::string path, SDL_Renderer* renderer)
 {
 	//TODO: Try/catch for bad texture paths
 	SDL_Surface* tempSurface = IMG_Load(path.c_str());
@@ -266,6 +284,10 @@ void Object::shootProjectile() {
 	Object* o = new Projectile(this);
 }
 
+/**
+ * Updates an object every tick. This is set as empty, but should be overridden by 
+ * child classes. 
+ */
 void Object::update() {
 	//x += velx;
 	//y += vely;
@@ -276,6 +298,9 @@ SDL_Point Object::getCenter() {
 	return p;
 }
 
+/**
+ * Returns whether or not the object is an entity. 
+ */
 bool Object::isEntity() {
 	return entity;
 }
