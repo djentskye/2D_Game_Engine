@@ -54,6 +54,13 @@ void Renderer::exit()
  * Renders the console
  */
 void Renderer::renderConsole() {
+	//TODO: This is super clunky lol, in the future we should have pointers in this class.
+	Object* backgroundObj = Console::getBackgroundObj();
+	std::list<Object*> textObjMap = *Console::getTextObjMap();
+
+	//Render the background
+	SDL_RenderCopy(renderer, backgroundObj->getTexture(), NULL, backgroundObj->getDestination());
+
 	//Render the cursor
 	SDL_Color cursorColor = Console::getCursorColor();
 	if (Game::getTick() % 50 < 25) {
@@ -66,13 +73,6 @@ void Renderer::renderConsole() {
 	SDL_Rect* test = Console::getCursorObj()->getDestination();
 
 	SDL_RenderDrawRect(renderer, Console::getCursorObj()->getDestination());
-
-	//TODO: This is super clunky lol, in the future we should have pointers in this class.
-	Object* backgroundObj = Console::getBackgroundObj();
-	std::list<Object*> textObjMap = *Console::getTextObjMap();
-
-	//Render the background
-	SDL_RenderCopy(renderer, backgroundObj->getTexture(), NULL, backgroundObj->getDestination());
 
 	//Render the text
 	for (Object* element : textObjMap) {

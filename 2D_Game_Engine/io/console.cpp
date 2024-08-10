@@ -113,6 +113,8 @@ void Console::closeConsole() {
 	//Stop showing console
 	showConsole = false;
 	backgroundObj->setDestination(-2, -2, -1, -1);
+
+	requestedBackgroundY = -((textHeight + 1) * maxLines);
 }
 
 /**
@@ -127,6 +129,9 @@ void Console::writeChar(int sym) {
 		//TODO: This only works on letters at the moment. Expand functionality
 		//to include more keys. 
 		sym -= 32;
+	}
+	if (sym == SDLK_ESCAPE) {
+		closeConsole();
 	}
 
 	//Add this character to our string
@@ -186,17 +191,6 @@ void Console::newLine() {
 			}
 		}
 
-		/*
-		for (Object* o : *textObjMap) {
-			if (o->getY() < 2) {
-				//Remove the top row of text textures
-				textObjMap->remove(o);
-			}
-			else {
-				//Move the textures up to the next line
-				o->setY(o->getY()- (textHeight + 1));
-			}
-		}*/
 		cursorResetX();
 
 		currentCommand = "";
@@ -213,15 +207,11 @@ void Console::newLine() {
 			(*it)->setDepth((*it)->getDepth() + 1);
 		}
 
-		//TODO: Add backgrounds!!
-		//Object* newBackgroundTile = 
-		//backgroundObjMap->emplace();
-
 		if (numLines == 2) {
 			requestedBackgroundY += backgroundShiftIncrementSize;
 		}
 
-		backgroundObj->setVelocity(0, 0.5);
+		backgroundObj->setVelocity(0, 0.8);
 		requestedBackgroundY += backgroundShiftIncrementSize;
 	}
 }
@@ -279,26 +269,6 @@ void Console::backspace() {
 		//Remove the character to the left of the cursor
 		int charToRemove = (((int)cursor->getX() - 1) / (textWidth + 1));
 		currentCommand.erase(charToRemove, 1);
-		/*
-		//Get the iterator for the beginning of our command, and find the element 
-		//just before our cursor
-		std::list<Object*>::iterator it = textObjMap->begin();
-		for (int i = 0; i < charToRemove; i++) {
-			it++;
-		}
-
-		//Remove the element to the left of our cursor
-		textObjMap->remove(*it);
-
-		//Move all elements after the character we want to erase to the left
-		for (it; it != textObjMap->end(); ++it) {
-			(*it)->setX((*it)->getX() - textWidth);
-		}
-		*/
-
-		//if (currentCommand.length() == 0) {
-			//textObjMap->erase();
-		//}
 
 		int currentChar = 0;
 		for (std::list<Object*>::iterator it = textObjMap->begin(); it != textObjMap->end(); ++it) {

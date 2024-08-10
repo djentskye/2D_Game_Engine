@@ -16,6 +16,7 @@ public:
 	SDL_Rect* getDestination();
 	void setDestination(SDL_Rect* rect);
 	void setDestination(double x, double y, int w, int h);
+	void setDestination(double x, double y);
 	void setX(double x);
 	void setY(double y);
 	double getX();

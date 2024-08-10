@@ -66,6 +66,14 @@ void Object::setDestination(double x, double y, int w, int h) {
 	this->h = h;
 }
 
+/**
+ * Sets the destination to a set of doubles and integers.
+ */
+void Object::setDestination(double x, double y) {
+	this->x = x;
+	this->y = y;
+}
+
 void Object::setX(double x) { this->x = x; }
 
 void Object::setY(double y) { this->y = y; }
@@ -285,12 +293,12 @@ void Object::shootProjectile() {
 }
 
 /**
- * Updates an object every tick. This is set as empty, but should be overridden by 
- * child classes. 
+ * Updates an object every tick. This is set as a simple movement function for now, 
+ * but can and should be overridden by child classes. 
  */
 void Object::update() {
-	//x += velx;
-	//y += vely;
+	x += velx;
+	y += vely;
 }
 
 SDL_Point Object::getCenter() {
