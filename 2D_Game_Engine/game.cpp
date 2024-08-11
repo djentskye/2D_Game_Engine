@@ -142,7 +142,10 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h,
 void Game::handleEvents()
 {
 	SDL_Event event;
+	//SDL_PollEvent(&event);
+	//switch (event.type)
 	SDL_PollEvent(&event);
+
 	switch (event.type)
 	{
 	//Catch and handle keypress events

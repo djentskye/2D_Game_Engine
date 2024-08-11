@@ -59,7 +59,7 @@ public:
 	double getHealth();
 	double getMaxHealth();
 	void shootProjectile();
-	void update();
+	virtual void update();
 	bool isEntity();
 
 protected:

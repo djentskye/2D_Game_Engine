@@ -30,6 +30,11 @@ void t_render()
 	g->render();
 }
 
+//Unused events handling thread
+void t_handleEvents() {
+	g->handleEvents();
+}
+
 int main(int argc, const char* argv[]) {
 	g = new Game();
 

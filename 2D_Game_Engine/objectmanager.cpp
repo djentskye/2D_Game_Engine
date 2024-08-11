@@ -103,10 +103,11 @@ void ObjectManager::updateObjects()
 		if (!physics.applyPhysics((*it).second)) {
 			it = objMap.erase(it);
 		}
-		if (obj->isEntity()) {
-			obj->update();
-		}
 		else {
+			if (obj->isEntity()) {
+				obj->update();
+			}
+
 			//Checks to make sure we don't accidentally increment something we can't
 			if (it == objMap.end()) {
 				break;

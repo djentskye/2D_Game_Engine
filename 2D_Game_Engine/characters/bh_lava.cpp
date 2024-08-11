@@ -13,7 +13,9 @@ bh_lava::bh_lava() {
 	physics_state = obj_dynamic;
 	tick01 = Game::getTick();
 	shooting = false;
+	health = 40;
 	maxHealth = 40;
+	entity = true;
 }
 
 bh_lava::bh_lava(double xDest, double yDest) {
@@ -25,7 +27,9 @@ bh_lava::bh_lava(double xDest, double yDest) {
 	physics_state = obj_dynamic;
 	tick01 = Game::getTick();
 	shooting = false;
+	health = 40;
 	maxHealth = 40;
+	entity = true;
 }
 
 /**
