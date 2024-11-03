@@ -17,6 +17,7 @@ public:
 	static void setKeyboardFocus(game_keyfocus k);
 
 private:
+	bool keyboardEventMenu(int sym, SDL_EventType eventType);
 	bool keyboardEventConsole(int sym, SDL_EventType eventType);
 	bool keyboardEventGame(int sym, SDL_EventType eventType);
 

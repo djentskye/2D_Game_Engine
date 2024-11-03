@@ -14,7 +14,7 @@ public:
 	void exit();
 	static void renderConsole();
 	static void render();
-	SDL_Renderer* getRenderer();
+	static SDL_Renderer* getRenderer();
 	static int addToRenderQueue(Object* o);
 	static void addToRenderQueue(int i, Object o);
 	static void removeFromRenderQueue(Object* o);

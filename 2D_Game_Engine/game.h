@@ -4,7 +4,9 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include "renderer.h"
+#include "mouse.h"
 #include <chrono>
+#include "ui/menus.h"
 #undef main
 
 class Game
@@ -33,6 +35,7 @@ private:
 	bool isRunning;
 	SDL_Window *window;
 	Player* player;
+	Menus* menu;
 
 	//A few private variables that we want to keep track of!
 	bool WINDOW_FULLSCREEN;

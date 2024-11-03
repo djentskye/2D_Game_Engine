@@ -28,6 +28,56 @@ Keyboard::Keyboard() {
 
 Keyboard::~Keyboard() {}
 
+bool Keyboard::keyboardEventMenu(int sym, SDL_EventType eventType) {
+	//Try-catch doesn't work here because of terrible memory management stuff??
+	try {
+		//std::cout << sym + " pressed! Command: " + keymap.at(sym) << std::endl;
+		if (eventType == SDL_KEYDOWN)
+		{
+			if (sym == SDLK_BACKQUOTE) {
+				setKeyboardFocus(gs_keyboard_console);
+				Console::openConsole();
+			}
+			else if (sym == SDLK_RETURN) {
+				Console::newLine();
+			}
+			else if (sym == SDLK_BACKSPACE) {
+				Console::backspace();
+			}
+			else if (sym == SDLK_LEFT) {
+				Console::cursorLeft();
+			}
+			else if (sym == SDLK_RIGHT) {
+				Console::cursorRight();
+			}
+			else if (sym == SDLK_UP) {
+				Console::cursorUp();
+			}
+			else if (sym == SDLK_DOWN) {
+				Console::cursorDown();
+			}
+			else if (sym == SDLK_LSHIFT || sym == SDLK_RSHIFT) {
+				Console::setShift(true);
+			}
+			else {
+				//If this is a keydown command, just run the bound command
+				Console::writeChar(sym);
+			}
+		}
+		else
+		{
+			//If this is a keyup command, check if we need to do anything
+			if (sym == SDLK_LSHIFT || sym == SDLK_RSHIFT) {
+				Console::setShift(false);
+			}
+		}
+		return true;
+	}
+	catch (std::out_of_range) {
+		return false;
+	}
+}
+
 bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 	//Try-catch doesn't work here because of terrible memory management stuff??
 		try {
@@ -125,8 +175,7 @@ bool Keyboard::keyboardEvent(int sym, SDL_EventType eventType)
 		return keyboardEventConsole(sym, eventType);
 	}
 	else if (keyboardFocus == gs_keyboard_menu) {
-		//TODO
-		return false;
+		return keyboardEventMenu(sym, eventType);
 	}
 	else {
 		return false;

@@ -160,3 +160,5 @@ bool loadMap::load(std::string filepath) {
 
 	return true;
 }
+
+//TODO: Create a function that loads menus?? They can also be stored in map files

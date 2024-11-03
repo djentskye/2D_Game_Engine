@@ -29,6 +29,7 @@
     <ClCompile Include="io\parseCFG.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mouse.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="objectmanager.cpp" />
     <ClCompile Include="physics.cpp" />
@@ -36,6 +37,9 @@
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="texture.cpp" />
+    <ClCompile Include="ui\button.cpp" />
+    <ClCompile Include="ui\menus.cpp" />
+    <ClCompile Include="ui\ui_element.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="characters\bh_lava.h" />
@@ -48,6 +52,7 @@
     <ClInclude Include="io\loadMap.h" />
     <ClInclude Include="io\parseCFG.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="mouse.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="objectmanager.h" />
     <ClInclude Include="physics.h" />
@@ -55,6 +60,10 @@
     <ClInclude Include="projectile.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="texture.h" />
+    <ClInclude Include="ui\button.h" />
+    <ClInclude Include="ui\menus.h" />
+    <ClInclude Include="ui\ui_element.h" />
+    <ClInclude Include="ui\ui_elements.h" />
     <ClInclude Include="variables.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -12,6 +12,7 @@
 #include "player.h"
 #include "io/console.h"
 #include "game.h"
+#include "ui/menus.h"
 
 static SDL_Renderer* renderer;
 static std::map<int, Object*> renderQueue;
@@ -106,6 +107,12 @@ void Renderer::render()
 	//Render the console if it's currently showing
 	if (Console::consoleShowing()) {
 		renderConsole();
+	}
+
+	//Render the menus if they are currently showing
+	if (Gamestates::getGamestate() == gs_menu ||
+		Gamestates::getGamestate() == gs_pausemenu) {
+		Menus::renderActiveMenu();
 	}
 
 	SDL_RenderPresent(renderer);

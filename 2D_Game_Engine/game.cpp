@@ -29,6 +29,7 @@
 #include "io/console.h"
 #include "texture.h"
 #include "projectile.h"
+//#include "ui/menus.h"
 
 SDL_Texture* block;
 
@@ -130,7 +131,9 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h,
 
 	loadMap::initMapLoader(player, renderer, &om);
 
-	loadMap::load("test");
+	//loadMap::load("test");
+	menu = new Menus();
+	menu->displayMainMenu();
 
 	ticks = 0;
 }
@@ -157,6 +160,10 @@ void Game::handleEvents()
 	case SDL_KEYUP:
 		keyboard.keyboardEvent(event.key.keysym.sym, SDL_KEYUP);
 		break;
+	//case SDL_MOUSEBUTTONDOWN:
+
+	//case SDL_MOUSEBUTTONUP:
+
 	case SDL_QUIT: 
 		isRunning = false;
 		break;
