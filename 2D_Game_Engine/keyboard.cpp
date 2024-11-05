@@ -14,6 +14,7 @@
 #include "commands.h"
 #include <string>
 #include "io/console.h"
+#include "ui/menus.h"
 
 //Stores keybindings; integer key is the SDL virtual keycode and string value is the associated command
 //TODO: Allocate memory somewhere else. This is breaking some keys, seemingly
@@ -39,29 +40,23 @@ bool Keyboard::keyboardEventMenu(int sym, SDL_EventType eventType) {
 				Console::openConsole();
 			}
 			else if (sym == SDLK_RETURN) {
-				Console::newLine();
+				Menus::select();
 			}
-			else if (sym == SDLK_BACKSPACE) {
-				Console::backspace();
+			else if (sym == SDLK_LEFT || sym == SDLK_a) {
+				Menus::cursorLeft();
 			}
-			else if (sym == SDLK_LEFT) {
-				Console::cursorLeft();
+			else if (sym == SDLK_RIGHT || sym == SDLK_d) {
+				Menus::cursorRight();
 			}
-			else if (sym == SDLK_RIGHT) {
-				Console::cursorRight();
+			else if (sym == SDLK_UP || sym == SDLK_w) {
+				Menus::cursorUp();
 			}
-			else if (sym == SDLK_UP) {
-				Console::cursorUp();
-			}
-			else if (sym == SDLK_DOWN) {
-				Console::cursorDown();
-			}
-			else if (sym == SDLK_LSHIFT || sym == SDLK_RSHIFT) {
-				Console::setShift(true);
+			else if (sym == SDLK_DOWN || sym == SDLK_s) {
+				Menus::cursorDown();
 			}
 			else {
 				//If this is a keydown command, just run the bound command
-				Console::writeChar(sym);
+				//Console::writeChar(sym);
 			}
 		}
 		else

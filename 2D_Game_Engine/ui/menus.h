@@ -23,8 +23,14 @@ public:
 	static void displayPauseMenu();
 	static void closePauseMenu();
 	static void renderActiveMenu();
+	static void select();
+	static void cursorLeft();
+	static void cursorRight();
+	static void cursorUp();
+	static void cursorDown();
 
 private:
+	static void setCursorLocationByUIElement(ui_element* uiel);
 	//References the currently selected element in the menu
 	//int cursor_opacity;
 	//double cursor_x, cursor_y, cursor_w, cursor_h;

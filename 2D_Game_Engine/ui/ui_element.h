@@ -26,6 +26,7 @@ public:
 	void setWidth(int width);
 	void setHeight(int height);
 	void setDepth(int d);
+	virtual void onPress();
 	bool setTexture(SDL_Texture* texture);
 	SDL_RendererFlip getTextureFlip();
 	void setTextureFlip(SDL_RendererFlip rf);

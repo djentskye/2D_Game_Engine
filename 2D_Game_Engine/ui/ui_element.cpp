@@ -56,6 +56,8 @@ void ui_element::setHeight(int height) { h = height; }
 
 void ui_element::setDepth(int d) { this->d = d; }
 
+void ui_element::onPress() {}
+
 /**
  * Sets the texture of an object to a preexisting texture
  *

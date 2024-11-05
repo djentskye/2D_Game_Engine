@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "variables.h"
+#include "keyboard.h"
 
 class Gamestates
 {

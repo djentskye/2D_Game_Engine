@@ -27,6 +27,12 @@ void Gamestates::init() {
  */
 void Gamestates::setGamestate(game_state g) {
 	*gamestate = g;
+	if (g == gs_menu || g == gs_pausemenu) {
+		Keyboard::setKeyboardFocus(gs_keyboard_menu);
+	}
+	else {
+		Keyboard::setKeyboardFocus(gs_keyboard_game);
+	}
 }
 
 /**
