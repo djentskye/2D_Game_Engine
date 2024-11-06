@@ -8,7 +8,6 @@
 #include <iostream>
 #include "../variables.h"
 #include <cmath>
-//#include "../game.h"
 
 class ui_element { 
 public:
@@ -37,6 +36,7 @@ protected:
 	double x, y;
 	int w, h, d;
 	double velx, vely;
+	bool selectable;
 	SDL_Texture* texture;
 	std::string name;
 	SDL_RendererFlip texture_flipped;

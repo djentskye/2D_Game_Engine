@@ -93,7 +93,7 @@
     <ClCompile Include="ui\menus.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
-    <ClCompile Include="ui\button.cpp">
+    <ClCompile Include="ui\ui_button.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="ui\ui_element.cpp">
@@ -101,6 +101,18 @@
     </ClCompile>
     <ClCompile Include="mouse.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\main_menu.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\ui_text.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\settings_menu.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\pause_menu.cpp">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +173,7 @@
     <ClInclude Include="ui\menus.h">
       <Filter>Header Files\ui</Filter>
     </ClInclude>
-    <ClInclude Include="ui\button.h">
+    <ClInclude Include="ui\ui_button.h">
       <Filter>Header Files\ui</Filter>
     </ClInclude>
     <ClInclude Include="ui\ui_element.h">
@@ -172,6 +184,18 @@
     </ClInclude>
     <ClInclude Include="mouse.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\main_menu.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ui_text.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\settings_menu.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\pause_menu.h">
+      <Filter>Header Files\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@ public:
 
 private: 
 	static Game* game;
+	static void runMenusCommand(std::string str);
 };
 
 #endif

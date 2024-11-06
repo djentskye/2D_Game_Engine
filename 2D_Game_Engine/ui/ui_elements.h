@@ -8,4 +8,5 @@
 #pragma once
 
 #include "ui_element.h"
-#include "button.h"
+#include "ui_button.h"
+#include "ui_text.h"

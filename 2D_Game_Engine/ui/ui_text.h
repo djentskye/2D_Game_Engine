@@ -11,28 +11,18 @@
 #include "../renderer.h"
 #include "SDL.h"
 
-typedef enum
-{
-	DEFAULT = 0
-} BUTTON_STYLE;
-
-class Button : public ui_element
+class UI_Text : public ui_element
 {
 public:
-	Button(std::string txt, int x_dest, int y_dest, int width, int height);
+	UI_Text(std::string txt, int x_dest, int y_dest, int width, int height);
 	void setLocation(int x_dest, int y_dest);
 	void setSize(int width, int height);
-	void setStyle(BUTTON_STYLE requested_style);
 	void setText(std::string txt);
 	void setFont(std::string font_name);
 	void setFontSize(int s);
 	void setFontColor(SDL_Color c);
 	void setTextLocation(int x, int y);
 	void setTextCentered();
-	void select();
-	void deselect();
-	void setCommand(std::string command);
-	void onPress();
 	void render();
 	void update();
 private:
@@ -40,7 +30,6 @@ private:
 	std::string text;
 	std::string font;
 	SDL_Texture* text_texture;
-	BUTTON_STYLE style;
 	//int font_size;
 	SDL_Color font_color;
 	SDL_Rect* textRect;

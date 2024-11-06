@@ -44,6 +44,9 @@ bool Keyboard::keyboardEventMenu(int sym, SDL_EventType eventType) {
 			else if (sym == SDLK_RETURN) {
 				Menus::select();
 			}
+			else if (sym == SDLK_ESCAPE) {
+				Commands::runCommand(Menus::trace());
+			}
 			else if (sym == SDLK_LEFT || sym == SDLK_a) {
 				Menus::cursorLeft();
 			}
@@ -81,7 +84,7 @@ bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 			//std::cout << sym + " pressed! Command: " + keymap.at(sym) << std::endl;
 			if (eventType == SDL_KEYDOWN)
 			{
-				if (sym == SDLK_BACKQUOTE) {
+				if (sym == SDLK_BACKQUOTE || sym == SDLK_ESCAPE) {
 					//Return the keyboard focus to the last game state that had it
 					setKeyboardFocus(Gamestates::gameStateToGameKeyfocus(
 						Gamestates::returnToPriorGamestate()));

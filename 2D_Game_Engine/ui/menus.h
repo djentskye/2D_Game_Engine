@@ -12,15 +12,19 @@
 #include "../gamestates.h"
 #include "ui_elements.h"
 #include "../texture.h"
-
+#include "main_menu.h"
+#include "settings_menu.h"
+#include "pause_menu.h"
 
 class Menus
 {
 public:
 	static void init();
-	static void displayMainMenu();
+	static void displayMainMenu(std::string trace);
+	static void displaySettingsMenu(std::string trace);
+	static void displaySettingsAudioMenu(std::string trace);
 	static void closeMainMenu();
-	static void displayPauseMenu();
+	static void displayPauseMenu(std::string trace);
 	static void closePauseMenu();
 	static void renderActiveMenu();
 	static void select();
@@ -28,6 +32,7 @@ public:
 	static void cursorRight();
 	static void cursorUp();
 	static void cursorDown();
+	static std::string trace();
 
 private:
 	static void setCursorLocationByUIElement(ui_element* uiel);

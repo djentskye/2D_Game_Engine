@@ -1,8 +1,8 @@
 //#include "ui_element.h"
-#include "button.h"
+#include "ui_button.h"
 #include "../commands.h"
 
-Button::Button(std::string txt, int x_dest, int y_dest, int width, int height) {
+UI_Button::UI_Button(std::string txt, int x_dest, int y_dest, int width, int height) {
 	text = txt;
 	x = x_dest;
 	y = y_dest;
@@ -22,14 +22,15 @@ Button::Button(std::string txt, int x_dest, int y_dest, int width, int height) {
 	rect->w = w;
 	rect->h = h;
 	setText(txt);
+	selectable = true;
 }
 
-void Button::setLocation(int x_dest, int y_dest) {
+void UI_Button::setLocation(int x_dest, int y_dest) {
 	x = x_dest;
 	y = y_dest;
 }
 
-void Button::setSize(int width, int height) {
+void UI_Button::setSize(int width, int height) {
 	w = width;
 	h = height;
 }
@@ -39,13 +40,13 @@ void Button::setSize(int width, int height) {
  *
  * @param BUTTON_STYLE requested_style
  */
-void Button::setStyle(BUTTON_STYLE requested_style) {
+void UI_Button::setStyle(BUTTON_STYLE requested_style) {
 	//Sets the style of the button to a pre-defined style
 	//TODO: Implement this function fully
 	style = requested_style;
 }
 
-void Button::setText(std::string txt) {
+void UI_Button::setText(std::string txt) {
 	text = txt;
 	text_texture = Fonts::getRenderedText(txt, font, TEXT_WIDTH, font_color);
 
@@ -57,7 +58,7 @@ void Button::setText(std::string txt) {
 	//		the fonts class. 
 }
 
-void Button::setFont(std::string font_name) {
+void UI_Button::setFont(std::string font_name) {
 	font = font_name;
 }
 
@@ -65,7 +66,7 @@ void Button::setFont(std::string font_name) {
 	font_size = s;
 }*/
 
-void Button::setFontColor(SDL_Color c) {
+void UI_Button::setFontColor(SDL_Color c) {
 	font_color = c;
 }
 
@@ -76,35 +77,35 @@ void Button::setFontColor(SDL_Color c) {
  * @param int x_dest
  * @param int y_dest
  */
-void Button::setTextLocation(int x_dest, int y_dest) {
+void UI_Button::setTextLocation(int x_dest, int y_dest) {
 	text_x = x_dest;
 	text_y = y_dest;
 }
 
-void Button::setTextCentered() {
+void UI_Button::setTextCentered() {
 	text_x = w / 2 - ((text.length() * TEXT_WIDTH)/2);
 	text_y = h / 2 - ((/*Number of lines*/1 * TEXT_HEIGHT) / 2);
 }
 
-void Button::select() {}
+void UI_Button::select() {}
 
-void Button::deselect() {}
+void UI_Button::deselect() {}
 
 /**
  * Set the command that should be run upon pressing the button (on_press)
  */
-void Button::setCommand(std::string command) {
+void UI_Button::setCommand(std::string command) {
 	on_press = command;
 }
 
 /**
  * Runs the button's on_press command
  */
-void Button::onPress() {
+void UI_Button::onPress() {
 	Commands::runCommand(on_press);
 }
 
-void Button::render() {
+void UI_Button::render() {
 	//Render the background texture
 	SDL_RenderCopy(Renderer::getRenderer(), texture, NULL, rect);
 
@@ -112,6 +113,6 @@ void Button::render() {
 	SDL_RenderCopy(Renderer::getRenderer(), text_texture, NULL, textRect);
 }
 
-void Button::update() {
+void UI_Button::update() {
 	//Play any animations or show selection here
 }

@@ -7,51 +7,77 @@
 #include "menus.h"
 
 std::map<int, ui_element*> elementQueue;
+std::map<int, ui_element*> nonselectableElementQueue;
 static ui_element* cursor_element;
 static int cursor_element_int;
 static SDL_Texture* cursor_texture;
 static SDL_Rect cursor_rect;
 static bool cursor_anim; //false means shrinking, true means growing
+static std::string lastTrace;
+static int animationCounter;
 
 void Menus::init() {
 	//elementQueue = new std::map<int, ui_element*>();
 	cursor_texture = Texture::getTexture("assets/textures/selection_box2.png");
+	lastTrace = "";
 	//printf("");
+	cursor_anim = true;
+	animationCounter = 0;
 }
 
 void Menus::setCursorLocationByUIElement(ui_element* uiel) {
-	cursor_rect.x = uiel->getX() - 10;
-	cursor_rect.y = uiel->getY() - 10;
-	cursor_rect.w = uiel->getWidth() + 20;
-	cursor_rect.h = uiel->getHeight() + 20;
+	cursor_rect.x = uiel->getX() - 30;
+	cursor_rect.y = uiel->getY() - 20;
+	cursor_rect.w = uiel->getWidth() + 60;
+	cursor_rect.h = uiel->getHeight() + 40;
+
+	animationCounter = 0;
 }
 
-void Menus::displayMainMenu() {
-	//Add all relevant objects to the element queue
-	Button* b_start = new Button("Start Game", 100, 100, 200, 80);
-	b_start->setCommand("map test");
-	elementQueue.insert({0, b_start });
-
-	Button* b_settings = new Button("Settings", 100, 250, 200, 80);
-	b_settings->setCommand("menu settings");
-	elementQueue.insert({ 1, b_settings });
-
-	Button* b_exit = new Button("Exit", 100, 400, 200, 80);
-	b_exit->setCommand("exit");
-	elementQueue.insert({ 2, b_exit });
+void Menus::displayMainMenu(std::string trace) {
+	lastTrace = trace;
+	main_menu::loadMainMenu(&elementQueue, &nonselectableElementQueue, trace);
 
 	cursor_element = elementQueue.at(0);
 	cursor_element_int = 0;
 
-	//setCursorLocationByUIElement(elementQueue.at(0));
 	setCursorLocationByUIElement(cursor_element);
 }
 
+void Menus::displaySettingsMenu(std::string trace) {
+	lastTrace = trace;
+	settings_menu::loadSettings(&elementQueue, &nonselectableElementQueue, trace);
+
+	cursor_element = elementQueue.at(0);
+	cursor_element_int = 0;
+
+	setCursorLocationByUIElement(cursor_element);
+}
+
+void Menus::displaySettingsAudioMenu(std::string trace) {
+	lastTrace = trace;
+	settings_menu::loadAudioSettings(&elementQueue, &nonselectableElementQueue, trace);
+
+	cursor_element = elementQueue.at(0);
+	cursor_element_int = 0;
+
+	setCursorLocationByUIElement(cursor_element);
+}
+
+//Will be deprecated. lol
 void Menus::closeMainMenu() {
 	//Remove elements from top to bottom???
 }
 
-void Menus::displayPauseMenu() {}
+void Menus::displayPauseMenu(std::string trace) {
+	lastTrace = trace;
+	pause_menu::loadPauseMenu(&elementQueue, &nonselectableElementQueue, trace);
+
+	cursor_element = elementQueue.at(0);
+	cursor_element_int = 0;
+
+	setCursorLocationByUIElement(cursor_element);
+}
 
 void Menus::closePauseMenu() {}
 
@@ -63,24 +89,31 @@ void Menus::renderActiveMenu() {
 		element.second->render();
 	}
 
+	for (std::pair<int, ui_element*> element : nonselectableElementQueue) {
+		element.second->render();
+	}
+
 	//Cycle through animation for the cursor!
-	/*if (cursor_anim && cursor_rect.x > cursor_element->getX() - 15) {
+	if (cursor_anim && cursor_rect.x > cursor_element->getX() - 30 && animationCounter == 7) {
 		cursor_rect.x--;
 		cursor_rect.y--;
 		cursor_rect.w += 2;
 		cursor_rect.h += 2;
-	}
-	else {
-		cursor_anim == false;
+
+		animationCounter = 0;
+	} else if(animationCounter == 7) {
+		cursor_anim = false;
 		cursor_rect.x++;
 		cursor_rect.y++;
 		cursor_rect.w -= 2;
 		cursor_rect.h -= 2;
-	}
 
-	if (cursor_rect.x == cursor_element->getX()) {
+		animationCounter = 0;
+	}
+	if (cursor_rect.x == cursor_element->getX() - 20) {
 		cursor_anim = true;
-	}*/
+	}
+	animationCounter++;
 
 	SDL_RenderCopy(Renderer::getRenderer(), cursor_texture, NULL, &cursor_rect);
 }
@@ -128,4 +161,8 @@ void Menus::cursorDown() {
 		cursor_element = elementQueue.at(cursor_element_int);
 		setCursorLocationByUIElement(cursor_element);
 	}
+}
+
+std::string Menus::trace() {
+	return lastTrace;
 }

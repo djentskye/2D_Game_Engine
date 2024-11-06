@@ -37,9 +37,13 @@
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="texture.cpp" />
-    <ClCompile Include="ui\button.cpp" />
+    <ClCompile Include="ui\pause_menu.cpp" />
+    <ClCompile Include="ui\settings_menu.cpp" />
+    <ClCompile Include="ui\ui_button.cpp" />
+    <ClCompile Include="ui\main_menu.cpp" />
     <ClCompile Include="ui\menus.cpp" />
     <ClCompile Include="ui\ui_element.cpp" />
+    <ClCompile Include="ui\ui_text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="characters\bh_lava.h" />
@@ -60,10 +64,14 @@
     <ClInclude Include="projectile.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="texture.h" />
-    <ClInclude Include="ui\button.h" />
+    <ClInclude Include="ui\pause_menu.h" />
+    <ClInclude Include="ui\settings_menu.h" />
+    <ClInclude Include="ui\ui_button.h" />
+    <ClInclude Include="ui\main_menu.h" />
     <ClInclude Include="ui\menus.h" />
     <ClInclude Include="ui\ui_element.h" />
     <ClInclude Include="ui\ui_elements.h" />
+    <ClInclude Include="ui\ui_text.h" />
     <ClInclude Include="variables.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

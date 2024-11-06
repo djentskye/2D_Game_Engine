@@ -12,6 +12,7 @@
 #include <string>
 #include "gamestates.h"
 #include "io/loadMap.h"
+#include <algorithm>
 
 Game* Commands::game;
 
@@ -31,6 +32,11 @@ Commands::Commands(Game* g) {
  * @param std::string str
  */
 void Commands::runCommand(std::string str) {
+	//Remove whitespace from the beginning of the command, if there is any
+	while (str.length() > 0 && str[0] == ' ') {
+		str = str.substr(1, std::string::npos);
+	}
+
 	if(str == "quit" || str == "exit") {
 		Console::print("Exiting game");
 		game->exit();
@@ -116,9 +122,30 @@ void Commands::runCommand(std::string str) {
 			return;
 		}
 	}
-	if (str == "menu_pause") {
+	if (str == "close_console") {
+		Console::closeConsole();
+		return;
+	}
+	if (str.substr(0, 5) == "menu_") {
+		//We split up menu commands since they make this function much longer
+		Commands::runMenusCommand(str);
+	}
+
+	Console::print("Command not found");
+}
+
+void Commands::runMenusCommand(std::string str) {
+	if (str.substr(0, 11) == "menu_pause " || str == "menu_pause") {
 		Gamestates::setGamestate(gs_menu);
-		Menus::displayPauseMenu();
+
+		//If we have a callback then store it
+		if (str.length() > 11) {
+			Menus::displayPauseMenu(str.substr(11, std::string::npos));
+
+		}
+		else {
+			Menus::displayPauseMenu("");
+		}
 
 		if (Console::isOpen()) {
 			Console::closeConsole();
@@ -136,9 +163,17 @@ void Commands::runCommand(std::string str) {
 
 		return;
 	}
-	if (str == "menu_main") {
+	if (str.substr(0, 10) == "menu_main " || str == "menu_main") {
 		Gamestates::setGamestate(gs_menu);
-		Menus::displayMainMenu();
+
+		//If we have a callback then store it
+		if (str.length() > 10) {
+			Menus::displayMainMenu(str.substr(10, std::string::npos));
+
+		}
+		else {
+			Menus::displayMainMenu("");
+		}
 
 		if (Console::isOpen()) {
 			Console::closeConsole();
@@ -146,10 +181,38 @@ void Commands::runCommand(std::string str) {
 
 		return;
 	}
-	if (str == "close_console") {
-		Console::closeConsole();
+	if (str.substr(0, 14) == "menu_settings " || str == "menu_settings") {
+		Gamestates::setGamestate(gs_menu);
+
+		//If we have a callback then store it
+		if (str.length() > 14) {
+			Menus::displaySettingsMenu(str.substr(14, std::string::npos));
+		}
+		else {
+			Menus::displaySettingsMenu("");
+		}
+
+		if (Console::isOpen()) {
+			Console::closeConsole();
+		}
+
 		return;
 	}
+	if (str.substr(0, 20) == "menu_settings_audio " || str == "menu_settings_audio") {
+		Gamestates::setGamestate(gs_menu);
 
-	Console::print("Command not found");
+		//If we have a callback then store it
+		if (str.length() > 20) {
+			Menus::displaySettingsAudioMenu(str.substr(20, std::string::npos));
+		}
+		else {
+			Menus::displaySettingsAudioMenu("");
+		}
+
+		if (Console::isOpen()) {
+			Console::closeConsole();
+		}
+
+		return;
+	}
 }
