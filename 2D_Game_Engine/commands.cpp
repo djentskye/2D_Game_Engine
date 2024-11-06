@@ -11,6 +11,7 @@
 #include "game.h"
 #include <string>
 #include "gamestates.h"
+#include "io/loadMap.h"
 
 Game* Commands::game;
 
@@ -31,11 +32,12 @@ Commands::Commands(Game* g) {
  */
 void Commands::runCommand(std::string str) {
 	if(str == "quit" || str == "exit") {
+		Console::print("Exiting game");
 		game->exit();
 		return;
 	}
 	if (str == "djent") {
-		std::cout << "djent" << std::endl;
+		Console::print("djent");
 		return;
 	}
 	if (str == "+left") {
@@ -78,8 +80,16 @@ void Commands::runCommand(std::string str) {
 		game->getPlayer()->stopAttacking();
 		return;
 	}
-	if (str.substr(0, 3) == "map") {
+	if (str.substr(0, 4) == "map ") {
 		std::string toLoad = str.substr(4, std::string::npos);
+
+		if (!loadMap::load(toLoad)) {
+			Console::print(toLoad + ".map not found");
+		}
+		else {
+			Gamestates::setGamestate(gs_game);
+		}
+
 		return;
 	}
 	if (str.substr(0, 15) == "g_setGameState ") {
@@ -106,4 +116,40 @@ void Commands::runCommand(std::string str) {
 			return;
 		}
 	}
+	if (str == "menu_pause") {
+		Gamestates::setGamestate(gs_menu);
+		Menus::displayPauseMenu();
+
+		if (Console::isOpen()) {
+			Console::closeConsole();
+		}
+
+		return;
+	}
+	if (str == "menu_unpause") {
+		Gamestates::setGamestate(gs_game);
+		Menus::closePauseMenu();
+
+		if (Console::isOpen()) {
+			Console::closeConsole();
+		}
+
+		return;
+	}
+	if (str == "menu_main") {
+		Gamestates::setGamestate(gs_menu);
+		Menus::displayMainMenu();
+
+		if (Console::isOpen()) {
+			Console::closeConsole();
+		}
+
+		return;
+	}
+	if (str == "close_console") {
+		Console::closeConsole();
+		return;
+	}
+
+	Console::print("Command not found");
 }

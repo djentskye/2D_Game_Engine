@@ -12,6 +12,7 @@
 static game_state* gamestate;
 static game_leveltype* gamemode;
 static game_camerastate* camerastate;
+static game_state prior_gamestate;
 
 /**
  * Constructs the game state variables
@@ -26,13 +27,13 @@ void Gamestates::init() {
  * Sets the game state
  */
 void Gamestates::setGamestate(game_state g) {
+
+	//Save the last gamestate if we're opening the console, so we can return to it
+	//if (g == gs_console) {
+	prior_gamestate = *gamestate;
+	//}
+
 	*gamestate = g;
-	if (g == gs_menu || g == gs_pausemenu) {
-		Keyboard::setKeyboardFocus(gs_keyboard_menu);
-	}
-	else {
-		Keyboard::setKeyboardFocus(gs_keyboard_game);
-	}
 }
 
 /**
@@ -54,4 +55,25 @@ void Gamestates::setGamemode(game_leveltype g) {
  */
 game_leveltype Gamestates::getGamemode() {
 	return *gamemode;
+}
+
+game_state Gamestates::returnToPriorGamestate() {
+	*gamestate = prior_gamestate;
+	return *gamestate;
+}
+
+game_keyfocus Gamestates::gameStateToGameKeyfocus(game_state gs) {
+	if (gs == gs_menu || gs == gs_pausemenu) {
+		return gs_keyboard_menu;
+	}
+	if (gs == gs_console) {
+		return gs_keyboard_console;
+	}
+	if (gs == gs_game) {
+		return gs_keyboard_game;
+	}
+}
+
+game_state Gamestates::getPriorGamestate() {
+	return prior_gamestate;
 }

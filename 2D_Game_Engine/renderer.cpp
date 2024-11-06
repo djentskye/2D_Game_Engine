@@ -94,6 +94,14 @@ void Renderer::render()
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
+	//Render the menus if they are currently showing
+	if (Gamestates::getGamestate() == gs_menu ||
+		Gamestates::getGamestate() == gs_pausemenu) {
+		Menus::renderActiveMenu();
+		SDL_RenderPresent(renderer);
+		return;
+	}
+
 	//Literally render everything here
 	//TODO: [REND] Implement a system for render order
 	//TODO: [REND] Render background
@@ -106,13 +114,17 @@ void Renderer::render()
 
 	//Render the console if it's currently showing
 	if (Console::consoleShowing()) {
-		renderConsole();
-	}
+		//Display the menu in the background if it was showing last
+		if (Gamestates::getPriorGamestate() == gs_menu) {
+			Menus::renderActiveMenu();
+		}
 
-	//Render the menus if they are currently showing
-	if (Gamestates::getGamestate() == gs_menu ||
-		Gamestates::getGamestate() == gs_pausemenu) {
-		Menus::renderActiveMenu();
+		//Display the game in the background if it was showing last
+		if (Gamestates::getPriorGamestate() == gs_game) {
+			//??????????????
+		}
+
+		renderConsole();
 	}
 
 	SDL_RenderPresent(renderer);

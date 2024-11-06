@@ -125,10 +125,20 @@ void Console::closeConsole() {
 void Console::writeChar(int sym) {
 
 	//Apply shift if it is currently held
+	//TODO: Expand functionality to include more keys. 
 	if (shift) {
-		//TODO: This only works on letters at the moment. Expand functionality
-		//to include more keys. 
-		sym -= 32;
+		if (sym >= 97 && sym <= 122) {
+			sym -= 32;
+		}
+		else if (sym == '-') {
+			sym = '_';
+		}
+		else if (sym >= 91 && sym <= 93) {
+			sym += 32;
+		}
+		else if (sym == '=') {
+			sym = '+';
+		}
 	}
 	if (sym == SDLK_ESCAPE) {
 		closeConsole();
@@ -156,16 +166,7 @@ void Console::writeChar(int sym) {
 	cursorRight();
 }
 
-/**
- * Creates a new line in the console. This should occur when enter/return is pressed. 
- */
-void Console::newLine() {
-	//Run the command present in the text bar
-	Commands::runCommand(currentCommand);
-
-	//Reset the currentCommand string
-	currentCommand = "";
-
+void Console::pushThisLineUp() {
 	//If we are at our max number of lines, start removing the oldest lines!
 	if (numLines == maxLines) {
 		std::list<Object*>::iterator it;
@@ -174,7 +175,8 @@ void Console::newLine() {
 				if (textObjMap->size() == 1) {
 					textObjMap->erase(it);
 					break;
-				} else {
+				}
+				else {
 					//Remove the top row of text textures
 					it = textObjMap->erase(it);
 				}
@@ -182,7 +184,7 @@ void Console::newLine() {
 			else {
 				//Move the textures up to the next line
 				(*it)->setY((*it)->getY() - (textHeight + 1));
-				(*it)->setDepth((*it)->getDepth()+1);
+				(*it)->setDepth((*it)->getDepth() + 1);
 				it++;
 			}
 
@@ -193,14 +195,14 @@ void Console::newLine() {
 
 		cursorResetX();
 
-		currentCommand = "";
+		//currentCommand = "";
 	}
 	else {
 		numLines++;
 		cursorDown();
 		cursorResetX();
 
-		currentCommand = "";
+		//currentCommand = "";
 
 		std::list<Object*>::iterator it;
 		for (it = textObjMap->begin(); it != textObjMap->end(); ++it) {
@@ -214,6 +216,20 @@ void Console::newLine() {
 		backgroundObj->setVelocity(0, 0.8);
 		requestedBackgroundY += backgroundShiftIncrementSize;
 	}
+}
+
+/**
+ * Creates a new line in the console. This should occur when enter/return is pressed. 
+ */
+void Console::newLine() {
+
+	pushThisLineUp();
+
+	//Run the command present in the text bar
+	Commands::runCommand(currentCommand);
+
+	//Reset the currentCommand string
+	currentCommand = "";
 }
 
 Object* Console::getBackgroundObj() {
@@ -315,4 +331,31 @@ void Console::update() {
 	if (backgroundObj->getDestination()->y < requestedBackgroundY) {
 		backgroundObj->update();
 	}
+}
+
+void Console::print(std::string str) {
+
+	std::string outputStr = "> " + str;
+
+	Object* outputLine = new Object();
+
+	outputLine->setDestination(0, (numLines-1) *
+	(textHeight + 1), ((textWidth+1) * (str.length() + 2)), textHeight);
+	
+
+
+	//Get the string texture
+	outputLine->setTexture(Fonts::getRenderedText(outputStr, textFont, textHeight, textColor));
+
+	//We will use the depth to store which row a letter is on
+	outputLine->setDepth(1);
+
+	//Put our character object in the textObjMap
+	textObjMap->push_back(outputLine);
+	
+	pushThisLineUp();
+}
+
+bool Console::isOpen() {
+	return showConsole;
 }

@@ -20,6 +20,7 @@ public:
 	static void openConsole();
 	static void closeConsole();
 	static void writeChar(int sym);
+	static void pushThisLineUp();
 	static void newLine();
 	static Object* getBackgroundObj();
 	static std::list<Object*>* getTextObjMap();
@@ -33,6 +34,8 @@ public:
 	static void backspace();
 	static void setShift(bool b);
 	static void update();
+	static void print(std::string str);
+	static bool isOpen();
 
 private:
 

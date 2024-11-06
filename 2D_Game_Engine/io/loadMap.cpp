@@ -112,7 +112,6 @@ Object* loadMap::loadObject(std::string objData) {
  * @param std::string filepath
  */
 bool loadMap::load(std::string filepath) {
-	Commands::runCommand("g_setGameState gs_game");
 
 	std::ifstream mapFile;
 	std::string fullMapString = "maps/" + filepath + ".map";
@@ -121,6 +120,8 @@ bool loadMap::load(std::string filepath) {
 	std::string tempString;
 
 	if (mapFile.is_open()) {
+		Commands::runCommand("close_console");
+		Commands::runCommand("g_setGameState gs_game");
 		while (getline(mapFile, tempString)) {
 			if (tempString.substr(0, 12) == "playerSpawn=") {
 				player->movePlayerTo(stoi(tempString.substr(12, 4)), stoi(tempString.substr(17, 4)));

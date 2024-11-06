@@ -15,6 +15,7 @@
 #include <string>
 #include "io/console.h"
 #include "ui/menus.h"
+#include "gamestates.h"
 
 //Stores keybindings; integer key is the SDL virtual keycode and string value is the associated command
 //TODO: Allocate memory somewhere else. This is breaking some keys, seemingly
@@ -36,6 +37,7 @@ bool Keyboard::keyboardEventMenu(int sym, SDL_EventType eventType) {
 		if (eventType == SDL_KEYDOWN)
 		{
 			if (sym == SDLK_BACKQUOTE) {
+				Gamestates::setGamestate(gs_console);
 				setKeyboardFocus(gs_keyboard_console);
 				Console::openConsole();
 			}
@@ -80,7 +82,9 @@ bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 			if (eventType == SDL_KEYDOWN)
 			{
 				if (sym == SDLK_BACKQUOTE) {
-					setKeyboardFocus(gs_keyboard_game);
+					//Return the keyboard focus to the last game state that had it
+					setKeyboardFocus(Gamestates::gameStateToGameKeyfocus(
+						Gamestates::returnToPriorGamestate()));
 					Console::closeConsole();
 				}
 				else if (sym == SDLK_RETURN) {
@@ -125,6 +129,7 @@ bool Keyboard::keyboardEventGame(int sym, SDL_EventType eventType) {
 			if (eventType == SDL_KEYDOWN)
 			{
 				if (sym == SDLK_BACKQUOTE) {
+					Gamestates::setGamestate(gs_console);
 					setKeyboardFocus(gs_keyboard_console);
 					Console::openConsole();
 				}
@@ -163,13 +168,22 @@ bool Keyboard::keyboardEventGame(int sym, SDL_EventType eventType) {
  */
 bool Keyboard::keyboardEvent(int sym, SDL_EventType eventType)
 {
-	if (keyboardFocus == gs_keyboard_game) {
+	/*if (keyboardFocus == gs_keyboard_game) {
 		return keyboardEventGame(sym, eventType);
 	}
 	else if (keyboardFocus == gs_keyboard_console) {
 		return keyboardEventConsole(sym, eventType);
 	}
 	else if (keyboardFocus == gs_keyboard_menu) {
+		return keyboardEventMenu(sym, eventType);
+	}*/
+	if (Gamestates::getGamestate() == gs_game) {
+		return keyboardEventGame(sym, eventType);
+	}
+	else if (Gamestates::getGamestate() == gs_console) {
+		return keyboardEventConsole(sym, eventType);
+	}
+	else if (Gamestates::getGamestate() == gs_menu) {
 		return keyboardEventMenu(sym, eventType);
 	}
 	else {

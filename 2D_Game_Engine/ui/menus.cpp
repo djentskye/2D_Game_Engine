@@ -122,7 +122,7 @@ void Menus::cursorUp() {
  * Moves cursor down
  */
 void Menus::cursorDown() {
-	//TODO: Bug test this...
+	//Ensure that we never move the cursor outside of the range of elements
 	if (cursor_element_int < elementQueue.size()-1) {
 		cursor_element_int++;
 		cursor_element = elementQueue.at(cursor_element_int);
