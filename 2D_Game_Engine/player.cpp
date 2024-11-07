@@ -27,8 +27,9 @@ Player::Player()
 	rotation = 0;
 	velx = 0;
 	vely = 0;
-	playerMaxSpeed = 0.3;
-	playerAccel = 0.3;
+	playerMaxSpeed = 3;
+	playerAccel = 1.2;
+	frictionConst = 0.6;
 	shooting = 0;
 	tick01 = 0;
 
@@ -131,10 +132,20 @@ SDL_Texture* Player::getTexture()
  * Player::update(). 
  */
 void Player::updateMovement() {
-	//We store the requested value 
-	double newVelX = velx;
-	double newVelY = vely;
 
+	//Magnitude, direction
+	//std::pair<double, float> destVec;
+
+	//We store the requested value 
+	//double newVelX = velx * frictionConst;
+	//double newVelY = vely * frictionConst;
+	velx *= frictionConst;
+	vely *= frictionConst;
+
+	double newVelX = 0;
+	double newVelY = 0;
+
+	//Keep track of what our directional movement looks like
 	double xdest = 0;
 	double ydest = 0;
 
@@ -159,16 +170,34 @@ void Player::updateMovement() {
 		ydest *= sqrt(2)/2;
 	}
 
-	xdest += xdest * playerMaxSpeed;
-	ydest += ydest * playerMaxSpeed;
+	//xdest += xdest * playerMaxSpeed;
+	//ydest += ydest * playerMaxSpeed;
 
-	newVelX = xdest + playerAccel * (velx);
-	newVelY = ydest + playerAccel * (vely);
+	//newVelX = xdest + playerAccel * (velx);
+	//newVelY = ydest + playerAccel * (vely);
+
+	//Find the desired acceleration
+	newVelX += velx + xdest * playerAccel;
+	newVelY += vely + ydest * playerAccel;
+
+	//Vector magnitude
+	double desiredVecMagnitude = sqrt(pow(newVelX, 2.0) + pow(newVelY, 2));
+
+	//Speed limiter
+	if (desiredVecMagnitude > playerMaxSpeed) {
+		//Make a unit vector, then multiply with max speed
+		newVelX = playerMaxSpeed * (newVelX / desiredVecMagnitude);
+		newVelY = playerMaxSpeed * (newVelY / desiredVecMagnitude);
+	}
 
 	velx = newVelX;
 	vely = newVelY;
 
-	double vel = this->getVelocity();
+	std::cout << velx;
+	std::cout << ", ";
+	std::cout << vely << std::endl;
+
+	//double vel = this->getVelocity();
 
 	//std::cout << "vel: ";
 	//std::cout << vel << std::endl;

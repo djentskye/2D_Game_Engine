@@ -131,11 +131,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h,
 
 	loadMap::initMapLoader(player, renderer, &om);
 
-	//loadMap::load("test");
 	//Gamestates::setGamestate(gs_menu);
 	Menus::init();
-	//menu = new Menus();
-	//menu->displayMainMenu();
 	Commands::runCommand("menu_main");
 
 	ticks = 0;

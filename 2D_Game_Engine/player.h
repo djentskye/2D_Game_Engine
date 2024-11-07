@@ -42,6 +42,7 @@ private:
 	void updateMovement();
 	bool shooting;
 	long long tick01;
+	double frictionConst;
 };
 
 #endif

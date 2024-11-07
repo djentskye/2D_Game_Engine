@@ -25,5 +25,12 @@ SDL_Texture* Texture::getTexture(const char* path) {
 	tempSurface = IMG_Load(path);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
+	if (texture == NULL) {
+		//This is terrible but apparently C strings are causing this so ???
+		std::string tempstr = "Failed to load texture: ";
+		tempstr.append(path);
+		Console::print(tempstr);
+		printf(tempstr.c_str());
+	}
 	return texture;
 }
