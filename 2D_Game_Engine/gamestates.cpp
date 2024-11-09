@@ -57,11 +57,19 @@ game_leveltype Gamestates::getGamemode() {
 	return *gamemode;
 }
 
+/**
+ * Swaps the gamestate to the prior one used
+ */
 game_state Gamestates::returnToPriorGamestate() {
 	*gamestate = prior_gamestate;
 	return *gamestate;
 }
 
+/**
+ * Translates from a game_state to the applicable game_keyfocus
+ * 
+ * @param game_state gs
+ */
 game_keyfocus Gamestates::gameStateToGameKeyfocus(game_state gs) {
 	if (gs == gs_menu || gs == gs_pausemenu) {
 		return gs_keyboard_menu;
@@ -74,6 +82,9 @@ game_keyfocus Gamestates::gameStateToGameKeyfocus(game_state gs) {
 	}
 }
 
+/**
+ * Returns the last gamestate before the current one
+ */
 game_state Gamestates::getPriorGamestate() {
 	return prior_gamestate;
 }

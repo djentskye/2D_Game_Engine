@@ -30,6 +30,12 @@ Keyboard::Keyboard() {
 
 Keyboard::~Keyboard() {}
 
+/**
+ * Handle keyboard events for menus
+ * 
+ * @param int sym
+ * @param SDL_EventType eventType
+ */
 bool Keyboard::keyboardEventMenu(int sym, SDL_EventType eventType) {
 	//Try-catch doesn't work here because of terrible memory management stuff??
 	try {
@@ -78,6 +84,12 @@ bool Keyboard::keyboardEventMenu(int sym, SDL_EventType eventType) {
 	}
 }
 
+/**
+ * Handle keyboard events for consoles
+ *
+ * @param int sym
+ * @param SDL_EventType eventType
+ */
 bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 	//Try-catch doesn't work here because of terrible memory management stuff??
 		try {
@@ -124,6 +136,12 @@ bool Keyboard::keyboardEventConsole(int sym, SDL_EventType eventType) {
 		}
 }
 
+/**
+ * Handle keyboard events for the core game
+ *
+ * @param int sym
+ * @param SDL_EventType eventType
+ */
 bool Keyboard::keyboardEventGame(int sym, SDL_EventType eventType) {
 	//Try-catch doesn't work here because of terrible memory management stuff??
 	if (keymap->count(sym) == 1) {
@@ -207,16 +225,20 @@ void Keyboard::bindKey(int sym, std::string keybindVal)
 	if (keymap->count(sym) == 1) {
 		keymap->erase(sym);
 	}
-	//If the requested keybinding has a +, bind the key with a 654 higher value to the 
-	//respective - command
+	//If the requested keybinding has a +, bind the key with a 654 higher 
+	//value to the respective - command
 	if (keybindVal[0] == '+') {
-		keymap->insert(std::pair<int, std::string>(sym+654, '-'+keybindVal.substr(1, std::string::npos)));
+		keymap->insert(std::pair<int, std::string>(sym+654, 
+			'-'+keybindVal.substr(1, std::string::npos)));
 	}
 
 	keymap->insert(std::pair<int, std::string>(sym, keybindVal));
 	printf("Just bound key!\n");
 }
 
+/**
+ * Set the keyboard focus. Keyfocus variables currently aren't being used, so 
+ */
 void Keyboard::setKeyboardFocus(game_keyfocus k) {
 	keyboardFocus = k;
 }

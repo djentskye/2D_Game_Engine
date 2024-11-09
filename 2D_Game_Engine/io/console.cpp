@@ -166,6 +166,10 @@ void Console::writeChar(int sym) {
 	cursorRight();
 }
 
+/**
+ * Pushes a line on the console up to the next line and moves all other lines up with 
+ * it. This is used for both user input and console output. 
+ */
 void Console::pushThisLineUp() {
 	//If we are at our max number of lines, start removing the oldest lines!
 	if (numLines == maxLines) {
@@ -240,30 +244,49 @@ std::list<Object*>* Console::getTextObjMap() {
 	return textObjMap;
 }
 
+/**
+ * Moves the console cursor left
+ */
 void Console::cursorLeft() {
 	if (cursor->getX() > (textWidth + 1)) {
 		cursor->setX(cursor->getX() - (textWidth + 1));
 	}
 }
 
+/**
+ * Moves the console cursor right
+ */
 void Console::cursorRight() {
 	if (cursor->getX() < Game::getWindowWidth() - (textWidth+1)) {
 		cursor->setX(cursor->getX() + (textWidth + 1));
 	}
 }
 
+/**
+ * Resets the x value of the cursor. This is used after a player presses enter or
+ * opens the console. 
+ */
 void Console::cursorResetX() {
 	cursor->setX(1);
 }
 
+/**
+ * Moves the console cursor down
+ */
 void Console::cursorDown() {
 	cursor->setY(cursor->getY() + (textHeight + 1));
 }
 
+/**
+ * Returns the cursor object
+ */
 Object* Console::getCursorObj() {
 	return cursor;
 }
 
+/**
+ * Returns a boolean signifying whether or not the console is showing
+ */
 bool Console::consoleShowing() {
 	return showConsole;
 }
@@ -333,6 +356,11 @@ void Console::update() {
 	}
 }
 
+/**
+ * Prints a string to the console as ouptut
+ * 
+ * @param std::string str
+ */
 void Console::print(std::string str) {
 
 	std::string outputStr = "> " + str;
@@ -356,6 +384,9 @@ void Console::print(std::string str) {
 	pushThisLineUp();
 }
 
+/**
+ * Returns whether the console is open or not
+ */
 bool Console::isOpen() {
 	return showConsole;
 }

@@ -134,7 +134,14 @@ void Commands::runCommand(std::string str) {
 	Console::print("Command not found");
 }
 
+/**
+ * Runs the menu command specified by str. This is a private function intended for 
+ * use by the runCommand() function only. 
+ *
+ * @param std::string str
+ */
 void Commands::runMenusCommand(std::string str) {
+	//Display the pause menu
 	if (str.substr(0, 11) == "menu_pause " || str == "menu_pause") {
 		Gamestates::setGamestate(gs_menu);
 
@@ -153,6 +160,7 @@ void Commands::runMenusCommand(std::string str) {
 
 		return;
 	}
+	//Close the pause menu
 	if (str == "menu_unpause") {
 		Gamestates::setGamestate(gs_game);
 		Menus::closePauseMenu();
@@ -163,6 +171,7 @@ void Commands::runMenusCommand(std::string str) {
 
 		return;
 	}
+	//Display the main menu
 	if (str.substr(0, 10) == "menu_main " || str == "menu_main") {
 		Gamestates::setGamestate(gs_menu);
 
@@ -181,6 +190,7 @@ void Commands::runMenusCommand(std::string str) {
 
 		return;
 	}
+	//Display the settings menu
 	if (str.substr(0, 14) == "menu_settings " || str == "menu_settings") {
 		Gamestates::setGamestate(gs_menu);
 
@@ -198,6 +208,7 @@ void Commands::runMenusCommand(std::string str) {
 
 		return;
 	}
+	//Display the audio settings submenu
 	if (str.substr(0, 20) == "menu_settings_audio " || str == "menu_settings_audio") {
 		Gamestates::setGamestate(gs_menu);
 

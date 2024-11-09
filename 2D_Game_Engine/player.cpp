@@ -133,12 +133,7 @@ SDL_Texture* Player::getTexture()
  */
 void Player::updateMovement() {
 
-	//Magnitude, direction
-	//std::pair<double, float> destVec;
-
 	//We store the requested value 
-	//double newVelX = velx * frictionConst;
-	//double newVelY = vely * frictionConst;
 	velx *= frictionConst;
 	vely *= frictionConst;
 
@@ -150,7 +145,6 @@ void Player::updateMovement() {
 	double ydest = 0;
 
 	//Figure out what our direction is going to be
-	//TODO: Figure out why going in negative directions is faster???
 	if (moveLeft) {
 		xdest--;
 	}
@@ -170,12 +164,6 @@ void Player::updateMovement() {
 		ydest *= sqrt(2)/2;
 	}
 
-	//xdest += xdest * playerMaxSpeed;
-	//ydest += ydest * playerMaxSpeed;
-
-	//newVelX = xdest + playerAccel * (velx);
-	//newVelY = ydest + playerAccel * (vely);
-
 	//Find the desired acceleration
 	newVelX += velx + xdest * playerAccel;
 	newVelY += vely + ydest * playerAccel;
@@ -192,15 +180,6 @@ void Player::updateMovement() {
 
 	velx = newVelX;
 	vely = newVelY;
-
-	std::cout << velx;
-	std::cout << ", ";
-	std::cout << vely << std::endl;
-
-	//double vel = this->getVelocity();
-
-	//std::cout << "vel: ";
-	//std::cout << vel << std::endl;
 }
 
 /**

@@ -1,5 +1,14 @@
 #include "main_menu.h"
 
+/**
+ * Loads the main menu
+ *
+ * @param std::map<int, ui_element*>* elementQueue, a queue of selectable elements
+ * @param std::map<int, ui_element*>* nonselectableEementQueue, a queue of
+ *		  nonselectable elements
+ * @param std::string trace, a string representing the menu callback trace in command
+ *		  form
+ */
 void main_menu::loadMainMenu(std::map<int, ui_element*>* elementQueue, 
 							 std::map<int, ui_element*>* nonselectableEementQueue, 
 							 std::string trace) {

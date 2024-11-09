@@ -1,7 +1,11 @@
 ///////////////////////////////////////////////////////////////
 // ui/menus.cpp
 // 
-// 
+// This class is the central hub for menus. It contains functions to call when 
+// specific menus should be loaded, selection functionality, menu navigation, 
+// and more. It also contains menu rendering code. All implementation of specific 
+// menus and their UI components takes place outside of this class in individual 
+// *_menu.cpp classes. This helps to make a more modular and flexible system. 
 ///////////////////////////////////////////////////////////////
 
 #include "menus.h"
@@ -25,6 +29,11 @@ void Menus::init() {
 	animationCounter = 0;
 }
 
+/**
+ * Sets the location of the menu cursor by which ui_element is currently selected. 
+ * 
+ * @param ui_element* uiel
+ */
 void Menus::setCursorLocationByUIElement(ui_element* uiel) {
 	cursor_rect.x = uiel->getX() - 30;
 	cursor_rect.y = uiel->getY() - 20;
@@ -34,6 +43,12 @@ void Menus::setCursorLocationByUIElement(ui_element* uiel) {
 	animationCounter = 0;
 }
 
+/**
+ * Displays the main menu. Takes a trace string that effectively serves as a 
+ * callback to prior menus so that back buttons work. This can be blank. 
+ * 
+ * @param std::string trace
+ */
 void Menus::displayMainMenu(std::string trace) {
 	lastTrace = trace;
 	main_menu::loadMainMenu(&elementQueue, &nonselectableElementQueue, trace);
@@ -44,6 +59,12 @@ void Menus::displayMainMenu(std::string trace) {
 	setCursorLocationByUIElement(cursor_element);
 }
 
+/**
+ * Displays the settings menu. Takes a trace string that effectively serves as a
+ * callback to prior menus so that back buttons work. This can be blank.
+ *
+ * @param std::string trace
+ */
 void Menus::displaySettingsMenu(std::string trace) {
 	lastTrace = trace;
 	settings_menu::loadSettings(&elementQueue, &nonselectableElementQueue, trace);
@@ -54,6 +75,12 @@ void Menus::displaySettingsMenu(std::string trace) {
 	setCursorLocationByUIElement(cursor_element);
 }
 
+/**
+ * Displays the settings audio submenu. Takes a trace string that effectively 
+ * serves as a callback to prior menus so that back buttons work. This can be blank.
+ *
+ * @param std::string trace
+ */
 void Menus::displaySettingsAudioMenu(std::string trace) {
 	lastTrace = trace;
 	settings_menu::loadAudioSettings(&elementQueue, &nonselectableElementQueue, trace);
@@ -64,11 +91,12 @@ void Menus::displaySettingsAudioMenu(std::string trace) {
 	setCursorLocationByUIElement(cursor_element);
 }
 
-//Will be deprecated. lol
-void Menus::closeMainMenu() {
-	//Remove elements from top to bottom???
-}
-
+/**
+ * Displays the pause menu. Takes a trace string that effectively serves as a callback 
+ * to prior menus so that back buttons work. This can be blank.
+ *
+ * @param std::string trace
+ */
 void Menus::displayPauseMenu(std::string trace) {
 	lastTrace = trace;
 	pause_menu::loadPauseMenu(&elementQueue, &nonselectableElementQueue, trace);
@@ -163,6 +191,9 @@ void Menus::cursorDown() {
 	}
 }
 
+/**
+ * Returns the last callback trace
+ */
 std::string Menus::trace() {
 	return lastTrace;
 }

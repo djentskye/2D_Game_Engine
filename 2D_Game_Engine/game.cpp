@@ -266,21 +266,3 @@ int Game::getWindowHeight() { return WINDOW_HEIGHT; }
 long long Game::getTick() {
 	return ticks;
 }
-
-/*
-void Game::setGamestate(game_state g) {
-	gamestate = g;
-}
-
-game_state Game::getGamestate() {
-	return gamestate;
-}
-
-void Game::setGamemode(game_leveltype g) {
-	gamemode = g;
-}
-
-game_leveltype Game::getGamemode() {
-	return gamemode;
-}
-*/

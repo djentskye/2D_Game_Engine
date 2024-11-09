@@ -9,7 +9,6 @@ UI_Text::UI_Text(std::string txt, int x_dest, int y_dest, int width, int height)
 	w = width;
 	h = height;
 	font = "Inconsolata";
-	//font_size = 16;
 	font_color = {255, 255, 255, 150};
 	//texture = Texture::getTexture("assets/textures/console_background.png");
 	//rect = new SDL_Rect();
@@ -25,16 +24,33 @@ UI_Text::UI_Text(std::string txt, int x_dest, int y_dest, int width, int height)
 	selectable = false;
 }
 
+/**
+ * Sets the location of the text
+ * 
+ * @param int x_dest
+ * @param int y_dest
+ */
 void UI_Text::setLocation(int x_dest, int y_dest) {
 	x = x_dest;
 	y = y_dest;
 }
 
+/**
+ * Sets the size of the text
+ *
+ * @param int width
+ * @param int height
+ */
 void UI_Text::setSize(int width, int height) {
 	w = width;
 	h = height;
 }
 
+/**
+ * Sets the text to display
+ * 
+ * @param std::string txt
+ */
 void UI_Text::setText(std::string txt) {
 	text = txt;
 	text_texture = Fonts::getRenderedText(txt, font, TEXT_WIDTH, font_color);
@@ -43,18 +59,23 @@ void UI_Text::setText(std::string txt) {
 	textRect->y = text_y + y;
 	textRect->w = txt.length() * TEXT_WIDTH;
 	textRect->h = TEXT_HEIGHT;
-	//TODO: Handle multiple lines of text on a button fluidly. This may have to go in 
-	//		the fonts class. 
+	//TODO: Handle multiple lines of text on a text box fluidly. This may have to 
+	//      go in the fonts class. 
 }
-
+/**
+ * Sets the font of the text
+ * 
+ * @param std::string font_name
+ */
 void UI_Text::setFont(std::string font_name) {
 	font = font_name;
 }
 
-/**void Button::setFontSize(int s) {
-	font_size = s;
-}*/
-
+/**
+ * Sets the color of the text
+ * 
+ * @param SDL_Color c
+ */
 void UI_Text::setFontColor(SDL_Color c) {
 	font_color = c;
 }
@@ -71,11 +92,17 @@ void UI_Text::setTextLocation(int x_dest, int y_dest) {
 	text_y = y_dest;
 }
 
+/**
+ * Centers the text
+ */
 void UI_Text::setTextCentered() {
 	text_x = w / 2 - ((text.length() * TEXT_WIDTH)/2);
 	text_y = h / 2 - ((/*Number of lines*/1 * TEXT_HEIGHT) / 2);
 }
 
+/**
+ * Renders the text
+ */
 void UI_Text::render() {
 	//Render the background texture
 	//SDL_RenderCopy(Renderer::getRenderer(), texture, NULL, rect);
@@ -84,6 +111,9 @@ void UI_Text::render() {
 	SDL_RenderCopy(Renderer::getRenderer(), text_texture, NULL, textRect);
 }
 
+/**
+ * Updates the text
+ */
 void UI_Text::update() {
 	//Play any animations or show selection here
 }

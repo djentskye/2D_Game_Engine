@@ -41,7 +41,6 @@ private:
 	std::string font;
 	SDL_Texture* text_texture;
 	BUTTON_STYLE style;
-	//int font_size;
 	SDL_Color font_color;
 	SDL_Rect* textRect;
 	std::string on_press;

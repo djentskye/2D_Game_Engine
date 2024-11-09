@@ -1,5 +1,14 @@
 #include "settings_menu.h"
 
+/**
+ * Loads the settings menu
+ *
+ * @param std::map<int, ui_element*>* elementQueue, a queue of selectable elements
+ * @param std::map<int, ui_element*>* nonselectableEementQueue, a queue of
+ *		  nonselectable elements
+ * @param std::string trace, a string representing the menu callback trace in command
+ *		  form
+ */
 void settings_menu::loadSettings(std::map<int, ui_element*>* elementQueue,
 								 std::map<int, ui_element*>* nonselectableEementQueue, 
 								 std::string trace) {
@@ -28,6 +37,15 @@ void settings_menu::loadSettings(std::map<int, ui_element*>* elementQueue,
 	elementQueue->insert({ 3, b_back });
 }
 
+/**
+ * Loads the audio settings submenu
+ *
+ * @param std::map<int, ui_element*>* elementQueue, a queue of selectable elements
+ * @param std::map<int, ui_element*>* nonselectableEementQueue, a queue of
+ *		  nonselectable elements
+ * @param std::string trace, a string representing the menu callback trace in command
+ *		  form
+ */
 void settings_menu::loadAudioSettings(std::map<int, ui_element*>* elementQueue,
 									  std::map<int, ui_element*>* nonselectableEementQueue,
 									  std::string trace) {

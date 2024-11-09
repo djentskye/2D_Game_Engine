@@ -42,6 +42,7 @@ private:
 	void updateMovement();
 	bool shooting;
 	long long tick01;
+	//A friction constant that slows the player down when not moving
 	double frictionConst;
 };
 
