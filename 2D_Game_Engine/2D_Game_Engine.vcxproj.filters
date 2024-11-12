@@ -37,6 +37,9 @@
     <Filter Include="Header Files\ui">
       <UniqueIdentifier>{723ecb0e-4900-4082-a012-e741006f22e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\map_editor">
+      <UniqueIdentifier>{4338e7cf-4fb2-4fe1-8d3d-05ee14e99fcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

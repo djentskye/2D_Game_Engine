@@ -29,7 +29,6 @@
 #include "io/console.h"
 #include "texture.h"
 #include "projectile.h"
-//#include "ui/menus.h"
 
 SDL_Texture* block;
 
