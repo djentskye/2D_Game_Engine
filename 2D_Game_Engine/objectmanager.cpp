@@ -126,7 +126,8 @@ void ObjectManager::updateObjects()
  */
 void ObjectManager::renderObjects(Renderer r)
 {
-	r.render();
+	//TODO: fix
+	//r.render();
 }
 
 /**

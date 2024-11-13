@@ -1,34 +1,24 @@
 ///////////////////////////////////////////////////////////////
-// game.cpp
+// editor.cpp
 // 
-// This is the game class, which acts as an interface between main classes and the 
-// rest of the code. Most central functionality is performed in here, with main 
-// classes focusing on only upper level/process management utilities. This allows
-// us to easily instantiate different versions of the game engine easily. 
 // 
-// This class contains a lot of core variables and some essential functions. It 
-// contains an initializing function, a rendering function, an update function, and 
-// a handleEvents function. It also contains pointers to essential objects in the 
-// game engine, window dimensions, and timing functionality. Most functions belong 
-// outside of this class, unless they directly relate to the core of the game 
-// engine. 
 ///////////////////////////////////////////////////////////////
 
-#include "Game.h"
+//#include "Game.h"
 #include <SDL.h>
 #include "sdl_image.h"
 #include <iostream>
-#include "player.h"
-#include "objectmanager.h"
-#include "io/parseCFG.h"
-#include "keyboard.h"
-#include "commands.h"
-#include "io/loadMap.h"
-#include "gamestates.h"
-#include "io/fonts.h"
-#include "io/console.h"
-#include "texture.h"
-#include "projectile.h"
+#include "../player.h"
+#include "../objectmanager.h"
+#include "../io/parseCFG.h"
+#include "../keyboard.h"
+#include "../commands.h"
+#include "../io/loadMap.h"
+#include "../gamestates.h"
+#include "../io/fonts.h"
+#include "../io/console.h"
+#include "../texture.h"
+#include "../projectile.h"
 
 SDL_Texture* block;
 
@@ -68,35 +58,25 @@ Game::~Game()
 void Game::init(const char* title, int xPos, int yPos, int w, int h, 
 				bool fullscreen)
 {
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-
-	int flags = SDL_WINDOW_OPENGL;
+	int flags = 0;
 	if (WINDOW_FULLSCREEN == true)
 	{
-		//flags |= SDL_WINDOW_FULLSCREEN;
+		flags = SDL_WINDOW_FULLSCREEN;
 	}
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 		std::cout << "SDL initialized" << std::endl;
 
-		//window = SDL_CreateWindow(title, xPos, yPos, WINDOW_WIDTH, WINDOW_HEIGHT, 
-		//						  flags);
-		window = SDL_CreateWindow(title, 100, 100, 800, 600,
+		window = SDL_CreateWindow(title, xPos, yPos, WINDOW_WIDTH, WINDOW_HEIGHT, 
 								  flags);
 		if (window)
 		{
 			std::cout << "Window created sucessfully" << std::endl;
 		}
+
+		renderer = new Renderer();
+		renderer->init(window);
 
 		isRunning = true;
 	}
@@ -111,18 +91,8 @@ void Game::init(const char* title, int xPos, int yPos, int w, int h,
 		isRunning = false;
 	}
 
-	//SDL_RenderSetLogicalSize(renderer->getRenderer(), 1920, 1080);
-}
+	SDL_RenderSetLogicalSize(renderer->getRenderer(), 1920, 1080);
 
-void Game::initRenderer() {
-	SDL_GLContext context = SDL_GL_CreateContext(window);
-	SDL_GL_MakeCurrent(window, context);
-
-	renderer = new Renderer();
-	renderer->init(window, context);
-}
-
-void Game::start() {
 	Texture::init(renderer);
 
 	Projectile::init();
@@ -137,8 +107,8 @@ void Game::start() {
 	commands = Commands(this);
 
 	//20, 6
-	//Console::init(20, 10, { 255, 255, 255, 255 }, "Inconsolata", {85, 10, 7, 160}, 
-	//			  100);
+	Console::init(20, 10, { 255, 255, 255, 255 }, "Inconsolata", {85, 10, 7, 160}, 
+				  100);
 
 	//Load keybindings from CFG
 	ParseCFG::parseKeybindings(keyboard);
@@ -151,8 +121,8 @@ void Game::start() {
 	loadMap::initMapLoader(player, renderer, &om);
 
 	//Gamestates::setGamestate(gs_menu);
-	//Menus::init();
-	//Commands::runCommand("menu_main");
+	Menus::init();
+	Commands::runCommand("menu_main");
 
 	ticks = 0;
 }
@@ -214,7 +184,7 @@ void Game::update()
 void Game::render()
 {
 	//Render all objects
-	renderer->render(window);
+	renderer->render();
 }
 
 /**
