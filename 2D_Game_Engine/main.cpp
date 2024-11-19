@@ -61,10 +61,12 @@ int main(int argc, const char* argv[]) {
 
     std::thread renderThread(t_render);
 
+    //Wait until the renderer is initialized to start all other processes
     while (!ready) {
         
     }
 
+    //Start the game engine
     g->start();
 
 	//Main game loop

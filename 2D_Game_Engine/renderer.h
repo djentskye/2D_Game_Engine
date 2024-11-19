@@ -36,5 +36,6 @@ private:
 		GLsizei length,
 		const GLchar* message,
 		const void* userParam);
+	static std::string loadShaderCodeFromFilepath(std::string filename);
 };
 

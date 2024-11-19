@@ -40,6 +40,9 @@
     <Filter Include="Source Files\map_editor">
       <UniqueIdentifier>{4338e7cf-4fb2-4fe1-8d3d-05ee14e99fcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{1e9bd2d9-1c79-4add-8715-9251950e1cec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -200,5 +203,13 @@
     <ClInclude Include="ui\pause_menu.h">
       <Filter>Header Files\ui</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\basic_frag.frag">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="shaders\basic_vertex.vert">
+      <Filter>Source Files\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -15,6 +15,7 @@
 //#include <gl/glu.h>
 
 #include <iostream>
+#include <fstream>
 #include "player.h"
 #include "io/console.h"
 #include "game.h"
@@ -40,33 +41,6 @@ SDL_GLContext gContext;
 GLuint vertexShader;
 GLuint fragShader;
 GLuint shaderProgram;
-
-
-
-
-//Load hardcoded shaders
-const GLchar* vertexSource = R"glsl(
-    #version 150 core
-
-    in vec2 position;
-
-    void main()
-    {
-        gl_Position = vec4(position, 0.0, 1.0);
-    }
-)glsl";
-
-const GLchar* fragSource = R"glsl(
-    #version 150 core
-
-	out vec4 outColor;
-
-	void main()
-	{
-		outColor = vec4(1.0, 1.0, 1.0, 1.0);
-	}
-)glsl";
-
 
 Renderer::Renderer()
 {
@@ -239,6 +213,9 @@ bool Renderer::initOpenGL() {
 
 	//Create a shader object for our vert shader
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	//Load shader from file
+	std::string vertexSourceStr = loadShaderCodeFromFilepath("shaders/basic_vertex.vert");
+	const GLchar* vertexSource = vertexSourceStr.c_str();
 	//Load data into our shader object
 	glShaderSource(vertexShader, 1, &vertexSource, NULL);
 	//Compile the vert shader
@@ -248,6 +225,9 @@ bool Renderer::initOpenGL() {
 
 	//Create a shader object for our frag shader
 	fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+	//Load shader from file
+	std::string fragSourceStr = loadShaderCodeFromFilepath("shaders/basic_frag.frag");
+	const GLchar* fragSource = fragSourceStr.c_str();
 	//Load data into our shader object
 	glShaderSource(fragShader, 1, &fragSource, NULL);
 	//Compile the frag shader
@@ -323,37 +303,13 @@ bool Renderer::initOpenGL() {
 	return true;
 }
 
-/*void GLAPIENTRY Renderer::MessageCallback(GLenum source,
-	GLenum type,
-	GLuint id,
-	GLenum severity,
-	GLsizei length,
-	const GLchar* message,
-	const void* userParam)
-{
-	fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-		(type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
-		type, severity, message);
-}*/
-
 /**
  * Initialize the renderer
  *
  * @param SDL_Window* window
  */
 void Renderer::init(SDL_Window* window, SDL_GLContext context) {
-
-
-
-
-
 	gContext = context;
-
-	//win = window;
-
-	//Create the GL context attached to our window
-	//gContext = SDL_GL_CreateContext(window);
-	//SDL_GL_MakeCurrent(window, gContext);
 
 	//Check to make sure everything went ok
 	if (gContext == NULL) {
@@ -562,4 +518,26 @@ void Renderer::addToRenderQueue(int i, Object o)
  */
 void Renderer::removeFromRenderQueue(Object* o) {
 	renderQueue.erase(o->getID());
+}
+
+std::string Renderer::loadShaderCodeFromFilepath(std::string filename) {
+	std::string shaderCode = "";
+	std::string tempString;
+	std::ifstream shaderFile;
+
+	shaderFile.open(filename);
+
+	if (shaderFile.is_open()) {
+		while (getline(shaderFile, tempString)) {
+			shaderCode += tempString + '\n';
+		}
+	} else {
+		std::cout << ("Could not open " + filename) << std::endl;
+		shaderFile.close();
+		return "";
+	}
+
+	shaderFile.close();
+
+	return shaderCode;
 }

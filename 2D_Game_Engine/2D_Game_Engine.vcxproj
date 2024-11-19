@@ -82,6 +82,10 @@
     <ClInclude Include="ui\ui_text.h" />
     <ClInclude Include="variables.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\basic_frag.frag" />
+    <None Include="shaders\basic_vertex.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{95EAE674-5DE1-4368-A5B5-0769F1E24B12}</ProjectGuid>
